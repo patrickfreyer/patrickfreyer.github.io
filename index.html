@@ -53,9 +53,6 @@ layout: default
         {% assign thoughts = site.data.thoughts %}
         {% assign profiles = site.data.social %}
 
-        <!-- Debug line added below -->
-        <p>DEBUG: Updates count: {{ site.data.updates | size }}</p>
-
         {% include about.html %}
         {% include updates.html updates=updates %}
         {% include projects.html projects=projects %}
