@@ -550,8 +550,8 @@ section > div {
 .timeline-icon {
     position: absolute;
     top: 0;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     background: var(--background);
     border: 2px solid var(--primary-color);
     border-radius: 50%;
@@ -573,6 +573,11 @@ section > div {
 .timeline-icon i {
     color: var(--primary-color);
     font-size: 1rem;
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .timeline-content {
@@ -966,17 +971,22 @@ section > div {
     }
 
     .timeline::before {
-        left: 1rem;
+        left: 2.25rem;
     }
 
     .timeline-item {
-        width: calc(100% - 3rem);
-        margin-left: 3rem !important;
+        width: calc(100% - 4.5rem);
+        margin-left: 4.5rem !important;
+        margin-right: 0 !important;
     }
 
     .timeline-item .timeline-icon {
-        left: -3.5rem;
+        left: -4.5rem;
         right: auto;
+    }
+
+    .timeline-content {
+        margin-left: 0;
     }
 }
 
@@ -997,6 +1007,33 @@ section > div {
         width: 2rem;
         height: 2rem;
         font-size: 1rem;
+    }
+
+    .timeline {
+        padding: 1rem 0;
+    }
+
+    .timeline::before {
+        left: 1.75rem;
+    }
+
+    .timeline-item {
+        width: calc(100% - 3.5rem);
+        margin-left: 3.5rem !important;
+    }
+
+    .timeline-item .timeline-icon {
+        width: 2rem;
+        height: 2rem;
+        left: -3.5rem;
+    }
+
+    .timeline-icon i {
+        font-size: 0.875rem;
+    }
+
+    .timeline-content {
+        padding: 1rem;
     }
 }
 
