@@ -589,22 +589,41 @@ section > div {
 /* LinkedIn Section */
 .linkedin-section {
     padding: 4rem 0;
-    background-color: var(--bg-color);
+    background-color: var(--section-bg);
+}
+
+.linkedin-embeds {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2rem;
 }
 
 .linkedin-embed-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
 }
 
+.embed-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.embed-description {
+    color: var(--light-text);
+    margin-bottom: 1rem;
+}
+
 .linkedin-embed-container iframe {
     max-width: 100%;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.linkedin-embed-container iframe:hover {
+    box-shadow: var(--card-hover-shadow);
 }
 
 @media (max-width: 600px) {

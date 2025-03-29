@@ -1,0 +1,19 @@
+<section id="linkedin-feed" class="linkedin-section">
+    <div class="container">
+        <h2>Latest from LinkedIn</h2>
+        <div class="linkedin-embeds">
+            {% for post in include.embeds %}
+            <div class="linkedin-embed-container">
+                <iframe 
+                    src="https://www.linkedin.com/embed/feed/update/{{ post.embed_code }}?collapsed=1" 
+                    height="600" 
+                    width="400" 
+                    frameborder="0" 
+                    allowfullscreen="" 
+                    title="{{ post.title }}">
+                </iframe>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

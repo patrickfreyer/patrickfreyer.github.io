@@ -52,28 +52,14 @@ layout: default
         {% assign projects = site.data.projects %}
         {% assign thoughts = site.data.thoughts %}
         {% assign profiles = site.data.social %}
+        {% assign linkedin_posts = site.data.linkedin.embeds %}
 
         {% include about.html %}
         {% include updates.html updates=updates %}
         {% include projects.html projects=projects %}
         {% include thoughts.html thoughts=thoughts %}
         {% include social.html profiles=profiles %}
-
-        <section id="linkedin-feed" class="linkedin-section">
-            <div class="container">
-                <h2>Latest from LinkedIn</h2>
-                <div class="linkedin-embed-container">
-                    <iframe 
-                        src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7311023765876817920?collapsed=1" 
-                        height="399" 
-                        width="504" 
-                        frameborder="0" 
-                        allowfullscreen="" 
-                        title="Embedded post">
-                    </iframe>
-                </div>
-            </div>
-        </section>
+        {% include linkedin.html embeds=linkedin_posts %}
     </main>
 
     <footer class="footer">
