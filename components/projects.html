@@ -1,0 +1,29 @@
+<section id="projects" class="projects-section">
+    <div class="container">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <template x-for="project in projects" :key="project.title">
+                <div class="project-card" :class="{ 'stealth': project.stealth }">
+                    <div class="project-icon" x-text="project.icon"></div>
+                    <h3 class="project-title" x-text="project.title"></h3>
+                    <p class="project-description" x-text="project.description"></p>
+                    <div class="project-tags">
+                        <template x-for="tag in project.tags" :key="tag">
+                            <span class="tag" x-text="tag"></span>
+                        </template>
+                    </div>
+                    <template x-if="!project.stealth">
+                        <a :href="project.link" class="project-link" target="_blank" rel="noopener noreferrer">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </template>
+                    <template x-if="project.stealth">
+                        <div class="stealth-badge">
+                            <i class="fas fa-lock"></i> Under Wraps
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </div>
+</section> 

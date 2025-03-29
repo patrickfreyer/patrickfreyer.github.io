@@ -10,15 +10,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Add marked for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body>
+<body x-data="mainData()">
     <header class="header">
         <nav class="nav-container">
             <div class="logo">PF</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
+                <li><a href="#updates">Updates</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#thoughts">Thoughts</a></li>
+                <li><a href="#social">Connect</a></li>
             </ul>
         </nav>
     </header>
@@ -39,29 +45,12 @@
             </div>
         </section>
 
-        <section id="about" class="about-section">
-            <div class="container">
-                <h2>About Me</h2>
-                <p>Hello! I'm Patrick...</p>
-            </div>
-        </section>
-
-        <section id="projects" class="projects-section">
-            <div class="container">
-                <h2>Projects</h2>
-                <div class="projects-grid">
-                    <!-- Project cards will be added here -->
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2>Get in Touch</h2>
-                <p>Feel free to reach out to me for collaborations or just to say hi!</p>
-                <a href="mailto:your.email@example.com" class="contact-button">Contact Me</a>
-            </div>
-        </section>
+        <!-- Include all components -->
+        <div x-html="await includeComponent('about')"></div>
+        <div x-html="await includeComponent('updates')"></div>
+        <div x-html="await includeComponent('projects')"></div>
+        <div x-html="await includeComponent('thoughts')"></div>
+        <div x-html="await includeComponent('social')"></div>
     </main>
 
     <footer class="footer">
@@ -70,6 +59,78 @@
         </div>
     </footer>
 
-    <script src="./js/main.js"></script>
+    <script>
+        // Main data management
+        function mainData() {
+            return {
+                updates: [],
+                projects: [],
+                thoughts: [],
+                socialProfiles: [],
+
+                async init() {
+                    // Load all data
+                    await Promise.all([
+                        this.loadData('updates'),
+                        this.loadData('projects'),
+                        this.loadData('thoughts'),
+                        this.loadData('social')
+                    ]);
+                },
+
+                async loadData(type) {
+                    try {
+                        const response = await fetch(`_data/${type}.yaml`);
+                        const text = await response.text();
+                        // Simple YAML parser for our needs
+                        this[type] = this.parseYAML(text);
+                    } catch (error) {
+                        console.error(`Error loading ${type}:`, error);
+                    }
+                },
+
+                async includeComponent(name) {
+                    try {
+                        const response = await fetch(`components/${name}.html`);
+                        return await response.text();
+                    } catch (error) {
+                        console.error(`Error loading component ${name}:`, error);
+                        return '';
+                    }
+                },
+
+                formatDate(dateStr) {
+                    return new Date(dateStr).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                },
+
+                parseYAML(text) {
+                    // Simple YAML parser for our basic needs
+                    const lines = text.split('\n');
+                    const result = [];
+                    let current = null;
+
+                    for (const line of lines) {
+                        if (line.trim().startsWith('-')) {
+                            if (current) result.push(current);
+                            current = {};
+                        } else if (line.includes(':')) {
+                            const [key, ...values] = line.split(':');
+                            const trimmedKey = key.trim();
+                            const value = values.join(':').trim();
+                            if (current && trimmedKey) {
+                                current[trimmedKey] = value;
+                            }
+                        }
+                    }
+                    if (current) result.push(current);
+                    return result;
+                }
+            };
+        }
+    </script>
 </body>
 </html>

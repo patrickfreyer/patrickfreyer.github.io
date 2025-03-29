@@ -1,0 +1,17 @@
+<section id="updates" class="updates-section">
+    <div class="container">
+        <h2>Updates</h2>
+        <div class="timeline">
+            <template x-for="update in updates" :key="update.date">
+                <div class="timeline-item" :class="update.type">
+                    <div class="timeline-icon" x-text="update.icon"></div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title" x-text="update.title"></h3>
+                        <div class="timeline-date" x-text="formatDate(update.date)"></div>
+                        <p class="timeline-description" x-text="update.description"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</section> 
