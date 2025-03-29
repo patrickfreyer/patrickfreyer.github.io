@@ -337,9 +337,9 @@ body {
 
 @keyframes float {
     0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(10px, 10px) rotate(90deg); }
-    50% { transform: translate(0, 20px) rotate(180deg); }
-    75% { transform: translate(-10px, 10px) rotate(270deg); }
+    25% { transform: translate(50px, 30px) rotate(90deg); }
+    50% { transform: translate(0, 60px) rotate(180deg); }
+    75% { transform: translate(-50px, 40px) rotate(270deg); }
     100% { transform: translate(0, 0) rotate(360deg); }
 }
 
