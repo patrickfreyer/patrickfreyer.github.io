@@ -2,25 +2,27 @@
     <div class="container">
         <h2>What I'm Following</h2>
         <div class="thoughts-grid">
-            <template x-for="thought in thoughts" :key="thought.title">
+            {% for thought in include.thoughts %}
                 <div class="thought-card" x-data="{ expanded: false }">
                     <div class="thought-header" @click="expanded = !expanded">
-                        <div class="thought-icon" x-text="thought.icon"></div>
+                        <div class="thought-icon">{{ thought.icon }}</div>
                         <div class="thought-meta">
-                            <h3 class="thought-title" x-text="thought.title"></h3>
-                            <span class="thought-category" x-text="thought.category"></span>
-                            <span class="thought-date" x-text="formatDate(thought.date)"></span>
+                            <h3 class="thought-title">{{ thought.title }}</h3>
+                            <span class="thought-category">{{ thought.category }}</span>
+                            <span class="thought-date" x-text="formatDate('{{ thought.date }}')"></span>
                         </div>
                         <div class="expand-icon" :class="{ 'expanded': expanded }">
                             <i class="fas fa-chevron-down"></i>
                         </div>
                     </div>
                     <div class="thought-content" x-show="expanded" x-transition>
-                        <div class="thought-summary" x-text="thought.summary"></div>
-                        <div class="thought-body markdown-content" x-html="thought.parsedContent"></div>
+                        <div class="thought-summary">{{ thought.summary }}</div>
+                        <div class="thought-body markdown-content">
+                            {{ thought.content | markdownify }}
+                        </div>
                     </div>
                 </div>
-            </template>
+            {% endfor %}
         </div>
     </div>
 </section> 

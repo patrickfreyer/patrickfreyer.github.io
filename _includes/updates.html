@@ -1,0 +1,17 @@
+<section id="updates" class="updates-section">
+    <div class="container">
+        <h2>Updates</h2>
+        <div class="timeline">
+            {% for update in include.updates %}
+                <div class="timeline-item {{ update.type }}">
+                    <div class="timeline-icon">{{ update.icon }}</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">{{ update.title }}</h3>
+                        <div class="timeline-date" x-text="formatDate('{{ update.date }}')"></div>
+                        <p class="timeline-description">{{ update.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

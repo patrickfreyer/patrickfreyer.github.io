@@ -1,0 +1,29 @@
+title: Patrick Freyer
+description: Personal website of Patrick Freyer, Software Developer & Technology Enthusiast
+url: https://patrickfreyer.github.io
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+
+# Exclude from processing
+exclude:
+  - README.md
+  - LICENSE
+  - .gitignore
+  - components/
+  - js/site-data.js
+
+# Collections
+collections:
+  data:
+    output: false
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default 

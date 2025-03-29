@@ -1,0 +1,23 @@
+<section id="social" class="social-section">
+    <div class="container">
+        <h2>Stay in Touch</h2>
+        <div class="social-grid">
+            {% for profile in include.profiles %}
+                <a href="{{ profile.url }}" class="social-card" target="_blank" rel="noopener noreferrer"
+                   style="--accent-color: {{ profile.color }}">
+                    <div class="social-icon">
+                        <i class="{{ profile.icon }}"></i>
+                    </div>
+                    <div class="social-info">
+                        <h3 class="social-platform">{{ profile.platform }}</h3>
+                        <p class="social-username">@{{ profile.username }}</p>
+                        <p class="social-description">{{ profile.description }}</p>
+                    </div>
+                    <div class="social-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

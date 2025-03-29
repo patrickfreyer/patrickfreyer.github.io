@@ -1,0 +1,28 @@
+<section id="projects" class="projects-section">
+    <div class="container">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            {% for project in include.projects %}
+                <div class="project-card {% if project.stealth %}stealth{% endif %}">
+                    <div class="project-icon">{{ project.icon }}</div>
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-description">{{ project.description }}</p>
+                    <div class="project-tags">
+                        {% for tag in project.tags %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% unless project.stealth %}
+                        <a href="{{ project.link }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    {% else %}
+                        <div class="stealth-badge">
+                            <i class="fas fa-lock"></i> Under Wraps
+                        </div>
+                    {% endunless %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

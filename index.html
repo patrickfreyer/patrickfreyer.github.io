@@ -1,3 +1,6 @@
+---
+layout: default
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +17,6 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Add marked for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Add site data -->
-    <script type="module">
-        import siteData from './js/site-data.js';
-        window.siteData = siteData;
-    </script>
 </head>
 <body x-data="mainData()">
     <header class="header">
@@ -50,50 +48,24 @@
             </div>
         </section>
 
-        <!-- Include all components -->
-        <div x-html="await includeComponent('about')"></div>
-        <div x-html="await includeComponent('updates')"></div>
-        <div x-html="await includeComponent('projects')"></div>
-        <div x-html="await includeComponent('thoughts')"></div>
-        <div x-html="await includeComponent('social')"></div>
+        <!-- Include all components with their respective data -->
+        {% include about.html %}
+        {% include updates.html updates=site.data.updates %}
+        {% include projects.html projects=site.data.projects %}
+        {% include thoughts.html thoughts=site.data.thoughts %}
+        {% include social.html profiles=site.data.social %}
     </main>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Patrick Freyer. All rights reserved.</p>
+            <p>&copy; {{ 'now' | date: "%Y" }} Patrick Freyer. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Main data management
+        // Main data management - simplified since data is now rendered server-side
         function mainData() {
             return {
-                updates: [],
-                projects: [],
-                thoughts: [],
-                socialProfiles: [],
-
-                async init() {
-                    // Initialize data from window.siteData
-                    this.updates = window.siteData.updates;
-                    this.projects = window.siteData.projects;
-                    this.socialProfiles = window.siteData.social;
-                    this.thoughts = window.siteData.thoughts.map(thought => ({
-                        ...thought,
-                        parsedContent: marked.parse(thought.content)
-                    }));
-                },
-
-                async includeComponent(name) {
-                    try {
-                        const response = await fetch(`components/${name}.html`);
-                        return await response.text();
-                    } catch (error) {
-                        console.error(`Error loading component ${name}:`, error);
-                        return '';
-                    }
-                },
-
                 formatDate(dateStr) {
                     return new Date(dateStr).toLocaleDateString('en-US', {
                         year: 'numeric',
