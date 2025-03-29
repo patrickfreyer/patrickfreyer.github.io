@@ -615,14 +615,14 @@ section > div {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(99, 102, 241, 0.1));
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1));
     border-radius: var(--radius-lg);
     margin-bottom: 1.5rem;
     position: relative;
 }
 
 .project-icon i {
-    background: linear-gradient(135deg, var(--primary-color), #6366f1);
+    background: linear-gradient(135deg, var(--primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
