@@ -8,20 +8,34 @@ markdown: kramdown
 plugins:
   - jekyll-feed
 
+# Include processing
+include:
+  - _includes
+  - _layouts
+  - _data
+  - assets
+  - css
+
 # Exclude from processing
 exclude:
   - README.md
   - LICENSE
   - .gitignore
-  - components/
-  - js/site-data.js
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
 
 # Collections
 collections:
   data:
     output: false
 
-# Defaults
+# Sass
+sass:
+  style: compressed
+
+# Default front matter
 defaults:
   - scope:
       path: ""

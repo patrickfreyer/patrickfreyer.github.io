@@ -1,6 +1,3 @@
----
-layout: default
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +45,6 @@ layout: default
             </div>
         </section>
 
-        <!-- Include all components with their respective data -->
         {% include about.html %}
         {% include updates.html updates=site.data.updates %}
         {% include projects.html projects=site.data.projects %}
@@ -63,7 +59,6 @@ layout: default
     </footer>
 
     <script>
-        // Main data management - simplified since data is now rendered server-side
         function mainData() {
             return {
                 formatDate(dateStr) {
