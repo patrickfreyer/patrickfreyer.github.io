@@ -1,4 +1,5 @@
 ---
+layout: default
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -47,11 +48,16 @@
             </div>
         </section>
 
+        {% assign updates = site.data.updates %}
+        {% assign projects = site.data.projects %}
+        {% assign thoughts = site.data.thoughts %}
+        {% assign profiles = site.data.social %}
+
         {% include about.html %}
-        {% include updates.html updates=site.data.updates %}
-        {% include projects.html projects=site.data.projects %}
-        {% include thoughts.html thoughts=site.data.thoughts %}
-        {% include social.html profiles=site.data.social %}
+        {% include updates.html updates=updates %}
+        {% include projects.html projects=projects %}
+        {% include thoughts.html thoughts=thoughts %}
+        {% include social.html profiles=profiles %}
     </main>
 
     <footer class="footer">
