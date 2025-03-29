@@ -549,7 +549,7 @@ section > div {
 
 .timeline-icon {
     position: absolute;
-    top: 0;
+    top: 50%;
     width: 2.5rem;
     height: 2.5rem;
     background: var(--background);
@@ -558,16 +558,18 @@ section > div {
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(1rem);
+    transform: translateY(-50%);
     z-index: 1;
 }
 
 .timeline-item:nth-child(odd) .timeline-icon {
     right: calc(100% + 2rem);
+    transform: translate(50%, -50%);
 }
 
 .timeline-item:nth-child(even) .timeline-icon {
     left: calc(100% + 2rem);
+    transform: translate(-50%, -50%);
 }
 
 .timeline-icon i {
@@ -661,6 +663,7 @@ section > div {
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 1.5rem;
+    margin-bottom: 3rem;
 }
 
 .tag {
@@ -971,17 +974,18 @@ section > div {
     }
 
     .timeline::before {
-        left: 2.25rem;
+        left: 1.25rem;
     }
 
     .timeline-item {
-        width: calc(100% - 4.5rem);
-        margin-left: 4.5rem !important;
+        width: calc(100% - 3rem);
+        margin-left: 3rem !important;
         margin-right: 0 !important;
     }
 
     .timeline-item .timeline-icon {
-        left: -4.5rem;
+        left: -1.25rem;
+        transform: translate(-50%, -50%) !important;
         right: auto;
     }
 
@@ -1014,18 +1018,18 @@ section > div {
     }
 
     .timeline::before {
-        left: 1.75rem;
+        left: 1rem;
     }
 
     .timeline-item {
-        width: calc(100% - 3.5rem);
-        margin-left: 3.5rem !important;
+        width: calc(100% - 2.5rem);
+        margin-left: 2.5rem !important;
     }
 
     .timeline-item .timeline-icon {
         width: 2rem;
         height: 2rem;
-        left: -3.5rem;
+        left: -1rem;
     }
 
     .timeline-icon i {
