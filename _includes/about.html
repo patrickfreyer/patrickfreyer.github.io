@@ -9,14 +9,6 @@
             </div>
             <div class="about-text">
                 <p>{{ site.data.about.about_text }}</p>
-                <div class="about-highlights">
-                    {% for highlight in site.data.about.highlights %}
-                        <div class="highlight">
-                            <span class="highlight-icon"><i class="{{ highlight.icon }}"></i></span>
-                            <span class="highlight-text">{{ highlight.text }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
             </div>
         </div>
     </div>
