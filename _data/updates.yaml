@@ -1,17 +1,17 @@
-- date: 2024-03-29
-  title: Personal Website Launch
-  description: Launched my new personal website using modern web technologies.
+- date: 2025-03-30
+  title: Moved to Denver, CO
+  description: I'm moving closer to the mountains and AI scene.
+  type: move
+  icon: 🚗
+
+- date: 2025-02-01
+  title: Launched Synthorated.com
+  description: I've build a GenAI podcast show generation tool that conducts thorough research on any topics before generating weekly or daily shows, available wherever you get your podcasts.
   type: project
-  icon: 🚀
+  icon: 🎧
 
-- date: 2024-03-15
-  title: New Project Started
-  description: Began working on an exciting new project in AI and machine learning.
-  type: work
-  icon: 🤖
-
-- date: 2024-02-01
-  title: Conference Talk
-  description: Gave a talk about modern web development practices at TechConf 2024.
-  type: speaking
-  icon: 🎤 
+- date: 2024-08-01
+  title: Back to Yale
+  description: I'm taking a break from full-time consulting to dive deeper into current AI trends and catch-up on more formalized computer science education (among many other courses).
+  type: education
+  icon: 🎓
