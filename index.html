@@ -20,14 +20,22 @@ layout: default
 </head>
 <body x-data="mainData()">
     <header class="header">
-        <nav class="nav-container">
-            <div class="logo">PF</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#updates">Updates</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#thoughts">Thoughts</a></li>
-                <li><a href="#social">Connect</a></li>
+        <nav class="nav-container" x-data="{ isOpen: false }">
+            <div class="nav-header">
+                <div class="logo">PF</div>
+                <button 
+                    @click="isOpen = !isOpen" 
+                    class="mobile-menu-button"
+                    aria-label="Toggle menu">
+                    <i class="fas" :class="isOpen ? 'fa-times' : 'fa-bars'"></i>
+                </button>
+            </div>
+            <ul class="nav-links" :class="{ 'nav-open': isOpen }">
+                <li><a href="#about" @click="isOpen = false">About</a></li>
+                <li><a href="#updates" @click="isOpen = false">Updates</a></li>
+                <li><a href="#projects" @click="isOpen = false">Projects</a></li>
+                <li><a href="#thoughts" @click="isOpen = false">Thoughts</a></li>
+                <li><a href="#social" @click="isOpen = false">Connect</a></li>
             </ul>
         </nav>
     </header>
