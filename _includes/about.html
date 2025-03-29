@@ -2,8 +2,10 @@
     <div class="container">
         <h2>About Me</h2>
         <div class="about-content">
-            <div class="about-image">
-                <img src="./assets/profile.jpeg" alt="Patrick Freyer" class="profile-image">
+            <div class="about-image-wrapper">
+                <div class="about-image">
+                    <img src="./assets/profile.jpeg" alt="Patrick Freyer" class="profile-image">
+                </div>
             </div>
             <div class="about-text">
                 <p>Hello! I'm Patrick, a passionate software developer and technology enthusiast based in {{ site.data.about.location }}. I specialize in building modern web applications and exploring cutting-edge technologies.</p>
@@ -11,7 +13,7 @@
                 <div class="about-highlights">
                     {% for highlight in site.data.about.highlights %}
                         <div class="highlight">
-                            <span class="highlight-icon">{{ highlight.icon }}</span>
+                            <span class="highlight-icon"><i class="{{ highlight.icon }}"></i></span>
                             <span class="highlight-text">{{ highlight.text }}</span>
                         </div>
                     {% endfor %}
