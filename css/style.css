@@ -499,4 +499,89 @@ section > div {
     .social-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Markdown Content Styles */
+.markdown-content {
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-top: 1.5rem;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.markdown-content h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.markdown-content h3 {
+    font-size: 1.25rem;
+}
+
+.markdown-content p {
+    margin: 1rem 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.markdown-content li {
+    margin: 0.5rem 0;
+}
+
+.markdown-content code {
+    background: var(--section-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: monospace;
+}
+
+.markdown-content pre {
+    background: var(--section-bg);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.markdown-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--light-text);
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.markdown-content a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
 } 

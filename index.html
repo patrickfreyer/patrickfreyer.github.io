@@ -82,8 +82,18 @@
                     try {
                         const response = await fetch(`_data/${type}.yaml`);
                         const text = await response.text();
-                        // Simple YAML parser for our needs
-                        this[type] = this.parseYAML(text);
+                        const data = this.parseYAML(text);
+                        
+                        // Handle the root key in YAML files
+                        if (type === 'thoughts') {
+                            this.thoughts = data.thoughts.map(thought => ({
+                                ...thought,
+                                // Parse markdown content
+                                parsedContent: marked.parse(thought.content)
+                            }));
+                        } else {
+                            this[type] = data[type] || data;
+                        }
                     } catch (error) {
                         console.error(`Error loading ${type}:`, error);
                     }
@@ -110,14 +120,57 @@
                 parseYAML(text) {
                     // Simple YAML parser for our basic needs
                     const lines = text.split('\n');
-                    const result = [];
+                    const result = {};
                     let current = null;
+                    let currentKey = null;
+                    let isMultiline = false;
+                    let multilineContent = [];
 
                     for (const line of lines) {
+                        const trimmedLine = line.trim();
+                        
+                        // Handle root level keys
+                        if (line.match(/^\w+:$/) && !line.startsWith(' ')) {
+                            currentKey = line.replace(':', '').trim();
+                            result[currentKey] = [];
+                            continue;
+                        }
+
+                        // Handle new items
                         if (line.trim().startsWith('-')) {
-                            if (current) result.push(current);
+                            if (current) {
+                                if (currentKey) {
+                                    result[currentKey].push(current);
+                                } else {
+                                    result.push(current);
+                                }
+                            }
                             current = {};
-                        } else if (line.includes(':')) {
+                            isMultiline = false;
+                            continue;
+                        }
+
+                        // Handle multiline content
+                        if (line.includes('|')) {
+                            isMultiline = true;
+                            multilineContent = [];
+                            continue;
+                        }
+
+                        if (isMultiline) {
+                            if (line.startsWith('    ') || line.startsWith('\t')) {
+                                multilineContent.push(line.substring(4));
+                                if (current) {
+                                    current.content = multilineContent.join('\n');
+                                }
+                                continue;
+                            } else {
+                                isMultiline = false;
+                            }
+                        }
+
+                        // Handle regular key-value pairs
+                        if (line.includes(':') && !isMultiline) {
                             const [key, ...values] = line.split(':');
                             const trimmedKey = key.trim();
                             const value = values.join(':').trim();
@@ -126,7 +179,16 @@
                             }
                         }
                     }
-                    if (current) result.push(current);
+
+                    // Add the last item
+                    if (current) {
+                        if (currentKey) {
+                            result[currentKey].push(current);
+                        } else {
+                            result.push(current);
+                        }
+                    }
+
                     return result;
                 }
             };
