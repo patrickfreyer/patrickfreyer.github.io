@@ -56,6 +56,10 @@
     /* Container */
     --container-max: 1400px;
     --container-padding: 2rem;
+
+    --primary-color-rgb: 37, 99, 235;
+    --secondary-color-rgb: 99, 102, 241;
+    --accent-color-rgb: 139, 92, 246;
 }
 
 * {
@@ -279,14 +283,23 @@ body {
 .social-links a {
     color: white;
     font-size: 1.75rem;
-    transition: var(--transition);
+    transition: var(--transition-normal);
     opacity: 0.9;
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(4px);
 }
 
 .social-links a:hover {
     color: white;
     transform: translateY(-4px);
     opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .floating-elements {
@@ -472,9 +485,15 @@ section > div {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--background);
+    background: var(--background);
     border-radius: 50%;
     box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.highlight:hover .highlight-icon {
+    transform: scale(1.1);
+    color: var(--secondary-color);
 }
 
 .highlight-text {
@@ -522,6 +541,11 @@ section > div {
     justify-content: center;
 }
 
+.timeline-icon i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
 .timeline-content {
     background: var(--background);
     padding: 1.5rem;
@@ -566,10 +590,21 @@ section > div {
 
 .project-icon {
     font-size: 2.5rem;
+    width: 4rem;
+    height: 4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(99, 102, 241, 0.1));
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.project-icon i {
     background: linear-gradient(135deg, var(--primary-color), #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
 }
 
 .project-title {
@@ -731,7 +766,18 @@ section > div {
 
 .social-icon {
     font-size: 1.5rem;
-    color: var(--accent-color, var(--primary-color));
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--accent-color-rgb, var(--primary-color-rgb)), 0.1);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-normal);
+}
+
+.social-card:hover .social-icon {
+    transform: scale(1.1);
 }
 
 .social-info {
@@ -982,4 +1028,28 @@ html {
         height: auto;
         min-height: 460px;
     }
+}
+
+/* Icon Styles */
+.fa,
+.fas,
+.far,
+.fab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    font-style: normal;
+}
+
+/* Mobile Menu Icon */
+.mobile-menu-button i {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 } 

@@ -1,8 +1,9 @@
 <section id="linkedin-feed" class="linkedin-section">
     <div class="container">
-        <h2>Latest from LinkedIn</h2>
+        <h2>GenAI in Action</h2>
         <div class="linkedin-embeds">
             {% for post in include.embeds %}
+            <h3>{{ post.title }}</h3>
             <div class="linkedin-embed-container">
                 <iframe 
                     src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:{{ post.embed_code }}?"
@@ -10,8 +11,7 @@
                     height="600" 
                     width="400" 
                     frameborder="0" 
-                    allowfullscreen="" 
-                    title="{{ post.title }}">
+                    allowfullscreen="">
                 </iframe>
             </div>
             {% endfor %}
