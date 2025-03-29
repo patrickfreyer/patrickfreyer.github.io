@@ -584,4 +584,33 @@ section > div {
 
 .markdown-content a:hover {
     text-decoration: underline;
+}
+
+/* LinkedIn Section */
+.linkedin-section {
+    padding: 4rem 0;
+    background-color: var(--bg-color);
+}
+
+.linkedin-embed-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.linkedin-embed-container iframe {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+    .linkedin-embed-container iframe {
+        width: 100%;
+        height: auto;
+        min-height: 460px;
+    }
 } 
