@@ -501,6 +501,15 @@ section > div {
     transition: var(--transition-normal);
 }
 
+.highlight-icon i {
+    font-size: 1.25rem;
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .highlight:hover .highlight-icon {
     transform: scale(1.1);
     color: var(--secondary-color);
