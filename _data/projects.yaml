@@ -1,19 +1,47 @@
-- title: Personal Website
-  description: A modern, responsive personal website built with HTML5, CSS3, and JavaScript.
-  icon: 🌐
-  link: https://github.com/patrickfreyer/patrickfreyer.github.io
+- title: Synthorated
+  description: Fully AI-generated podcast shows on any topic, based on multi-step research. Available wherever you get your podcasts.
+  icon: 🎧
+  link: https://synthorated.com
   stealth: false
-  tags: [Web, Frontend]
+  tags: [Podcast, GenAI, Audio]
 
-- title: AI Research Project
-  description: Innovative research in machine learning and artificial intelligence.
-  icon: 🤖
+- title: LegalAI
+  description: Complex case analysis on thousands of evidence documents for real-world simulations.
+  icon: 📄
   stealth: true
-  tags: [AI, Research]
+  tags: [Legal, GenAI, Simulations]
 
-- title: Open Source Contribution
-  description: Active contributor to various open source projects in the developer tools space.
-  icon: 🛠️
-  link: https://github.com/patrickfreyer
+- title: Ovis Analytics
+  description: Bringing advanced investor analytics to forestry assets.
+  icon: 🌳
+  link: https://oaforesthub.com
   stealth: false
-  tags: [Open Source, Tools] 
+  tags: [Forestry, Analytics, Satelite Imagery] 
+
+- title: Agricultural Investment Fund
+  description: Leading data and tech topics for an agriculture investment firm.
+  icon: 🌾
+  stealth: true
+  tags: [Agriculture, Data, Analytics] 
+
+- title: BetterFlightTracker
+  description: A ThreeJS-powered, interactive 3D flight tracker.
+  icon: 🛩️
+  link: https://betterflighttracker.com
+  in_development: true
+  stealth: false
+  tags: [Flights, Alerts, Tracking]
+  
+- title: LifeLabs
+  description: A personal health app leveraging clinical data in combination with wearable tracking to provide pre-medical support.
+  icon: 💊
+  stealth: true
+  tags: [Health, Wearables, Clinical Data]
+
+- title: ReactiveSlides
+  description: A new file format andtool for creating fully responsive, AI-editable presentations in a PowerPoint-like interface.
+  icon: 📝
+  in_development: true
+  stealth: false
+  tags: [Presentations, AI, Editing, File Formats]
+  

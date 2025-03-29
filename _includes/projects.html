@@ -1,6 +1,7 @@
 <section id="projects" class="projects-section">
     <div class="container">
         <h2>Projects</h2>
+        <p class="section-subtitle">A collection of my personal projects and roles, separate from my consulting work with BCG.</p>
         <div class="projects-grid">
             {% for project in include.projects %}
                 <div class="project-card {% if project.stealth %}stealth{% endif %}">
@@ -12,6 +13,11 @@
                             <span class="tag">{{ tag }}</span>
                         {% endfor %}
                     </div>
+                    {% if project.in_development %}
+                        <div class="development-badge">
+                            <i class="fas fa-code"></i> In Development
+                        </div>
+                    {% endif %}
                     {% unless project.stealth %}
                         <a href="{{ project.link }}" class="project-link" target="_blank" rel="noopener noreferrer">
                             View Project <i class="fas fa-arrow-right"></i>
