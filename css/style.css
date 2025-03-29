@@ -736,9 +736,36 @@ section > div {
     font-size: 1.25rem;
 }
 
+/* Status Badges */
+.development-badge,
+.stealth-badge {
+    position: absolute;
+    top: 2rem;
+    right: -4rem;
+    padding: 0.5rem 4rem;
+    transform: rotate(45deg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 2;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.development-badge {
+    background: linear-gradient(135deg, var(--success-color), #34d399);
+    color: white;
+}
+
+.development-badge i {
+    margin-right: 0.5rem;
+    animation: spin 2s linear infinite;
+}
+
 .stealth {
-    opacity: 1;
-    background: linear-gradient(135deg, rgba(23, 23, 23, 0.95), rgba(32, 32, 32, 0.95));
+    background: linear-gradient(135deg, 
+        rgba(23, 23, 23, 0.95), 
+        rgba(32, 32, 32, 0.95)
+    );
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
@@ -752,9 +779,14 @@ section > div {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.1) 50%, transparent 55%);
-    background-size: 200% 200%;
-    animation: shimmer 3s infinite linear;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(99, 102, 241, 0.03) 10px,
+            rgba(99, 102, 241, 0.03) 20px
+        );
     pointer-events: none;
 }
 
@@ -765,7 +797,11 @@ section > div {
     left: -50%;
     right: -50%;
     bottom: -50%;
-    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    background: radial-gradient(
+        circle at center,
+        rgba(99, 102, 241, 0.1) 0%,
+        transparent 70%
+    );
     opacity: 0.5;
     animation: pulse 4s infinite ease-in-out;
     pointer-events: none;
@@ -795,28 +831,25 @@ section > div {
 }
 
 .stealth-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(99, 102, 241, 0.15);
-    color: #818cf8;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid rgba(99, 102, 241, 0.2);
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(139, 92, 246, 0.8));
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stealth-badge i {
-    font-size: 1rem;
+    margin-right: 0.5rem;
     animation: lockPulse 2s infinite ease-in-out;
 }
 
-@keyframes shimmer {
-    0% { background-position: 200% 200%; }
-    100% { background-position: -200% -200%; }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes lockPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); filter: brightness(1.2); }
+    100% { transform: scale(1); }
 }
 
 @keyframes pulse {
@@ -825,21 +858,27 @@ section > div {
     100% { transform: scale(1); opacity: 0.5; }
 }
 
-@keyframes lockPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); color: #a5b4fc; }
-    100% { transform: scale(1); }
-}
-
 .stealth:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
     border-color: rgba(99, 102, 241, 0.3);
 }
 
+.stealth:hover::before {
+    animation: scanline 2s linear infinite;
+}
+
 .stealth:hover .stealth-badge {
-    background: rgba(99, 102, 241, 0.2);
-    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 200%;
+    }
 }
 
 /* Thoughts Section */

@@ -14,14 +14,14 @@
 
 - platform: X (Twitter)
   username: patrickfreyer
-  url: https://x.com/patrickfreyer
+  url: https://x.com/real_patrick_f
   icon: fab fa-x-twitter
   color: "#000000"
   description: Follow my thoughts and updates
 
 - platform: Instagram
   username: patrickfreyer
-  url: https://instagram.com/patrickfreyer
+  url: hhttps://www.instagram.com/brightlyshadowed/
   icon: fab fa-instagram
   color: "#E4405F"
   description: See my visual journey 
