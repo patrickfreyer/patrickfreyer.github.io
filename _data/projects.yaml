@@ -1,20 +1,19 @@
-projects:
-  - title: Personal Website
-    description: A modern, responsive personal website built with HTML5, CSS3, and JavaScript.
-    icon: 🌐
-    link: https://github.com/patrickfreyer/patrickfreyer.github.io
-    stealth: false
-    tags: [Web, Frontend]
+- title: Personal Website
+  description: A modern, responsive personal website built with HTML5, CSS3, and JavaScript.
+  icon: 🌐
+  link: https://github.com/patrickfreyer/patrickfreyer.github.io
+  stealth: false
+  tags: [Web, Frontend]
 
-  - title: AI Research Project
-    description: Innovative research in machine learning and artificial intelligence.
-    icon: 🤖
-    stealth: true
-    tags: [AI, Research]
+- title: AI Research Project
+  description: Innovative research in machine learning and artificial intelligence.
+  icon: 🤖
+  stealth: true
+  tags: [AI, Research]
 
-  - title: Open Source Contribution
-    description: Active contributor to various open source projects in the developer tools space.
-    icon: 🛠️
-    link: https://github.com/patrickfreyer
-    stealth: false
-    tags: [Open Source, Tools] 
+- title: Open Source Contribution
+  description: Active contributor to various open source projects in the developer tools space.
+  icon: 🛠️
+  link: https://github.com/patrickfreyer
+  stealth: false
+  tags: [Open Source, Tools] 

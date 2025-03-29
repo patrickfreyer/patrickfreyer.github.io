@@ -1,28 +1,27 @@
-social_profiles:
-  - platform: LinkedIn
-    username: patrickfreyer
-    url: https://linkedin.com/in/patrickfreyer
-    icon: fab fa-linkedin
-    color: "#0077B5"
-    description: Connect with me professionally
+- platform: LinkedIn
+  username: patrickfreyer
+  url: https://linkedin.com/in/patrickfreyer
+  icon: fab fa-linkedin
+  color: "#0077B5"
+  description: Connect with me professionally
 
-  - platform: GitHub
-    username: patrickfreyer
-    url: https://github.com/patrickfreyer
-    icon: fab fa-github
-    color: "#333333"
-    description: Check out my code and projects
+- platform: GitHub
+  username: patrickfreyer
+  url: https://github.com/patrickfreyer
+  icon: fab fa-github
+  color: "#333333"
+  description: Check out my code and projects
 
-  - platform: X (Twitter)
-    username: patrickfreyer
-    url: https://x.com/patrickfreyer
-    icon: fab fa-x-twitter
-    color: "#000000"
-    description: Follow my thoughts and updates
+- platform: X (Twitter)
+  username: patrickfreyer
+  url: https://x.com/patrickfreyer
+  icon: fab fa-x-twitter
+  color: "#000000"
+  description: Follow my thoughts and updates
 
-  - platform: Instagram
-    username: patrickfreyer
-    url: https://instagram.com/patrickfreyer
-    icon: fab fa-instagram
-    color: "#E4405F"
-    description: See my visual journey 
+- platform: Instagram
+  username: patrickfreyer
+  url: https://instagram.com/patrickfreyer
+  icon: fab fa-instagram
+  color: "#E4405F"
+  description: See my visual journey 
