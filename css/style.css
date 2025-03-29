@@ -214,6 +214,16 @@ body {
     .nav-links a:hover {
         background: rgba(99, 102, 241, 0.1);
     }
+
+    .timeline-item {
+        width: calc(100% - 3rem);
+        margin-left: 3rem !important;
+    }
+
+    .timeline-item .timeline-icon {
+        left: -3.5rem;
+        right: auto;
+    }
 }
 
 @keyframes slideDown {
@@ -530,7 +540,7 @@ section > div {
 
 .timeline-icon {
     position: absolute;
-    left: -3rem;
+    top: 0;
     width: 2rem;
     height: 2rem;
     background: var(--background);
@@ -539,6 +549,16 @@ section > div {
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(1rem);
+    z-index: 1;
+}
+
+.timeline-item:nth-child(odd) .timeline-icon {
+    right: calc(100% + 2rem);
+}
+
+.timeline-item:nth-child(even) .timeline-icon {
+    left: calc(100% + 2rem);
 }
 
 .timeline-icon i {
@@ -851,8 +871,13 @@ section > div {
     }
 
     .timeline-item {
-        width: calc(100% - 2rem);
-        margin-left: 2rem !important;
+        width: calc(100% - 3rem);
+        margin-left: 3rem !important;
+    }
+
+    .timeline-item .timeline-icon {
+        left: -3.5rem;
+        right: auto;
     }
 }
 
