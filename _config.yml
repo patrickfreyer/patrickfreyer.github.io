@@ -26,11 +26,6 @@ exclude:
   - node_modules
   - vendor
 
-# Collections
-collections:
-  data:
-    output: false
-
 # Sass
 sass:
   style: compressed
