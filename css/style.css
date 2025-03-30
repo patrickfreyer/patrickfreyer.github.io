@@ -225,8 +225,10 @@ body {
         margin-right: 0 !important;
     }
 
-    .timeline-item .timeline-icon {
-        left: -36px;
+    .timeline-item:nth-child(odd) .timeline-icon,
+    .timeline-item:nth-child(even) .timeline-icon {
+        left: -36px !important;
+        right: auto !important;
         transform: translateY(-50%) !important;
     }
 
@@ -1118,8 +1120,10 @@ section > div {
         margin-right: 0 !important;
     }
 
-    .timeline-item .timeline-icon {
-        left: -36px;
+    .timeline-item:nth-child(odd) .timeline-icon,
+    .timeline-item:nth-child(even) .timeline-icon {
+        left: -36px !important;
+        right: auto !important;
         transform: translateY(-50%) !important;
     }
 
