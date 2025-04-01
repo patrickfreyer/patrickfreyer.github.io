@@ -293,8 +293,8 @@ body {
 #earth-container {
     position: relative;
     width: 90%;
-    max-width: 450px;
-    height: 400px;
+    max-width: 600px;
+    height: 600px;
     margin-top: 3rem;
     z-index: 2;
     display: flex;
@@ -1448,8 +1448,9 @@ html {
         position: relative;
         flex-basis: 45%;
         width: 45%;
-        height: auto;
-        min-height: 500px;
+        height: 85vh;
+        min-height: 600px;
+        max-height: 1000px;
         margin-top: 0;
         max-width: none;
         z-index: 2;
@@ -1459,10 +1460,10 @@ html {
     }
 
     #earth-container canvas {
-        max-width: 100%;
-        max-height: 80vh;
-        width: auto !important;
-        height: auto !important;
+        max-width: none;
+        max-height: none;
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .hero-section .container {
