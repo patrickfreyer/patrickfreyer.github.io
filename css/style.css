@@ -126,6 +126,7 @@ body {
     cursor: pointer;
     padding: 0.5rem;
     transition: var(--transition);
+    margin-left: auto;
 }
 
 .mobile-menu-button:hover {
@@ -185,6 +186,13 @@ body {
 @media (max-width: 768px) {
     .mobile-menu-button {
         display: block;
+    }
+
+    .nav-container {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
     }
 
     .nav-links {
