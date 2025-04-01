@@ -57,8 +57,7 @@ function initEarth() {
     controls.minDistance = 7; // Prevent zooming in too close
     controls.maxDistance = 25; // Prevent zooming out too far
     controls.enablePan = false; // Disable panning (optional, keeps focus on rotation)
-    controls.autoRotate = true; // Optional: auto-rotate
-    controls.autoRotateSpeed = 0.3; // Optional: auto-rotate speed
+    controls.autoRotate = false; // Disable auto-rotate for testing interaction
 
     // Function to convert Lat/Lon to 3D coordinates
     function latLonToVector3(lat, lon, radius) {
@@ -88,8 +87,15 @@ function initEarth() {
     camera.position.z = 12;
 
     // Animation Loop
+    let frameCount = 0;
     function animate() {
         requestAnimationFrame(animate);
+
+        // Log frame count periodically to check if loop is running
+        if (frameCount % 60 === 0) {
+            // console.log(`Animate loop running - Frame: ${frameCount}`);
+        }
+        frameCount++;
 
         // Update Controls
         controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true

@@ -282,26 +282,33 @@ body {
     position: relative;
     overflow: hidden;
     min-height: 100vh;
-    padding: 8rem 0 4rem;
+    padding: 6rem 0 4rem;
     background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(var(--secondary-color-rgb), 0.1));
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
 #earth-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    height: 400px;
+    margin-top: 3rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
 }
 
 #earth-container canvas {
     display: block;
     width: 100% !important;
     height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .hero-section::before {
@@ -318,9 +325,12 @@ body {
 .hero-section .container {
     position: relative;
     z-index: 1;
+    width: 100%;
     max-width: 1140px;
     margin: 0 auto;
     padding: 0 15px;
+    text-align: center;
+    pointer-events: none;
 }
 
 .hero-content {
@@ -330,10 +340,13 @@ body {
     gap: 4rem;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .hero-text {
     flex: 1;
+    width: 100%;
+    pointer-events: auto;
 }
 
 .hero-section h1 {
@@ -358,6 +371,8 @@ body {
     gap: 1.5rem;
     margin-top: 2rem;
     animation: fadeIn 1s ease-out 0.6s backwards;
+    justify-content: center;
+    pointer-events: auto;
 }
 
 .about-content {
@@ -1402,7 +1417,9 @@ html {
 /* Responsive adjustments for wider screens */
 @media (min-width: 992px) {
     .hero-section {
+        flex-direction: row;
         justify-content: space-between;
+        padding: 8rem 0 4rem;
     }
 
     .hero-section .container {
@@ -1412,15 +1429,30 @@ html {
         padding-left: 5%;
         padding-right: 2%;
         z-index: 1;
+        text-align: left;
+    }
+
+    .hero-content {
+        /* Adjust if needed based on .container changes */
+    }
+
+    .hero-text {
+        /* Adjust if needed based on .container changes */
+    }
+
+    .social-links {
+        justify-content: flex-start;
     }
 
     #earth-container {
         position: relative;
         flex-basis: 45%;
+        width: 45%;
         height: auto;
         min-height: 500px;
-        z-index: 0;
-        top: auto; left: auto;
+        margin-top: 0;
+        max-width: none;
+        z-index: 2;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1432,13 +1464,12 @@ html {
         width: auto !important;
         height: auto !important;
     }
+
+    .hero-section .container {
+        pointer-events: auto;
+        z-index: 1;
+    }
 }
 
-@media (max-width: 991.98px) {
-    .hero-section .hero-content {
-        text-align: center;
-    }
-    .hero-section .social-links {
-        justify-content: center;
-    }
-} 
+/* Remove the specific max-width media query as defaults handle mobile now */
+/* @media (max-width: 991.98px) { ... } */ 
