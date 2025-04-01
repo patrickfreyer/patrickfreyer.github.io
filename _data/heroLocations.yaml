@@ -1,9 +1,36 @@
-- name: "New York"
-  lat: 40.7128
-  lon: -74.0060
+- name: "New Haven"
+  lat: 41.3083
+  lon: -72.9279
+- name: "Coventry"
+  lat: 52.4068
+  lon: -1.5197
 - name: "London"
   lat: 51.5074
   lon: -0.1278
-- name: "Tokyo"
-  lat: 35.6895
-  lon: 139.6917 
+- name: "Munich"
+  lat: 48.1351
+  lon: 11.5820
+- name: "Brussels"
+  lat: 50.8503
+  lon: 4.3517
+- name: "Singapore"
+  lat: 1.3521
+  lon: 103.8198
+- name: "Hong Kong"
+  lat: 22.3193
+  lon: 114.1694
+- name: "Dubai"
+  lat: 25.2048
+  lon: 55.2708
+- name: "Riyadh"
+  lat: 24.7136
+  lon: 46.6753
+- name: "Denver"
+  lat: 39.7392
+  lon: -104.9903
+- name: "Toulouse"
+  lat: 43.6047
+  lon: 1.4442
+- name: "Den Haag"
+  lat: 52.0705
+  lon: 4.3007

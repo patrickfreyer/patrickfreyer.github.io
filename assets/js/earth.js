@@ -1,4 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
 // Ensure locationsData is available
 if (typeof locationsData === 'undefined') {
@@ -48,6 +49,17 @@ function initEarth() {
     pointLight.position.set(10, 10, 10);
     scene.add(pointLight);
 
+    // Controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 7; // Prevent zooming in too close
+    controls.maxDistance = 25; // Prevent zooming out too far
+    controls.enablePan = false; // Disable panning (optional, keeps focus on rotation)
+    controls.autoRotate = true; // Optional: auto-rotate
+    controls.autoRotateSpeed = 0.3; // Optional: auto-rotate speed
+
     // Function to convert Lat/Lon to 3D coordinates
     function latLonToVector3(lat, lon, radius) {
         const phi = (90 - lat) * (Math.PI / 180);
@@ -79,8 +91,11 @@ function initEarth() {
     function animate() {
         requestAnimationFrame(animate);
 
-        // Rotation
-        earth.rotation.y += 0.001; // Adjust speed as needed
+        // Update Controls
+        controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+
+        // Rotation (removed, OrbitControls handles interaction)
+        // earth.rotation.y += 0.001;
 
         renderer.render(scene, camera);
     }
