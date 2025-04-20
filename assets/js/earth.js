@@ -134,11 +134,12 @@ function initEarth() {
     const globeMaterial = new THREE.MeshPhongMaterial({
         map: earthDayTexture,
         normalMap: normalTexture,
+        normalScale: new THREE.Vector2(0.8, 0.8),
         specularMap: specularTexture,
         bumpMap: bumpTexture,
-        bumpScale: 0.05,
-        specular: new THREE.Color(0x333333),
-        shininess: 25
+        bumpScale: 0.02,
+        specular: new THREE.Color(0x444444),
+        shininess: 15
     });
     const earthMesh = new THREE.Mesh(globeGeometry, globeMaterial);
     scene.add(earthMesh);
@@ -214,8 +215,8 @@ function initEarth() {
     const createPin = () => {
         const pinGroup = new THREE.Group();
         
-        // Create the main pin head (sphere)
-        const headGeometry = new THREE.SphereGeometry(0.04, 12, 12);
+        // Create the main pin head (sphere) - reduced by 40%
+        const headGeometry = new THREE.SphereGeometry(0.024, 12, 12); // from 0.04 to 0.024
         const headMaterial = new THREE.MeshPhongMaterial({ 
             color: 0xff3333,
             emissive: 0xff0000,
@@ -224,8 +225,8 @@ function initEarth() {
         });
         const head = new THREE.Mesh(headGeometry, headMaterial);
         
-        // Create the pin point (cone)
-        const pointGeometry = new THREE.ConeGeometry(0.03, 0.1, 6);
+        // Create the pin point (cone) - reduced by 40%
+        const pointGeometry = new THREE.ConeGeometry(0.018, 0.06, 6); // from 0.03/0.1 to 0.018/0.06
         const pointMaterial = new THREE.MeshPhongMaterial({ 
             color: 0xff3333,
             emissive: 0xff0000,
@@ -233,11 +234,11 @@ function initEarth() {
             shininess: 100
         });
         const point = new THREE.Mesh(pointGeometry, pointMaterial);
-        point.position.y = -0.15;
+        point.position.y = -0.09; // from -0.15 to -0.09
         point.rotation.x = Math.PI;
 
-        // Create a glow effect
-        const glowGeometry = new THREE.SphereGeometry(0.12, 16, 16);
+        // Create a glow effect - reduced by 40%
+        const glowGeometry = new THREE.SphereGeometry(0.072, 16, 16); // from 0.12 to 0.072
         const glowMaterial = new THREE.MeshBasicMaterial({
             color: 0xff6666,
             transparent: true,
