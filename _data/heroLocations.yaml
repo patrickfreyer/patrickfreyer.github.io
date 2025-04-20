@@ -100,6 +100,9 @@
 - name: "Nursultan"
   lat: 51.0924
   lon: 71.4304
+- name: "Astana"
+  lat: 51.0924
+  lon: 71.4304
 - name: "New York"
   lat: 40.7128
   lon: -74.0060

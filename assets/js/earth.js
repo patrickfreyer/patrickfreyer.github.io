@@ -57,6 +57,15 @@ function initEarth() {
         return;
     }
 
+    // Debug container dimensions
+    console.log('Container dimensions:', {
+        width: container.clientWidth,
+        height: container.clientHeight,
+        offsetWidth: container.offsetWidth,
+        offsetHeight: container.offsetHeight,
+        style: container.style.cssText
+    });
+
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -65,6 +74,17 @@ function initEarth() {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
+
+    // Debug renderer
+    console.log('Renderer canvas dimensions:', {
+        width: renderer.domElement.width,
+        height: renderer.domElement.height,
+        style: renderer.domElement.style.cssText
+    });
+
+    // Clear background to a visible color temporarily for debugging
+    scene.background = new THREE.Color(0x111111);
+    renderer.setClearColor(0x111111, 1);
 
     // Earth Geometry and Materials Setup
     const earthRadius = 5;
@@ -290,16 +310,28 @@ function initEarth() {
 
     // Initial Camera Position
     camera.position.z = 12;
+    console.log('Camera position:', camera.position);
 
     // Animation Loop
+    let frameCount = 0;
     function animate() {
+        frameCount++;
+        if (frameCount % 60 === 0) {  // Log every 60 frames
+            console.log('Animation frame:', frameCount);
+        }
+
         requestAnimationFrame(animate);
-
-        // Update Controls
         controls.update();
-
+        
         // Rotate cloud layer
-        cloudLayer.rotation.y += 0.0003;
+        if (cloudLayer) {
+            cloudLayer.rotation.y += 0.0003;
+        }
+
+        // Debug camera position occasionally
+        if (frameCount % 180 === 0) {  // Every 3 seconds at 60fps
+            console.log('Camera position during animation:', camera.position);
+        }
 
         renderer.render(scene, camera);
     }
@@ -323,7 +355,21 @@ function initEarth() {
     )).then(() => {
         console.log("All textures loaded, starting animation");
         animate();
+    }).catch(error => {
+        console.error("Error loading textures:", error);
+        // Start animation anyway to see if we get a blue sphere
+        animate();
     });
+
+    // Add immediate visibility check
+    setTimeout(() => {
+        console.log('Delayed visibility check:', {
+            containerVisible: container.offsetWidth > 0 && container.offsetHeight > 0,
+            rendererVisible: renderer.domElement.width > 0 && renderer.domElement.height > 0,
+            cameraPosition: camera.position,
+            sceneChildren: scene.children.length
+        });
+    }, 1000);  // Check after 1 second
 
     console.log("Three.js Earth initialized");
 } 
