@@ -127,7 +127,7 @@
 - name: "Honolulu"
   lat: 21.3069
   lon: -157.8583
-- name: "Köln"
+- name: "Cologne"
   lat: 50.9375
   lon: 6.9603
 - name: "Seattle"
@@ -214,3 +214,6 @@
 - name: "Geneva"
   lat: 46.2044
   lon: 6.1432
+- name: "Istanbul"
+  lat: 41.0082
+  lon: 28.9784

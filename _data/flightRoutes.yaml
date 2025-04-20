@@ -1,3 +1,359 @@
+### 2024
+
+- origin: "Almaty"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2024
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Doha"
+  destination: "Dubai"
+  airline: "Qatar"
+  year: 2024
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Munich"
+  airline: "Emirates"
+  year: 2024
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2024
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2024
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2024
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Munich"
+  airline: "Emirates"
+  year: 2024
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2024
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Munich"
+  airline: "Emirates"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Munich"
+  airline: "Emirates"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Seattle"
+  airline: "Lufthansa"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Seattle"
+  destination: "Seattle"
+  airline: "Patrick"
+  year: 2024
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Seattle"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2024
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "London"
+  airline: "Lufthansa"
+  year: 2024
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2024
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Hamburg"
+  airline: "Lufthansa"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hamburg"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Barcelona"
+  airline: "Lufthansa"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Barcelona"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Hamburg"
+  airline: "Lufthansa"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hamburg"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Bodrum"
+  airline: "Eurowings Discover"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Bodrum"
+  destination: "Munich"
+  airline: "Eurowings Discover"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Vienna"
+  airline: "Austrian"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Vienna"
+  destination: "New York"
+  airline: "Austrian"
+  year: 2024
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Hong Kong"
+  airline: "Cathay Pacific"
+  year: 2024
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hong Kong"
+  destination: "Chengdu"
+  airline: "Air China"
+  year: 2024
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Chengdu"
+  destination: "Hong Kong"
+  airline: "Air China"
+  year: 2024
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hong Kong"
+  destination: "New York"
+  airline: "Cathay Pacific"
+  year: 2024
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "Delta"
+  year: 2024
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "Delta"
+  year: 2024
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Beijing"
+  airline: "Air China"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Beijing"
+  destination: "Shenzhen"
+  airline: "Air China"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Shenzhen"
+  destination: "Beijing"
+  airline: "Air China"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Beijing"
+  destination: "New York"
+  airline: "Air China"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Toronto"
+  airline: "Air Canada"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Halifax"
+  airline: "Air Canada"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Halifax"
+  destination: "Toronto"
+  airline: "Air Canada"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "New York"
+  airline: "Air Canada"
+  year: 2024
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2024
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+### 2025
+
 - origin: "Munich"
   destination: "Cologne"
   airline: "Lufthansa"
