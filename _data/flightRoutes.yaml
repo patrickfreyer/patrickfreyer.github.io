@@ -1,3 +1,829 @@
+### 2023
+
+- origin: "Muscat"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2023
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Doha"
+  destination: "Frankfurt"
+  airline: "Qatar"
+  year: 2023
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2023
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Vienna"
+  airline: "Lufthansa"
+  year: 2023
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Vienna"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "FlyDubai"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Saudi"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Kuwait"
+  airline: "Emirates"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Kuwait"
+  destination: "Riyadh"
+  airline: "Saudi"
+  year: 2023
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dammam"
+  airline: "Saudi"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dammam"
+  destination: "Riyadh"
+  airline: "Saudi"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2023
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Washington DC"
+  destination: "Munich"
+  airline: "United"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Doha"
+  destination: "Abu Dhabi"
+  airline: "Qatar"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Abu Dhabi"
+  destination: "Riyadh"
+  airline: "Etihad"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Dubai"
+  airline: "Lufthansa"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Doha"
+  destination: "Riyadh"
+  airline: "Qatar"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Tabuk"
+  airline: "Saudia"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Tabuk"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Zurich"
+  airline: "Swiss"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Zurich"
+  destination: "Munich"
+  airline: "Swiss"
+  year: 2023
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Arar"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Arar"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Tabuk"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Tabuk"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Zurich"
+  airline: "Swiss"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Zurich"
+  destination: "Munich"
+  airline: "Swiss"
+  year: 2023
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Zurich"
+  airline: "Swiss"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Zurich"
+  destination: "Dubai"
+  airline: "Swiss"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Abu Dhabi"
+  destination: "Riyadh"
+  airline: "Etihad"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Riyadh"
+  airline: "Lufthansa"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Muscat"
+  airline: "Omanair"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Muscat"
+  destination: "Dubai"
+  airline: "Omanair"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Dammam"
+  airline: "Saudia"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dammam"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Budapest"
+  airline: "Lufthansa"
+  year: 2023
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Budapest"
+  destination: "Vienna"
+  airline: "Austrian"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Vienna"
+  destination: "Munich"
+  airline: "Austrian"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Dublin"
+  airline: "Air Lingus"
+  year: 2023
+  month: "August"
+  occasion: "Rowing"
+  travelers: ["Patrick"]
+
+- origin: "Dublin"
+  destination: "Munich"
+  airline: "Air Lingus"
+  year: 2023
+  month: "August"
+  occasion: "Rowing"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Zurich"
+  airline: "Swiss"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Zurich"
+  destination: "Dubai"
+  airline: "Swiss"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Brussels"
+  airline: "Lufthansa"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Brussels"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Zurich"
+  airline: "Swiss"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Zurich"
+  destination: "Dubai"
+  airline: "Swiss"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Saudia"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "Saudia"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Riyadh"
+  airline: "Emirates"
+  year: 2023
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Riyadh"
+  destination: "Dubai"
+  airline: "FlyDubai"
+  year: 2023
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2023
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Vienna"
+  airline: "Lufthansa"
+  year: 2023
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Vienna"
+  destination: "Berlin"
+  airline: "Lufthansa"
+  year: 2023
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Berlin"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Berlin"
+  airline: "Lufthansa"
+  year: 2023
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Berlin"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2023
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Doha"
+  destination: "Hanoi"
+  airline: "Qatar"
+  year: 2023
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Hanoi"
+  destination: "Da Nang"
+  airline: "Vietjet"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Da Nang"
+  destination: "Ho Chi Minh"
+  airline: "Bamboo Airways"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Ho Chi Minh"
+  destination: "Phu Quoc"
+  airline: "Vietjet"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Phu Quoc"
+  destination: "Hanoi"
+  airline: "Vietjet"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Hanoi"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Doha"
+  destination: "Munich"
+  airline: "Qatar"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
+  destination: "Hamburg"
+  airline: "Lufthansa"
+  year: 2023
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Hamburg"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "London"
+  airline: "Lufthansa"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Doha"
+  destination: "Almaty"
+  airline: "Qatar"
+  year: 2023
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
 ### 2024
 
 - origin: "Almaty"
