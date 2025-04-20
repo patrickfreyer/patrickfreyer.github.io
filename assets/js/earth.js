@@ -13,9 +13,30 @@ function findLocationByName(name) {
     return locationsData.find(loc => loc.name === name);
 }
 
+// Helper function to count route frequencies
+function countRouteFrequencies(routes) {
+    const frequencies = {};
+    
+    routes.forEach(route => {
+        // Create a consistent key for the route (sort cities alphabetically to count both directions)
+        const cities = [route.origin, route.destination].sort();
+        const routeKey = `${cities[0]}-${cities[1]}`;
+        frequencies[routeKey] = (frequencies[routeKey] || 0) + 1;
+    });
+    
+    return frequencies;
+}
+
+// Function to get route frequency
+function getRouteFrequency(origin, destination, frequencies) {
+    const cities = [origin, destination].sort();
+    const routeKey = `${cities[0]}-${cities[1]}`;
+    return frequencies[routeKey] || 1;
+}
+
 // Function to create curved flight path
-function createFlightPath(startPoint, endPoint, earthRadius) {
-    const points = [];
+function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
+    const pathsPoints = [];
     const numPoints = 50;
     
     // Calculate distance for height scaling
@@ -23,31 +44,50 @@ function createFlightPath(startPoint, endPoint, earthRadius) {
     const maxHeightScale = 0.08;
     const baseScale = Math.atan(distance) / (Math.PI / 2) * maxHeightScale;
 
-    // Generate curved path points
+    // Generate base curved path points
+    const basePoints = [];
     for (let i = 0; i <= numPoints; i++) {
         const t = i / numPoints;
         const point = startPoint.clone().normalize();
         point.lerp(endPoint.clone().normalize(), t).normalize();
         const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
         point.multiplyScalar(heightScale);
-        points.push(point);
+        basePoints.push(point);
     }
 
-    return points;
+    // Calculate perpendicular direction for parallel lines
+    const pathDirection = endPoint.clone().sub(startPoint).normalize();
+    const globeNormal = startPoint.clone().add(endPoint).normalize();
+    const perpDirection = pathDirection.clone().cross(globeNormal).normalize();
+
+    // Create offset paths
+    for (let i = 0; i < numLines; i++) {
+        const offset = perpDirection.clone().multiplyScalar(0.01 * (i - (numLines - 1) / 2));
+        const offsetPoints = basePoints.map(point => {
+            return point.clone().add(offset);
+        });
+        pathsPoints.push(offsetPoints);
+    }
+
+    return pathsPoints;
 }
 
-// Function to create flight path line
-function createFlightLine(points, color = 0x00ff00) {
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({
-        color: color,
-        transparent: true,
-        opacity: 0.6,
-        linewidth: 1,
-        depthTest: true,
-        depthWrite: false
+// Function to create flight path lines
+function createFlightLines(pathsPoints, color = 0x00ff00) {
+    const lines = [];
+    pathsPoints.forEach(points => {
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({
+            color: color,
+            transparent: true,
+            opacity: 0.6,
+            linewidth: 1,
+            depthTest: true,
+            depthWrite: false
+        });
+        lines.push(new THREE.Line(geometry, material));
     });
-    return new THREE.Line(geometry, material);
+    return lines;
 }
 
 function initEarth() {
@@ -74,7 +114,7 @@ function initEarth() {
     // const material = new THREE.MeshStandardMaterial({ color: 0x2288ff }); // Placeholder blue color
     // Earth Material (Texture Loading)
     const textureLoader = new THREE.TextureLoader();
-    const earthTexture = textureLoader.load('https://www.solarsystemscope.com/textures/download/8k_earth_nightmap.jpg', // Example texture
+    const earthTexture = textureLoader.load('https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg', // Example texture
         () => { console.log("Texture loaded successfully"); animate(); }, // Start animation once texture loads
         undefined, // onProgress callback currently not supported
         (err) => { console.error('An error happened loading the texture:', err); }
@@ -171,8 +211,24 @@ function initEarth() {
         console.log(`Adding pin for ${location.name} at`, position);
     });
 
+    // Count route frequencies before adding flight paths
+    const routeFrequencies = countRouteFrequencies(flightRoutesData);
+    
+    // Track processed routes to avoid duplicates
+    const processedRoutes = new Set();
+    
     // Add flight paths
     flightRoutesData.forEach(route => {
+        // Create a consistent key for the route
+        const cities = [route.origin, route.destination].sort();
+        const routeKey = `${cities[0]}-${cities[1]}`;
+        
+        // Skip if we've already processed this route
+        if (processedRoutes.has(routeKey)) {
+            return;
+        }
+        processedRoutes.add(routeKey);
+        
         const originLoc = findLocationByName(route.origin);
         const destLoc = findLocationByName(route.destination);
         
@@ -184,17 +240,22 @@ function initEarth() {
         const startPoint = latLonToVector3(originLoc.lat, originLoc.lon, earthRadius);
         const endPoint = latLonToVector3(destLoc.lat, destLoc.lon, earthRadius);
         
-        // Create curved path
-        const pathPoints = createFlightPath(startPoint, endPoint, earthRadius);
+        // Get the actual frequency for this route
+        const frequency = getRouteFrequency(route.origin, route.destination, routeFrequencies);
+        const numLines = Math.min(Math.max(frequency, 1), 5); // Cap between 1 and 5 lines
         
-        // Create flight line with airline-specific color
+        const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
+        
+        // Create flight lines with airline-specific color
         const airlineColors = {
-            'default': 0x00ff00 // Default green
+            'default': 0x00ff00
         };
-        const flightLine = createFlightLine(pathPoints, airlineColors[route.airline] || airlineColors.default);
-        earth.add(flightLine);
+        const flightLines = createFlightLines(pathsPoints, airlineColors[route.airline] || airlineColors.default);
         
-        console.log(`Added flight path: ${route.origin} -> ${route.destination}`);
+        // Add all lines to the earth
+        flightLines.forEach(line => earth.add(line));
+        
+        console.log(`Added flight path with ${numLines} lines for route ${route.origin} -> ${route.destination} (frequency: ${frequency})`);
     });
 
     // Initial Camera Position
