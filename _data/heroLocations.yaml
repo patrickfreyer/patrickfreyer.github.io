@@ -34,3 +34,135 @@
 - name: "Den Haag"
   lat: 52.0705
   lon: 4.3007
+- name: "Muscat"
+  lat: 23.5859
+  lon: 58.4059
+- name: "Doha"
+  lat: 25.2854
+  lon: 51.5310
+- name: "Frankfurt"
+  lat: 50.0379
+  lon: 8.5622
+- name: "Düsseldorf"
+  lat: 51.2895
+  lon: 6.7668
+- name: "Vienna"
+  lat: 48.1200
+  lon: 16.5700
+- name: "Kuwait"
+  lat: 29.2403
+  lon: 47.9698
+- name: "Dammam"
+  lat: 26.4207
+  lon: 50.0888
+- name: "Washington DC"
+  lat: 38.9072
+  lon: -77.0369
+- name: "Abu Dhabi"
+  lat: 24.4539
+  lon: 54.6778
+- name: "Tabuk"
+  lat: 28.3835
+  lon: 36.5662
+- name: "Zurich"
+  lat: 47.4502
+  lon: 8.5616
+- name: "Arar"
+  lat: 30.9750
+  lon: 41.0382
+- name: "Budapest"
+  lat: 47.4979
+  lon: 19.0402
+- name: "Dublin"
+  lat: 53.4264
+  lon: -6.2499
+- name: "Berlin"
+  lat: 52.5200
+  lon: 13.4050
+- name: "Hanoi"
+  lat: 21.0285
+  lon: 105.8542
+- name: "Da Nang"
+  lat: 16.0544
+  lon: 108.2022
+- name: "Ho Chi Minh"
+  lat: 10.8231
+  lon: 106.6297
+- name: "Phu Quoc"
+  lat: 10.2276
+  lon: 103.9809
+- name: "Hamburg"
+  lat: 53.6302
+  lon: 10.0041
+- name: "Almaty"
+  lat: 43.2551
+  lon: 76.9126
+- name: "Nursultan"
+  lat: 51.0924
+  lon: 71.4304
+- name: "New York"
+  lat: 40.7128
+  lon: -74.0060
+- name: "Panama"
+  lat: 8.9824
+  lon: -79.5199
+- name: "Montevideo"
+  lat: -34.9011
+  lon: -56.1645
+- name: "Stockholm"
+  lat: 59.3293
+  lon: 18.0686
+- name: "Copenhagen"
+  lat: 55.6761
+  lon: 12.5683
+- name: "San Francisco"
+  lat: 37.7749
+  lon: -122.4194
+- name: "Oakland"
+  lat: 37.8044
+  lon: -122.2712
+- name: "Big Island"
+  lat: 19.8968
+  lon: -155.5828
+- name: "Honolulu"
+  lat: 21.3069
+  lon: -157.8583
+- name: "Köln"
+  lat: 50.9375
+  lon: 6.9603
+- name: "Seattle"
+  lat: 47.6062
+  lon: -122.3321
+- name: "Barcelona"
+  lat: 41.3851
+  lon: 2.1734
+- name: "Bodrum"
+  lat: 37.0343
+  lon: 27.4305
+- name: "Chengdu"
+  lat: 30.5728
+  lon: 103.8652
+- name: "Beijing"
+  lat: 39.9042
+  lon: 116.4074
+- name: "Shenzhen"
+  lat: 22.5431
+  lon: 114.0579
+- name: "Toronto"
+  lat: 43.6532
+  lon: -79.3832
+- name: "Halifax"
+  lat: 44.6488
+  lon: -63.5752
+- name: "Griechenland"
+  lat: 39.0742
+  lon: 21.8243
+- name: "Aruba"
+  lat: 12.5211
+  lon: -69.9683
+- name: "San Diego"
+  lat: 32.7157
+  lon: -117.1611
+- name: "Madrid"
+  lat: 40.4168
+  lon: -3.7038

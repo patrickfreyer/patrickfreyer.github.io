@@ -1,11 +1,53 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 
-// Ensure locationsData is available
-if (typeof locationsData === 'undefined') {
-    console.error('locationsData is not defined. Make sure it is passed correctly from Jekyll.');
+// Ensure required data is available
+if (typeof locationsData === 'undefined' || typeof flightRoutesData === 'undefined') {
+    console.error('Required data is not defined. Make sure locationsData and flightRoutesData are passed correctly from Jekyll.');
 } else {
     initEarth();
+}
+
+// Helper function to find location data by name
+function findLocationByName(name) {
+    return locationsData.find(loc => loc.name === name);
+}
+
+// Function to create curved flight path
+function createFlightPath(startPoint, endPoint, earthRadius) {
+    const points = [];
+    const numPoints = 50;
+    
+    // Calculate distance for height scaling
+    const distance = startPoint.distanceTo(endPoint);
+    const maxHeightScale = 0.08;
+    const baseScale = Math.atan(distance) / (Math.PI / 2) * maxHeightScale;
+
+    // Generate curved path points
+    for (let i = 0; i <= numPoints; i++) {
+        const t = i / numPoints;
+        const point = startPoint.clone().normalize();
+        point.lerp(endPoint.clone().normalize(), t).normalize();
+        const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
+        point.multiplyScalar(heightScale);
+        points.push(point);
+    }
+
+    return points;
+}
+
+// Function to create flight path line
+function createFlightLine(points, color = 0x00ff00) {
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.6,
+        linewidth: 1,
+        depthTest: true,
+        depthWrite: false
+    });
+    return new THREE.Line(geometry, material);
 }
 
 function initEarth() {
@@ -127,6 +169,33 @@ function initEarth() {
         
         earth.add(pin);
         console.log(`Adding pin for ${location.name} at`, position);
+    });
+
+    // Add flight paths
+    flightRoutesData.forEach(route => {
+        const originLoc = findLocationByName(route.origin);
+        const destLoc = findLocationByName(route.destination);
+        
+        if (!originLoc || !destLoc) {
+            console.warn(`Could not find location data for route: ${route.origin} -> ${route.destination}`);
+            return;
+        }
+
+        const startPoint = latLonToVector3(originLoc.lat, originLoc.lon, earthRadius);
+        const endPoint = latLonToVector3(destLoc.lat, destLoc.lon, earthRadius);
+        
+        // Create curved path
+        const pathPoints = createFlightPath(startPoint, endPoint, earthRadius);
+        
+        // Create flight line with airline-specific color
+        const airlineColors = {
+            'Delta': 0x0039A6, // Delta Blue
+            'default': 0x00ff00 // Default green
+        };
+        const flightLine = createFlightLine(pathPoints, airlineColors[route.airline] || airlineColors.default);
+        earth.add(flightLine);
+        
+        console.log(`Added flight path: ${route.origin} -> ${route.destination}`);
     });
 
     // Initial Camera Position

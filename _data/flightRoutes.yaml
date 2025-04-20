@@ -1,0 +1,13 @@
+- origin: "New York"
+  destination: "London"
+  airline: "Delta"
+  month: "January"
+  occasion: "Business"
+  cotravelers: ["Sofya", "Pascal"]
+
+- origin: "Riyadh"
+  destination: "London"
+  airline: "Delta"
+  month: "January"
+  occasion: "Business"
+  cotravelers: ["Sofya", "Pascal"]
