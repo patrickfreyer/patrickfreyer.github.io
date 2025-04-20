@@ -192,7 +192,7 @@ function initEarth() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
-    controls.minDistance = 8;
+    controls.minDistance = 6;
     controls.maxDistance = 12;
     controls.enablePan = false;
     controls.autoRotate = true;
@@ -298,7 +298,7 @@ function initEarth() {
         
         // Get the actual frequency for this route
         const frequency = getRouteFrequency(route.origin, route.destination, routeFrequencies);
-        const numLines = Math.min(Math.max(frequency, 1), 5); // Cap between 1 and 5 lines
+        const numLines = Math.min(Math.max(frequency, 1), 10); // Cap between 1 and 5 lines
         
         const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
         
