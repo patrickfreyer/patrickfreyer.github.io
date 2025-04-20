@@ -275,8 +275,16 @@ function initEarth() {
         const originLoc = findLocationByName(route.origin);
         const destLoc = findLocationByName(route.destination);
         
+        // Log missing cities
+        if (!originLoc) {
+            console.warn(`Missing location data for origin city: ${route.origin}`);
+        }
+        if (!destLoc) {
+            console.warn(`Missing location data for destination city: ${route.destination}`);
+        }
+        
         if (!originLoc || !destLoc) {
-            console.warn(`Could not find location data for route: ${route.origin} -> ${route.destination}`);
+            console.warn(`Skipping route: ${route.origin} -> ${route.destination} due to missing location data`);
             return;
         }
 
