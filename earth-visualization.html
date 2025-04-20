@@ -1,0 +1,62 @@
+---
+layout: default
+title: Earth Visualization
+permalink: /earth-visualization/
+---
+
+<div class="earth-visualization-page">
+    <div id="earth-container" class="fullscreen"></div>
+    <a href="/" class="back-button" aria-label="Back to Home">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+</div>
+
+<script>
+    const locationsData = {{ site.data.heroLocations | jsonify }};
+    const flightRoutesData = {{ site.data.flightRoutes | jsonify }};
+</script>
+
+<script src="{{ '/assets/js/earth.js' | relative_url }}" type="module"></script>
+
+<style>
+    .earth-visualization-page {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    #earth-container.fullscreen {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        padding: 10px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+</style> 

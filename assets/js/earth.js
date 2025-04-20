@@ -8,6 +8,12 @@ if (typeof locationsData === 'undefined' || typeof flightRoutesData === 'undefin
     initEarth();
 }
 
+// Helper function to get base URL for assets
+function getBaseURL() {
+    // Get the base URL from Jekyll if available, otherwise assume root
+    return window.baseURL || '';
+}
+
 // Helper function to find location data by name
 function findLocationByName(name) {
     return locationsData.find(loc => loc.name === name);
@@ -69,16 +75,17 @@ function initEarth() {
     // Earth Geometry and Materials Setup
     const earthRadius = 5;
     const textureLoader = new THREE.TextureLoader();
+    const baseURL = getBaseURL();
     
-    // Load all textures
+    // Load all textures with proper base URL
     const textures = {
-        earth: textureLoader.load('/assets/textures/earth_albedo.jpg'),
-        night: textureLoader.load('/assets/textures/earth_night.jpg'),
-        normal: textureLoader.load('/assets/textures/earth_normal.jpg'),
-        specular: textureLoader.load('/assets/textures/earth_specular.jpg'),
-        roughness: textureLoader.load('/assets/textures/earth_roughness.jpg'),
-        clouds: textureLoader.load('/assets/textures/earth_clouds.jpg'),
-        bump: textureLoader.load('/assets/textures/earth_bump.jpg')
+        earth: textureLoader.load(baseURL + 'assets/textures/earth_albedo.jpg'),
+        night: textureLoader.load(baseURL + 'assets/textures/earth_night.jpg'),
+        normal: textureLoader.load(baseURL + 'assets/textures/earth_normal.jpg'),
+        specular: textureLoader.load(baseURL + 'assets/textures/earth_specular.jpg'),
+        roughness: textureLoader.load(baseURL + 'assets/textures/earth_roughness.jpg'),
+        clouds: textureLoader.load(baseURL + 'assets/textures/earth_clouds.jpg'),
+        bump: textureLoader.load(baseURL + 'assets/textures/earth_bump.jpg')
     };
 
     // Base Earth Layer
