@@ -70,39 +70,56 @@ function initEarth() {
     const earthRadius = 5;
     const textureLoader = new THREE.TextureLoader();
     
-    // Load all textures
+    // Load all textures with absolute paths and fallbacks
     const textures = {
-        earth: textureLoader.load('./assets/earth_albedo.jpg',
+        earth: textureLoader.load('/assets/earth_albedo.jpg',
             undefined,
             undefined,
-            (err) => console.error('Error loading earth texture:', err)
+            (err) => {
+                console.error('Error loading earth texture:', err);
+                // Fallback to the example texture that worked before
+                textures.earth = textureLoader.load(
+                    'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg',
+                    () => {
+                        console.log("Fallback texture loaded successfully");
+                        earthMaterial.map = textures.earth;
+                        earthMaterial.needsUpdate = true;
+                    },
+                    undefined,
+                    (err) => {
+                        console.error('Error loading fallback texture:', err);
+                        earthMaterial.color = new THREE.Color(0x2288ff);
+                        earthMaterial.needsUpdate = true;
+                    }
+                );
+            }
         ),
-        night: textureLoader.load('./assets/earth_night.jpg',
+        night: textureLoader.load('/assets/earth_night.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading night texture:', err)
         ),
-        normal: textureLoader.load('./assets/earth_normal.jpg',
+        normal: textureLoader.load('/assets/earth_normal.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading normal texture:', err)
         ),
-        specular: textureLoader.load('./assets/earth_specular.jpg',
+        specular: textureLoader.load('/assets/earth_specular.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading specular texture:', err)
         ),
-        roughness: textureLoader.load('./assets/earth_roughness.jpg',
+        roughness: textureLoader.load('/assets/earth_roughness.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading roughness texture:', err)
         ),
-        clouds: textureLoader.load('./assets/earth_clouds.jpg',
+        clouds: textureLoader.load('/assets/earth_clouds.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading clouds texture:', err)
         ),
-        bump: textureLoader.load('./assets/earth_bump.jpg',
+        bump: textureLoader.load('/assets/earth_bump.jpg',
             undefined,
             undefined,
             (err) => console.error('Error loading bump texture:', err)
@@ -120,6 +137,11 @@ function initEarth() {
         specular: new THREE.Color(0x333333),
         shininess: 25
     });
+
+    // Add a basic fallback color in case textures fail to load
+    if (!textures.earth.image) {
+        earthMaterial.color = new THREE.Color(0x2288ff);
+    }
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earth);
 

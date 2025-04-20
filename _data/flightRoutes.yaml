@@ -5,7 +5,7 @@
   airline: "Qatar"
   year: 2024
   month: "January"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Doha"
@@ -13,7 +13,7 @@
   airline: "Qatar"
   year: 2024
   month: "January"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Dubai"
@@ -21,7 +21,7 @@
   airline: "Emirates"
   year: 2024
   month: "January"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -29,7 +29,7 @@
   airline: "Emirates"
   year: 2024
   month: "January"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Dubai"
@@ -37,7 +37,7 @@
   airline: "Saudia"
   year: 2024
   month: "February"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Riyadh"
@@ -45,7 +45,7 @@
   airline: "Saudia"
   year: 2024
   month: "February"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Dubai"
@@ -53,7 +53,7 @@
   airline: "Emirates"
   year: 2024
   month: "February"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -61,7 +61,7 @@
   airline: "Emirates"
   year: 2024
   month: "February"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Dubai"
@@ -69,7 +69,7 @@
   airline: "Emirates"
   year: 2024
   month: "March"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -77,7 +77,7 @@
   airline: "Emirates"
   year: 2024
   month: "March"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Dubai"
@@ -85,7 +85,7 @@
   airline: "Emirates"
   year: 2024
   month: "March"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -93,7 +93,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "March"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Frankfurt"
@@ -101,24 +101,24 @@
   airline: "Lufthansa"
   year: 2024
   month: "March"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Access GenAI"
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Seattle"
   destination: "Seattle"
   airline: "Patrick"
   year: 2024
   month: "March"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Pilots License"
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Seattle"
   destination: "Frankfurt"
   airline: "Lufthansa"
   year: 2024
   month: "April"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Access GenAI"
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Munich"
   destination: "London"
@@ -141,7 +141,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "May"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Düsseldorf"
@@ -149,7 +149,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "May"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -157,7 +157,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "June"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Hamburg"
@@ -165,7 +165,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "June"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -173,7 +173,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "June"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Barcelona"
@@ -181,15 +181,15 @@
   airline: "Lufthansa"
   year: 2024
   month: "June"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Work"
+  travelers: ["Patrick", "Michael"]
 
 - origin: "Munich"
   destination: "Hamburg"
   airline: "Lufthansa"
   year: 2024
   month: "August"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Hamburg"
@@ -197,7 +197,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "August"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
@@ -206,7 +206,7 @@
   year: 2024
   month: "August"
   occasion: "Private"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya", "Masha"]
 
 - origin: "Bodrum"
   destination: "Munich"
@@ -214,14 +214,14 @@
   year: 2024
   month: "August"
   occasion: "Private"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Munich"
   destination: "Vienna"
   airline: "Austrian"
   year: 2024
   month: "August"
-  occasion: "Private"
+  occasion: "Yale"
   travelers: ["Patrick"]
 
 - origin: "Vienna"
@@ -229,7 +229,7 @@
   airline: "Austrian"
   year: 2024
   month: "August"
-  occasion: "Private"
+  occasion: "Yale"
   travelers: ["Patrick"]
 
 - origin: "New York"
@@ -237,7 +237,7 @@
   airline: "Cathay Pacific"
   year: 2024
   month: "September"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "Hong Kong"
@@ -245,7 +245,7 @@
   airline: "Air China"
   year: 2024
   month: "September"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "Chengdu"
@@ -253,7 +253,7 @@
   airline: "Air China"
   year: 2024
   month: "September"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "Hong Kong"
@@ -261,7 +261,7 @@
   airline: "Cathay Pacific"
   year: 2024
   month: "September"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "New York"
@@ -270,7 +270,7 @@
   year: 2024
   month: "October"
   occasion: "Private"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Denver"
   destination: "New York"
@@ -278,14 +278,14 @@
   year: 2024
   month: "October"
   occasion: "Private"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "New York"
   destination: "Beijing"
   airline: "Air China"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "Beijing"
@@ -293,7 +293,7 @@
   airline: "Air China"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Rowing"
   travelers: ["Patrick"]
 
 - origin: "Shenzhen"
@@ -301,23 +301,23 @@
   airline: "Air China"
   year: 2024
   month: "November"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Rowing"
+  travelers: ["Patrick", "Ioanna", "Jay", "Alex", "Bastian"]
 
 - origin: "Beijing"
   destination: "New York"
   airline: "Air China"
   year: 2024
   month: "November"
-  occasion: "Private"
-  travelers: ["Patrick"]
+  occasion: "Rowing"
+  travelers: ["Patrick", "Ioanna", "Jay", "Alex", "Bastian"]
 
 - origin: "New York"
   destination: "Toronto"
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Ovis"
   travelers: ["Patrick"]
 
 - origin: "Toronto"
@@ -325,7 +325,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Ovis"
   travelers: ["Patrick"]
 
 - origin: "Halifax"
@@ -333,7 +333,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Ovis"
   travelers: ["Patrick"]
 
 - origin: "Toronto"
@@ -341,7 +341,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Private"
+  occasion: "Ovis"
   travelers: ["Patrick"]
 
 - origin: "New York"
