@@ -8,12 +8,6 @@ if (typeof locationsData === 'undefined' || typeof flightRoutesData === 'undefin
     initEarth();
 }
 
-// Helper function to get base URL for assets
-function getBaseURL() {
-    // Get the base URL from Jekyll if available, otherwise assume root
-    return window.baseURL || '';
-}
-
 // Helper function to find location data by name
 function findLocationByName(name) {
     return locationsData.find(loc => loc.name === name);
@@ -66,88 +60,47 @@ function initEarth() {
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); // alpha:true for transparent background
 
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
-    // Earth Geometry and Materials Setup
+    // Earth Geometry
     const earthRadius = 5;
-    const textureLoader = new THREE.TextureLoader();
-    const baseURL = getBaseURL();
-    
-    // Load all textures with proper base URL
-    const textures = {
-        earth: textureLoader.load(baseURL + 'assets/textures/earth_albedo.jpg'),
-        night: textureLoader.load(baseURL + 'assets/textures/earth_night.jpg'),
-        normal: textureLoader.load(baseURL + 'assets/textures/earth_normal.jpg'),
-        specular: textureLoader.load(baseURL + 'assets/textures/earth_specular.jpg'),
-        roughness: textureLoader.load(baseURL + 'assets/textures/earth_roughness.jpg'),
-        clouds: textureLoader.load(baseURL + 'assets/textures/earth_clouds.jpg'),
-        bump: textureLoader.load(baseURL + 'assets/textures/earth_bump.jpg')
-    };
+    const geometry = new THREE.SphereGeometry(earthRadius, 64, 64);
 
-    // Base Earth Layer
-    const earthGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
-    const earthMaterial = new THREE.MeshPhongMaterial({
-        map: textures.earth,
-        normalMap: textures.normal,
-        specularMap: textures.specular,
-        bumpMap: textures.bump,
-        bumpScale: 0.05,
-        specular: new THREE.Color(0x333333),
-        shininess: 25
-    });
-    const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+    // Earth Material (using a simple color for now, texture loading added below)
+    // const material = new THREE.MeshStandardMaterial({ color: 0x2288ff }); // Placeholder blue color
+    // Earth Material (Texture Loading)
+    const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load('https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg', // Example texture
+        () => { console.log("Texture loaded successfully"); animate(); }, // Start animation once texture loads
+        undefined, // onProgress callback currently not supported
+        (err) => { console.error('An error happened loading the texture:', err); }
+    );
+    const material = new THREE.MeshStandardMaterial({ map: earthTexture });
+
+    const earth = new THREE.Mesh(geometry, material);
     scene.add(earth);
 
-    // Night Lights Layer
-    const nightGeometry = new THREE.SphereGeometry(earthRadius * 1.001, 64, 64);
-    const nightMaterial = new THREE.MeshBasicMaterial({
-        map: textures.night,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        opacity: 0.8,
-        depthWrite: false
-    });
-    const nightLayer = new THREE.Mesh(nightGeometry, nightMaterial);
-    earth.add(nightLayer);
-
-    // Cloud Layer
-    const cloudGeometry = new THREE.SphereGeometry(earthRadius * 1.008, 64, 64);
-    const cloudMaterial = new THREE.MeshPhongMaterial({
-        map: textures.clouds,
-        transparent: true,
-        opacity: 0.4,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-        blending: THREE.NormalBlending
-    });
-    const cloudLayer = new THREE.Mesh(cloudGeometry, cloudMaterial);
-    earth.add(cloudLayer);
-
-    // Enhanced Lighting System
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft white light
     scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(5, 3, 5);
-    scene.add(directionalLight);
-
-    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
-    scene.add(hemisphereLight);
+    const pointLight = new THREE.PointLight(0xffffff, 0.4, 100);
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
 
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
+    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
-    controls.minDistance = 5;
-    controls.maxDistance = 12;
-    controls.enablePan = false;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.3;
+    controls.minDistance = 5; // Prevent zooming in too close
+    controls.maxDistance = 12; // Prevent zooming out too far
+    controls.enablePan = false; // Disable panning (optional, keeps focus on rotation)
+    controls.autoRotate = true; // Disable auto-rotate for testing interaction
+    controls.autoRotateSpeed = 0.3; // Optional: auto-rotate speed
 
     // Function to convert Lat/Lon to 3D coordinates
     function latLonToVector3(lat, lon, radius) {
@@ -249,21 +202,28 @@ function initEarth() {
     camera.position.z = 12;
 
     // Animation Loop
+    let frameCount = 0;
     function animate() {
         requestAnimationFrame(animate);
 
-        // Update Controls
-        controls.update();
+        // Log frame count periodically to check if loop is running
+        if (frameCount % 60 === 0) {
+            // console.log(`Animate loop running - Frame: ${frameCount}`);
+        }
+        frameCount++;
 
-        // Rotate cloud layer
-        cloudLayer.rotation.y += 0.0003;
+        // Update Controls
+        controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
+
+        // Rotation (removed, OrbitControls handles interaction)
+        // earth.rotation.y += 0.001;
 
         renderer.render(scene, camera);
     }
 
     // Handle Window Resize
     function onWindowResize() {
-        if (!container) return;
+        if (!container) return; // Check if container still exists
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -271,16 +231,8 @@ function initEarth() {
 
     window.addEventListener('resize', onWindowResize, false);
 
-    // Start animation once textures are loaded
-    Promise.all(Object.values(textures).map(texture => 
-        new Promise(resolve => {
-            if (texture.image) resolve();
-            texture.addEventListener('load', resolve);
-        })
-    )).then(() => {
-        console.log("All textures loaded, starting animation");
-        animate();
-    });
+    // Start animation (if texture loads instantly or fails)
+    // animate(); // Now called within texture loader callback
 
-    console.log("Three.js Earth initialized");
+     console.log("Three.js Earth initialized");
 } 
