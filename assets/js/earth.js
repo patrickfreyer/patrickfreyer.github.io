@@ -72,13 +72,41 @@ function initEarth() {
     
     // Load all textures
     const textures = {
-        earth: textureLoader.load('/assets/textures/earth_albedo.jpg'),
-        night: textureLoader.load('/assets/textures/earth_night.jpg'),
-        normal: textureLoader.load('/assets/textures/earth_normal.jpg'),
-        specular: textureLoader.load('/assets/textures/earth_specular.jpg'),
-        roughness: textureLoader.load('/assets/textures/earth_roughness.jpg'),
-        clouds: textureLoader.load('/assets/textures/earth_clouds.jpg'),
-        bump: textureLoader.load('/assets/textures/earth_bump.jpg')
+        earth: textureLoader.load('../textures/earth_albedo.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading earth texture:', err)
+        ),
+        night: textureLoader.load('../textures/earth_night.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading night texture:', err)
+        ),
+        normal: textureLoader.load('../textures/earth_normal.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading normal texture:', err)
+        ),
+        specular: textureLoader.load('../textures/earth_specular.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading specular texture:', err)
+        ),
+        roughness: textureLoader.load('../textures/earth_roughness.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading roughness texture:', err)
+        ),
+        clouds: textureLoader.load('../textures/earth_clouds.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading clouds texture:', err)
+        ),
+        bump: textureLoader.load('../textures/earth_bump.jpg',
+            undefined,
+            undefined,
+            (err) => console.error('Error loading bump texture:', err)
+        )
     };
 
     // Base Earth Layer

@@ -1,13 +1,135 @@
-- origin: "New York"
-  destination: "London"
-  airline: "Delta"
+- origin: "Munich"
+  destination: "Cologne"
+  airline: "Lufthansa"
+  year: 2025
   month: "January"
-  occasion: "Business"
-  cotravelers: ["Sofya", "Pascal"]
+  occasion: "Ovis"
+  travelers: ["Patrick"]
 
-- origin: "Riyadh"
-  destination: "London"
-  airline: "Delta"
+- origin: "Cologne"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2025
   month: "January"
-  occasion: "Business"
-  cotravelers: ["Sofya", "Pascal"]
+  occasion: "Ovis"
+  travelers: ["Patrick", "Matthias"]
+
+- origin: "Munich"
+  destination: "New York"
+  airline: "Lufthansa"
+  year: 2025
+  month: "January"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "San Diego"
+  airline: "Delta"
+  year: 2025
+  month: "February"
+  occasion: "LegalAI"
+  travelers: ["Patrick"]
+
+- origin: "San Diego"
+  destination: "New York"
+  airline: "Delta"
+  year: 2025
+  month: "March"
+  occasion: "LegalAI"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2025
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Madrid"
+  airline: "Lufthansa"
+  year: 2025
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Madrid"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2025
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Frankfurt"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2025
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
+  destination: "New York"
+  airline: "Lufthansa"
+  year: 2025
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Geneva"
+  airline: "Swiss"
+  year: 2025
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Geneva"
+  destination: "Munich"
+  airline: "Swiss"
+  year: 2025
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
+  destination: "Istanbul"
+  airline: "Turkish Airlines"
+  year: 2025
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Istanbul"
+  destination: "Astana"
+  airline: "Turkish Airlines"
+  year: 2025
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald","Eric", "Felix", "Max", "Benjamin"]
+
+- origin: "Astana"
+  destination: "Istanbul"
+  airline: "Turkish Airlines"
+  year: 2025
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Istanbul"
+  destination: "Munich"
+  airline: "Turkish Airlines"
+  year: 2025
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "Lufthansa"
+  year: 2025
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick"]

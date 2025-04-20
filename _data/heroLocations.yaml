@@ -211,3 +211,6 @@
 - name: "Birmingham"
   lat: 52.4862
   lon: -1.8904
+- name: "Geneva"
+  lat: 46.2044
+  lon: 6.1432
