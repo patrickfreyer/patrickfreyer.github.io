@@ -157,9 +157,6 @@
 - name: "Halifax"
   lat: 44.6488
   lon: -63.5752
-- name: "Griechenland"
-  lat: 39.0742
-  lon: 21.8243
 - name: "Aruba"
   lat: 12.5211
   lon: -69.9683

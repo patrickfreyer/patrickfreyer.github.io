@@ -1,3 +1,125 @@
+### 2019
+
+# More flights missing before June
+- origin: "Frankfurt"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2019
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Doha"
+  destination: "Hong Kong"
+  airline: "Qatar"
+  year: 2019
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hong Kong"
+  destination: "Bangkok"
+  airline: "Ethiopian"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Bangkok"
+  destination: "Addis Ababa"
+  airline: "Ethiopian"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Addis Ababa"
+  destination: "Mombasa"
+  airline: "Ethiopian"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Mombasa"
+  destination: "Nairobi"
+  airline: "XXX"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Nairobi"
+  destination: "Masai Mara"
+  airline: "XXX"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Masai Mara"
+  destination: "Nairobi"
+  airline: "XXX"
+  year: 2019
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+# More flights missing
+
+- origin: "Nairobi"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2019
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dubai"
+  destination: "Frankfurt"
+  airline: "Emirates"
+  year: 2019
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick"]
+# More flights missing after September
+
+### 2020
+
+# More flights missing before February
+- origin: "Birmingham"
+  destination: "Dublin"
+  airline: "AerLingus"
+  year: 2020
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dublin"
+  destination: "New York"
+  airline: "AerLingus"
+  year: 2020
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Dublin"
+  airline: "AerLingus"
+  year: 2020
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Dublin"
+  destination: "Birmingham"
+  airline: "AerLingus"
+  year: 2020
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+# More flights missing after February
+
 ### 2021
 
 - origin: "Frankfurt"
