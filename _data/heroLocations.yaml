@@ -220,3 +220,12 @@
 - name: "Istanbul"
   lat: 41.0082
   lon: 28.9784
+- name: "Cairo"
+  lat: 30.0444
+  lon: 31.2357
+- name: "Rome"
+  lat: 41.9028
+  lon: 12.4964
+- name: "Edinburgh"
+  lat: 55.9533
+  lon: -3.1883

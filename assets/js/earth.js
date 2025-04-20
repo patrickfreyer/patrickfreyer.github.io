@@ -189,7 +189,6 @@ function initEarth() {
         
         // Create flight line with airline-specific color
         const airlineColors = {
-            'Delta': 0x0039A6, // Delta Blue
             'default': 0x00ff00 // Default green
         };
         const flightLine = createFlightLine(pathPoints, airlineColors[route.airline] || airlineColors.default);
