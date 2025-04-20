@@ -215,39 +215,26 @@ function initEarth() {
     const createPin = () => {
         const pinGroup = new THREE.Group();
         
-        // Create the main pin head (sphere) - reduced by 40%
-        const headGeometry = new THREE.SphereGeometry(0.024, 12, 12); // from 0.04 to 0.024
+        // Create a simple sphere for the location marker
+        const headGeometry = new THREE.SphereGeometry(0.015, 8, 8); // Smaller and less detailed sphere
         const headMaterial = new THREE.MeshPhongMaterial({ 
             color: 0xff3333,
             emissive: 0xff0000,
-            emissiveIntensity: 0.5,
-            shininess: 100
+            emissiveIntensity: 0.3,
+            shininess: 50
         });
         const head = new THREE.Mesh(headGeometry, headMaterial);
         
-        // Create the pin point (cone) - reduced by 40%
-        const pointGeometry = new THREE.ConeGeometry(0.018, 0.06, 6); // from 0.03/0.1 to 0.018/0.06
-        const pointMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0xff3333,
-            emissive: 0xff0000,
-            emissiveIntensity: 0.3,
-            shininess: 100
-        });
-        const point = new THREE.Mesh(pointGeometry, pointMaterial);
-        point.position.y = -0.09; // from -0.15 to -0.09
-        point.rotation.x = Math.PI;
-
-        // Create a glow effect - reduced by 40%
-        const glowGeometry = new THREE.SphereGeometry(0.072, 16, 16); // from 0.12 to 0.072
+        // Create a subtle glow effect
+        const glowGeometry = new THREE.SphereGeometry(0.04, 12, 12);
         const glowMaterial = new THREE.MeshBasicMaterial({
             color: 0xff6666,
             transparent: true,
-            opacity: 0.4
+            opacity: 0.25
         });
         const glow = new THREE.Mesh(glowGeometry, glowMaterial);
 
         pinGroup.add(head);
-        pinGroup.add(point);
         pinGroup.add(glow);
 
         return pinGroup;
