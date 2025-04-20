@@ -1,3 +1,333 @@
+### 2022
+
+- origin: "Nursultan"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2022
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Frankfurt"
+  destination: "New York"
+  airline: "Singapore Airlines"
+  year: 2022
+  month: "January"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Panama"
+  airline: "Copa Airlines"
+  year: 2022
+  month: "March"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "Panama"
+  destination: "Montevideo"
+  airline: "Copa Airlines"
+  year: 2022
+  month: "March"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "Montevideo"
+  destination: "Panama"
+  airline: "Copa Airlines"
+  year: 2022
+  month: "March"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "Panama"
+  destination: "New York"
+  airline: "Copa Airlines"
+  year: 2022
+  month: "March"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Frankfurt"
+  airline: "Singapore Airlines"
+  year: 2022
+  month: "June"
+  occasion: "Yale"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Stockholm"
+  airline: "Lufthansa"
+  year: 2022
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Stockholm"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Copenhagen"
+  airline: "Lufthansa"
+  year: 2022
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Copenhagen"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Copenhagen"
+  airline: "Lufthansa"
+  year: 2022
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Copenhagen"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Copenhagen"
+  airline: "Lufthansa"
+  year: 2022
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Copenhagen"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Berlin"
+  airline: "Lufthansa"
+  year: 2022
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "San Francisco"
+  airline: "Condor"
+  year: 2022
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Oakland"
+  destination: "Big Island"
+  airline: "Southwest"
+  year: 2022
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Big Island"
+  destination: "Honolulu"
+  airline: "Southwest"
+  year: 2022
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Honolulu"
+  destination: "Oakland"
+  airline: "Southwest"
+  year: 2022
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "San Francisco"
+  destination: "Frankfurt"
+  airline: "Condor"
+  year: 2022
+  month: "September"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Eurowings"
+  year: 2022
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "London"
+  airline: "Eurowings"
+  year: 2022
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Köln"
+  airline: "Eurowings"
+  year: 2022
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Köln"
+  destination: "München"
+  airline: "Eurowings"
+  year: 2022
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "München"
+  destination: "Düsseldorf"
+  airline: "Lufthansa"
+  year: 2022
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Düsseldorf"
+  destination: "München"
+  airline: "Lufthansa"
+  year: 2022
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Doha"
+  airline: "Qatar"
+  year: 2022
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Doha"
+  destination: "Muscat"
+  airline: "Qatar"
+  year: 2022
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
 ### 2023
 
 - origin: "Muscat"
@@ -1120,7 +1450,7 @@
   year: 2024
   month: "November"
   occasion: "Rowing"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Ioanna", "Jay", "Alex", "Bastian"]
 
 - origin: "Shenzhen"
   destination: "Beijing"
