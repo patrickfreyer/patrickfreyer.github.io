@@ -90,105 +90,72 @@ function initEarth() {
     const earthRadius = 5;
     const textureLoader = new THREE.TextureLoader();
     
-    // Load all textures with absolute paths and fallbacks
-    const textures = {
-        earth: textureLoader.load('/assets/earth_albedo.jpg',
-            undefined,
-            undefined,
-            (err) => {
-                console.error('Error loading earth texture:', err);
-                // Fallback to the example texture that worked before
-                textures.earth = textureLoader.load(
-                    'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg',
-                    () => {
-                        console.log("Fallback texture loaded successfully");
-                        earthMaterial.map = textures.earth;
-                        earthMaterial.needsUpdate = true;
-                    },
-                    undefined,
-                    (err) => {
-                        console.error('Error loading fallback texture:', err);
-                        earthMaterial.color = new THREE.Color(0x2288ff);
-                        earthMaterial.needsUpdate = true;
-                    }
-                );
-            }
-        ),
-        night: textureLoader.load('/assets/earth_night.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading night texture:', err)
-        ),
-        normal: textureLoader.load('/assets/earth_normal.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading normal texture:', err)
-        ),
-        specular: textureLoader.load('/assets/earth_specular.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading specular texture:', err)
-        ),
-        roughness: textureLoader.load('/assets/earth_roughness.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading roughness texture:', err)
-        ),
-        clouds: textureLoader.load('/assets/earth_clouds.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading clouds texture:', err)
-        ),
-        bump: textureLoader.load('/assets/earth_bump.jpg',
-            undefined,
-            undefined,
-            (err) => console.error('Error loading bump texture:', err)
-        )
-    };
-
-    // Base Earth Layer
+    // Create basic material first
     const earthGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
-    const earthMaterial = new THREE.MeshPhongMaterial({
-        map: textures.earth,
-        normalMap: textures.normal,
-        specularMap: textures.specular,
-        bumpMap: textures.bump,
-        bumpScale: 0.05,
-        specular: new THREE.Color(0x333333),
-        shininess: 25
+    const earthMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0x2288ff  // Start with a basic blue color
     });
-
-    // Add a basic fallback color in case textures fail to load
-    if (!textures.earth.image) {
-        earthMaterial.color = new THREE.Color(0x2288ff);
-    }
     const earth = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earth);
 
-    // Night Lights Layer
-    const nightGeometry = new THREE.SphereGeometry(earthRadius * 1.001, 64, 64);
-    const nightMaterial = new THREE.MeshBasicMaterial({
-        map: textures.night,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        opacity: 0.8,
-        depthWrite: false
-    });
-    const nightLayer = new THREE.Mesh(nightGeometry, nightMaterial);
-    earth.add(nightLayer);
+    // Start animation immediately
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
 
-    // Cloud Layer
-    const cloudGeometry = new THREE.SphereGeometry(earthRadius * 1.008, 64, 64);
-    const cloudMaterial = new THREE.MeshPhongMaterial({
-        map: textures.clouds,
-        transparent: true,
-        opacity: 0.4,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-        blending: THREE.NormalBlending
-    });
-    const cloudLayer = new THREE.Mesh(cloudGeometry, cloudMaterial);
-    earth.add(cloudLayer);
+    // Load textures and enhance material after
+    const textures = {
+        earth: textureLoader.load('/assets/earth_albedo.jpg',
+            (texture) => {
+                console.log("Earth texture loaded");
+                earthMaterial.map = texture;
+                earthMaterial.needsUpdate = true;
+            },
+            undefined,
+            () => {
+                console.log("Failed to load earth texture, falling back to color");
+                // Already using fallback color
+            }
+        ),
+        night: textureLoader.load('/assets/earth_night.jpg',
+            (texture) => {
+                console.log("Night texture loaded");
+                if (!nightLayer) {
+                    const nightGeometry = new THREE.SphereGeometry(earthRadius * 1.001, 64, 64);
+                    const nightMaterial = new THREE.MeshBasicMaterial({
+                        map: texture,
+                        blending: THREE.AdditiveBlending,
+                        transparent: true,
+                        opacity: 0.8,
+                        depthWrite: false
+                    });
+                    const nightLayer = new THREE.Mesh(nightGeometry, nightMaterial);
+                    earth.add(nightLayer);
+                }
+            }
+        ),
+        clouds: textureLoader.load('/assets/earth_clouds.jpg',
+            (texture) => {
+                console.log("Cloud texture loaded");
+                if (!cloudLayer) {
+                    const cloudGeometry = new THREE.SphereGeometry(earthRadius * 1.008, 64, 64);
+                    const cloudMaterial = new THREE.MeshPhongMaterial({
+                        map: texture,
+                        transparent: true,
+                        opacity: 0.4,
+                        depthWrite: false,
+                        side: THREE.DoubleSide,
+                        blending: THREE.NormalBlending
+                    });
+                    cloudLayer = new THREE.Mesh(cloudGeometry, cloudMaterial);
+                    earth.add(cloudLayer);
+                }
+            }
+        )
+    };
 
     // Enhanced Lighting System
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -312,30 +279,6 @@ function initEarth() {
     camera.position.z = 12;
     console.log('Camera position:', camera.position);
 
-    // Animation Loop
-    let frameCount = 0;
-    function animate() {
-        frameCount++;
-        if (frameCount % 60 === 0) {  // Log every 60 frames
-            console.log('Animation frame:', frameCount);
-        }
-
-        requestAnimationFrame(animate);
-        controls.update();
-        
-        // Rotate cloud layer
-        if (cloudLayer) {
-            cloudLayer.rotation.y += 0.0003;
-        }
-
-        // Debug camera position occasionally
-        if (frameCount % 180 === 0) {  // Every 3 seconds at 60fps
-            console.log('Camera position during animation:', camera.position);
-        }
-
-        renderer.render(scene, camera);
-    }
-
     // Handle Window Resize
     function onWindowResize() {
         if (!container) return;
@@ -345,21 +288,6 @@ function initEarth() {
     }
 
     window.addEventListener('resize', onWindowResize, false);
-
-    // Start animation once textures are loaded
-    Promise.all(Object.values(textures).map(texture => 
-        new Promise(resolve => {
-            if (texture.image) resolve();
-            texture.addEventListener('load', resolve);
-        })
-    )).then(() => {
-        console.log("All textures loaded, starting animation");
-        animate();
-    }).catch(error => {
-        console.error("Error loading textures:", error);
-        // Start animation anyway to see if we get a blue sphere
-        animate();
-    });
 
     // Add immediate visibility check
     setTimeout(() => {
