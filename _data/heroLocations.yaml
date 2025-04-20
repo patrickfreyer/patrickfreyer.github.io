@@ -229,3 +229,6 @@
 - name: "Edinburgh"
   lat: 55.9533
   lon: -3.1883
+- name: "Athens"
+  lat: 37.9838
+  lon: 23.7275
