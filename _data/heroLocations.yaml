@@ -166,3 +166,48 @@
 - name: "Madrid"
   lat: 40.4168
   lon: -3.7038
+- name: "Xi'an"
+  lat: 34.3416
+  lon: 108.9398
+- name: "Shanghai"
+  lat: 31.2304
+  lon: 121.4737
+- name: "Borneo"
+  lat: 0.9619
+  lon: 114.5548
+- name: "Durban"
+  lat: -29.8587
+  lon: 31.0218
+- name: "Helsinki"
+  lat: 60.1699
+  lon: 24.9384
+- name: "Delhi"
+  lat: 28.6139
+  lon: 77.2090
+- name: "Jaipur"
+  lat: 26.9124
+  lon: 75.7873
+- name: "Mumbai"
+  lat: 19.0760
+  lon: 72.8777
+- name: "Bangalore"
+  lat: 12.9716
+  lon: 77.5946
+- name: "Bangkok"
+  lat: 13.7563
+  lon: 100.5018
+- name: "Addis Ababa"
+  lat: 9.0320
+  lon: 38.7492
+- name: "Mombasa"
+  lat: -4.0435
+  lon: 39.6682
+- name: "Nairobi"
+  lat: -1.2921
+  lon: 36.8219
+- name: "Masai Mara"
+  lat: -1.5437
+  lon: 35.1233
+- name: "Birmingham"
+  lat: 52.4862
+  lon: -1.8904

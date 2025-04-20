@@ -120,7 +120,7 @@ function initEarth() {
         const pinGroup = new THREE.Group();
         
         // Create the main pin head (sphere)
-        const headGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+        const headGeometry = new THREE.SphereGeometry(0.04, 12, 12);
         const headMaterial = new THREE.MeshPhongMaterial({ 
             color: 0xff3333,
             emissive: 0xff0000,
@@ -130,7 +130,7 @@ function initEarth() {
         const head = new THREE.Mesh(headGeometry, headMaterial);
         
         // Create the pin point (cone)
-        const pointGeometry = new THREE.ConeGeometry(0.05, 0.2, 8);
+        const pointGeometry = new THREE.ConeGeometry(0.03, 0.1, 6);
         const pointMaterial = new THREE.MeshPhongMaterial({ 
             color: 0xff3333,
             emissive: 0xff0000,
