@@ -96,7 +96,7 @@ function initEarth() {
     controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
-    controls.minDistance = 10; // Prevent zooming in too close
+    controls.minDistance = 5; // Prevent zooming in too close
     controls.maxDistance = 12; // Prevent zooming out too far
     controls.enablePan = false; // Disable panning (optional, keeps focus on rotation)
     controls.autoRotate = true; // Disable auto-rotate for testing interaction
