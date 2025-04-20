@@ -74,7 +74,7 @@ function initEarth() {
     // const material = new THREE.MeshStandardMaterial({ color: 0x2288ff }); // Placeholder blue color
     // Earth Material (Texture Loading)
     const textureLoader = new THREE.TextureLoader();
-    const earthTexture = textureLoader.load('https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg', // Example texture
+    const earthTexture = textureLoader.load('https://www.solarsystemscope.com/textures/download/8k_earth_nightmap.jpg', // Example texture
         () => { console.log("Texture loaded successfully"); animate(); }, // Start animation once texture loads
         undefined, // onProgress callback currently not supported
         (err) => { console.error('An error happened loading the texture:', err); }
