@@ -308,7 +308,9 @@ function initEarth() {
     });
 
     // Initial Camera Position
-    camera.position.z = 12;
+    camera.position.set(4, 8, 8); // Position camera above and to the side of Europe
+    camera.lookAt(0, 0, 0); // Look at the center of the Earth
+    controls.update(); // Update controls after changing camera position
 
     // Animation Loop with cloud rotation
     let frameCount = 0;

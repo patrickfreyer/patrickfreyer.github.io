@@ -580,14 +580,6 @@ section > div {
 .profile-image {
     width: 100%;
     height: auto;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition-normal);
-}
-
-.profile-image:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-lg);
 }
 
 .about-text {
