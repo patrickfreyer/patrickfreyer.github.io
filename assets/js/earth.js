@@ -251,7 +251,6 @@ function initEarth() {
         pin.rotateX(Math.PI / 2);
         
         earthMesh.add(pin);
-        console.log(`Adding pin for ${location.name} at`, position);
     });
 
     // Count route frequencies before adding flight paths
@@ -306,7 +305,6 @@ function initEarth() {
         // Add all lines to the earth
         flightLines.forEach(line => earthMesh.add(line));
         
-        console.log(`Added flight path with ${numLines} lines for route ${route.origin} -> ${route.destination} (frequency: ${frequency})`);
     });
 
     // Initial Camera Position

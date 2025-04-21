@@ -1,12 +1,157 @@
+### 2018
+
+- origin: "Brussels"
+  destination: "New York"
+  airline: "Brussels Airlines"
+  year: 2018
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Julia"]
+
+- origin: "New York"
+  destination: "Brussels"
+  airline: "Brussels Airlines"
+  year: 2018
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Julia"]
+
+- origin: "Brussels"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2018
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Dubai"
+  destination: "Durban"
+  airline: "Emirates"
+  year: 2018
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Durban"
+  destination: "Dubai"
+  airline: "Emirates"
+  year: 2018
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Dubai"
+  destination: "Brussels"
+  airline: "Emirates"
+  year: 2018
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Brussels"
+  destination: "Berlin"
+  airline: "Brussels Airlines"
+  year: 2018
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Berlin"
+  destination: "Brussels"
+  airline: "Brussels Airlines"
+  year: 2018
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "Helsinki"
+  airline: "Finnair"
+  year: 2018
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sophia"]
+
+- origin: "Helsinki"
+  destination: "New Delhi"
+  airline: "Finnair"
+  year: 2018
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sophia"]
+
+- origin: "Jaipur"
+  destination: "Mumbai"
+  airline: "xxx"
+  year: 2018
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sophia"]
+
+- origin: "Bangalore"
+  destination: "New Delhi"
+  airline: "xxx"
+  year: 2018
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sophia"]
+
+- origin: "Delhi"
+  destination: "Frankfurt"
+  airline: "Air India"
+  year: 2018
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sophia"]
+
+- origin: "Birmingham"
+  destination: "Stuttgart"
+  airline: "FlyBe"
+  year: 2018
+  month: "December"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
 ### 2019
 
-# More flights missing before June
+- origin: "Stuttgart"
+  destination: "Birmingham"
+  airline: "FlyBe"
+  year: 2019
+  month: "January"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Birmingham"
+  destination: "Stuttgart"
+  airline: "FlyBe"
+  year: 2019
+  month: "February"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Stuttgart"
+  destination: "Birmingham"
+  airline: "FlyBe"
+  year: 2019
+  month: "February"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Birmingham"
+  destination: "Stuttgart"
+  airline: "FlyBe"
+  year: 2019
+  month: "June"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
 - origin: "Frankfurt"
   destination: "Doha"
   airline: "Qatar"
   year: 2019
   month: "June"
-  occasion: "Private"
+  occasion: "Warwick"
   travelers: ["Patrick"]
 
 - origin: "Doha"
@@ -14,7 +159,7 @@
   airline: "Qatar"
   year: 2019
   month: "June"
-  occasion: "Private"
+  occasion: "Warwick"
   travelers: ["Patrick"]
 
 - origin: "Hong Kong"
@@ -65,8 +210,6 @@
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
-# More flights missing
-
 - origin: "Nairobi"
   destination: "Dubai"
   airline: "Emirates"
@@ -82,11 +225,33 @@
   month: "September"
   occasion: "Private"
   travelers: ["Patrick"]
-# More flights missing after September
+
+- origin: "Stuttgart"
+  destination: "Birmingham"
+  airline: "FlyBe"
+  year: 2019
+  month: "September"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Birmingham"
+  destination: "Stuttgart"
+  airline: "FlyBe"
+  year: 2019
+  month: "December"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
 
 ### 2020
 
-# More flights missing before February
+- origin: "Stuttgart"
+  destination: "Birmingham"
+  airline: "FlyBe"
+  year: 2020
+  month: "January"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
 - origin: "Birmingham"
   destination: "Dublin"
   airline: "AerLingus"
@@ -118,7 +283,38 @@
   month: "February"
   occasion: "Private"
   travelers: ["Patrick"]
-# More flights missing after February
+
+- origin: "Birmingham"
+  destination: "Amsterdam"
+  airline: "KLM"
+  year: 2020
+  month: "March"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Amsterdam"
+  destination: "Stuttgart"
+  airline: "KLM"
+  year: 2020
+  month: "March"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
+  destination: "London"
+  airline: "Lufthansa"
+  year: 2020
+  month: "September"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2020
+  month: "December"
+  occasion: "Warwick"
+  travelers: ["Patrick"]
 
 ### 2021
 
@@ -126,7 +322,7 @@
   destination: "London"
   airline: "Lufthansa"
   year: 2021
-  month: "January"
+  month: "February"
   occasion: "Warwick"
   travelers: ["Patrick"]
 
@@ -134,7 +330,7 @@
   destination: "Frankfurt"
   airline: "Lufthansa"
   year: 2021
-  month: "January"
+  month: "June"
   occasion: "Warwick"
   travelers: ["Patrick"]
 
@@ -142,7 +338,7 @@
   destination: "Athens"
   airline: "Lufthansa"
   year: 2021
-  month: "February"
+  month: "June"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
@@ -150,7 +346,7 @@
   destination: "Frankfurt"
   airline: "Lufthansa"
   year: 2021
-  month: "February"
+  month: "June"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
@@ -158,7 +354,7 @@
   destination: "New York"
   airline: "Lufthansa"
   year: 2021
-  month: "March"
+  month: "August"
   occasion: "Yale"
   travelers: ["Patrick"]
 
@@ -166,7 +362,7 @@
   destination: "Aruba"
   airline: "United"
   year: 2021
-  month: "March"
+  month: "October"
   occasion: "Private"
   travelers: ["Patrick", "Fabio", "Rutvik"]
 
@@ -174,7 +370,7 @@
   destination: "New York"
   airline: "United"
   year: 2021
-  month: "March"
+  month: "October"
   occasion: "Private"
   travelers: ["Patrick", "Fabio", "Rutvik"]
 
@@ -182,7 +378,7 @@
   destination: "Frankfurt"
   airline: "Lufthansa"
   year: 2021
-  month: "March"
+  month: "December"
   occasion: "Yale"
   travelers: ["Patrick"]
 
@@ -190,7 +386,7 @@
   destination: "Nursultan"
   airline: "Lufthansa"
   year: 2021
-  month: "April"
+  month: "December"
   occasion: "Private"
   travelers: ["Patrick"]
 
