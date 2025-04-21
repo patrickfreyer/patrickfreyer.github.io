@@ -229,3 +229,15 @@
 - name: "Athens"
   lat: 37.9838
   lon: 23.7275
+- name: "Stuttgart"
+  lat: 48.7758
+  lon: 9.1829
+- name: "Amsterdam"
+  lat: 52.3676
+  lon: 4.9041
+- name: "Paris"
+  lat: 48.8566
+  lon: 2.3522
+- name: "Marseille"
+  lat: 43.2965
+  lon: 5.3698

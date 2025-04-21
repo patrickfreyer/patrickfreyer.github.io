@@ -1733,6 +1733,37 @@
   travelers: ["Patrick", "Michael"]
 
 - origin: "Munich"
+  destination: "Paris"
+  airline: "AirFrance"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Paris"
+  destination: "Marseille"
+  airline: "AirFrance"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Marseille"
+  destination: "Paris"
+  airline: "AirFrance"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+
+- origin: "Paris"
+  destination: "Munich"
+  airline: "AirFrance"
+  year: 2024
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Munich"
   destination: "Hamburg"
   airline: "Lufthansa"
   year: 2024
