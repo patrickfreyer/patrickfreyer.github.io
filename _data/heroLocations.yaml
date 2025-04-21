@@ -241,3 +241,6 @@
 - name: "Marseille"
   lat: 43.2965
   lon: 5.3698
+- name: "Cancun"
+  lat: 21.1619
+  lon: -86.8515
