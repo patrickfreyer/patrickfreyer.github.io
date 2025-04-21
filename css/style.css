@@ -1525,4 +1525,153 @@ html {
         padding: 0.875rem 1.75rem;
         font-size: 1rem;
     }
+}
+
+/* Filter Panel Styles */
+.filter-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(23, 23, 23, 0.85);
+    padding: 0;
+    border-radius: 12px;
+    color: white;
+    z-index: 1000;
+    max-width: 300px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, width 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-panel.collapsed {
+    transform: translateX(-280px);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+}
+
+.toggle-filters-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.filter-panel.collapsed .toggle-filters-btn i {
+    transform: rotate(180deg);
+}
+
+.filter-content {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #e2e8f0;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    outline: none;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+}
+
+.filter-group select:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.filter-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.filter-group select option {
+    background: #1a1a1a;
+    color: white;
+    padding: 8px;
+}
+
+.filter-group select[multiple] {
+    min-height: 100px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.filter-button {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-button:first-child {
+    background: var(--primary-color);
+    color: white;
+}
+
+.filter-button:last-child {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.filter-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+.filter-button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .filter-panel {
+        top: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .filter-panel.collapsed {
+        transform: translateX(calc(-100% + 40px));
+    }
 } 

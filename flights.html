@@ -6,33 +6,42 @@ permalink: /flights/
 
 <div class="earth-visualization-page">
     <div id="filter-panel" class="filter-panel">
-        <h3>Filters</h3>
-        <div class="filter-group">
-            <label for="year-filter">Year</label>
-            <select id="year-filter" multiple>
-                <!-- Will be populated by JavaScript -->
-            </select>
+        <div class="filter-header">
+            <h3>Filters</h3>
+            <button id="toggle-filters" class="toggle-filters-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
         </div>
-        <div class="filter-group">
-            <label for="airline-filter">Airline</label>
-            <select id="airline-filter" multiple>
-                <!-- Will be populated by JavaScript -->
-            </select>
+        <div class="filter-content">
+            <div class="filter-group">
+                <label for="year-filter">Year</label>
+                <select id="year-filter" multiple>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="airline-filter">Airline</label>
+                <select id="airline-filter" multiple>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="occasion-filter">Occasion</label>
+                <select id="occasion-filter" multiple>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="travelers-filter">Travelers</label>
+                <select id="travelers-filter" multiple>
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button id="apply-filters" class="filter-button">Apply</button>
+                <button id="reset-filters" class="filter-button">Reset</button>
+            </div>
         </div>
-        <div class="filter-group">
-            <label for="occasion-filter">Occasion</label>
-            <select id="occasion-filter" multiple>
-                <!-- Will be populated by JavaScript -->
-            </select>
-        </div>
-        <!-- <div class="filter-group">
-            <label for="month-filter">Month</label>
-            <select id="month-filter" multiple>
-                
-            </select>
-        </div> -->
-        <button id="apply-filters" class="filter-button">Apply Filters</button>
-        <button id="reset-filters" class="filter-button">Reset</button>
     </div>
     <div id="earth-container" class="fullscreen"></div>
 </div>

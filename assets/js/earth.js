@@ -92,6 +92,16 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
 
 // Add these functions before initEarth()
 function getUniqueValues(data, key) {
+    if (key === 'travelers') {
+        // Special handling for travelers array
+        const allTravelers = new Set();
+        data.forEach(item => {
+            if (Array.isArray(item[key])) {
+                item[key].forEach(traveler => allTravelers.add(traveler));
+            }
+        });
+        return [...allTravelers].sort();
+    }
     return [...new Set(data.map(item => item[key]))].filter(Boolean).sort();
 }
 
@@ -100,6 +110,7 @@ function populateFilterDropdowns(flightData) {
     const airlines = getUniqueValues(flightData, 'airline');
     const occasions = getUniqueValues(flightData, 'occasion');
     const months = getUniqueValues(flightData, 'month');
+    const travelers = getUniqueValues(flightData, 'travelers');
 
     // Helper function to populate dropdowns
     function populateDropdown(elementId, values) {
@@ -119,6 +130,7 @@ function populateFilterDropdowns(flightData) {
     populateDropdown('airline-filter', airlines);
     populateDropdown('occasion-filter', occasions);
     populateDropdown('month-filter', months);
+    populateDropdown('travelers-filter', travelers);
 }
 
 function getSelectedValues(elementId) {
@@ -135,13 +147,28 @@ function filterFlightData(data, filters) {
         const airlineMatch = filters.airlines.length === 0 || filters.airlines.includes(flight.airline);
         const occasionMatch = filters.occasions.length === 0 || filters.occasions.includes(flight.occasion);
         const monthMatch = filters.months.length === 0 || filters.months.includes(flight.month);
-        return yearMatch && airlineMatch && occasionMatch && monthMatch;
+        
+        // Check if any selected travelers are in the flight's travelers array
+        const travelersMatch = filters.travelers.length === 0 || 
+            (Array.isArray(flight.travelers) && 
+             filters.travelers.some(traveler => flight.travelers.includes(traveler)));
+
+        return yearMatch && airlineMatch && occasionMatch && monthMatch && travelersMatch;
     });
 }
 
 function setupFilterHandlers(earthMesh, initializeFlightPaths) {
     const applyButton = document.getElementById('apply-filters');
     const resetButton = document.getElementById('reset-filters');
+    const toggleButton = document.getElementById('toggle-filters');
+    const filterPanel = document.getElementById('filter-panel');
+
+    // Setup toggle functionality
+    if (toggleButton && filterPanel) {
+        toggleButton.addEventListener('click', () => {
+            filterPanel.classList.toggle('collapsed');
+        });
+    }
 
     if (applyButton) {
         applyButton.addEventListener('click', () => {
@@ -149,7 +176,8 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
                 years: getSelectedValues('year-filter'),
                 airlines: getSelectedValues('airline-filter'),
                 occasions: getSelectedValues('occasion-filter'),
-                months: getSelectedValues('month-filter')
+                months: getSelectedValues('month-filter'),
+                travelers: getSelectedValues('travelers-filter')
             };
 
             // Remove existing flight paths
@@ -164,7 +192,7 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
     if (resetButton) {
         resetButton.addEventListener('click', () => {
             // Clear all selections
-            ['year-filter', 'airline-filter', 'occasion-filter', 'month-filter'].forEach(id => {
+            ['year-filter', 'airline-filter', 'occasion-filter', 'month-filter', 'travelers-filter'].forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.selectedIndex = -1;
             });
