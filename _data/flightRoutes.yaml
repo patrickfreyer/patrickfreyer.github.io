@@ -1,11 +1,11 @@
 # More flights missing...
 
-### 2014
+### 2013
 
 - origin: "Frankfurt"
   destination: "Beijing"
   airline: "Air China"
-  year: 2014
+  year: 2013
   month: "July"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
@@ -13,7 +13,7 @@
 - origin: "Beijing"
   destination: "Xi'an"
   airline: "Air China"
-  year: 2014
+  year: 2013
   month: "July"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
@@ -21,7 +21,7 @@
 - origin: "Shanghai"
   destination: "Beijing"
   airline: "Air China"
-  year: 2014
+  year: 2013
   month: "July"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
@@ -29,12 +29,32 @@
 - origin: "Beijing"
   destination: "Frankfurt"
   airline: "Air China"
-  year: 2014
+  year: 2013
   month: "July"
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
 # More flights missing...
+
+### 2014
+# More flights missing...
+
+### 2015
+- origin: "Frankfurt"
+  destination: "Los Angeles"
+  airline: "Lufthansa"
+  year: 2015
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Los Angeles"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2015
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
 
 ### 2015
 - origin: "Frankfurt"

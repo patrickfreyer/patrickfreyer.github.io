@@ -253,3 +253,6 @@
 - name: "Venice"
   lat: 45.4408
   lon: 12.3155
+- name: "Los Angeles"
+  lat: 34.0522
+  lon: -118.2437
