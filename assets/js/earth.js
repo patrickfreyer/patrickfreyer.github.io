@@ -90,6 +90,90 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
     return lines;
 }
 
+// Add these functions before initEarth()
+function getUniqueValues(data, key) {
+    return [...new Set(data.map(item => item[key]))].filter(Boolean).sort();
+}
+
+function populateFilterDropdowns(flightData) {
+    const years = getUniqueValues(flightData, 'year');
+    const airlines = getUniqueValues(flightData, 'airline');
+    const occasions = getUniqueValues(flightData, 'occasion');
+    const months = getUniqueValues(flightData, 'month');
+
+    // Helper function to populate dropdowns
+    function populateDropdown(elementId, values) {
+        const select = document.getElementById(elementId);
+        if (!select) return;
+        
+        select.innerHTML = '';
+        values.forEach(value => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+        });
+    }
+
+    populateDropdown('year-filter', years);
+    populateDropdown('airline-filter', airlines);
+    populateDropdown('occasion-filter', occasions);
+    populateDropdown('month-filter', months);
+}
+
+function getSelectedValues(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return [];
+    return Array.from(element.selectedOptions).map(option => option.value);
+}
+
+function filterFlightData(data, filters) {
+    return data.filter(flight => {
+        const yearMatch = filters.years.length === 0 || filters.years.includes(flight.year);
+        const airlineMatch = filters.airlines.length === 0 || filters.airlines.includes(flight.airline);
+        const occasionMatch = filters.occasions.length === 0 || filters.occasions.includes(flight.occasion);
+        const monthMatch = filters.months.length === 0 || filters.months.includes(flight.month);
+        return yearMatch && airlineMatch && occasionMatch && monthMatch;
+    });
+}
+
+function setupFilterHandlers(earthMesh, initializeFlightPaths) {
+    const applyButton = document.getElementById('apply-filters');
+    const resetButton = document.getElementById('reset-filters');
+
+    if (applyButton) {
+        applyButton.addEventListener('click', () => {
+            const filters = {
+                years: getSelectedValues('year-filter'),
+                airlines: getSelectedValues('airline-filter'),
+                occasions: getSelectedValues('occasion-filter'),
+                months: getSelectedValues('month-filter')
+            };
+
+            // Remove existing flight paths
+            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+
+            // Apply filtered data
+            const filteredData = filterFlightData(flightRoutesData, filters);
+            initializeFlightPaths(filteredData, earthMesh);
+        });
+    }
+
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            // Clear all selections
+            ['year-filter', 'airline-filter', 'occasion-filter', 'month-filter'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.selectedIndex = -1;
+            });
+
+            // Reset to original data
+            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+            initializeFlightPaths(flightRoutesData, earthMesh);
+        });
+    }
+}
+
 function initEarth() {
     const container = document.getElementById('earth-container');
     if (!container) {
@@ -253,59 +337,60 @@ function initEarth() {
         earthMesh.add(pin);
     });
 
-    // Count route frequencies before adding flight paths
-    const routeFrequencies = countRouteFrequencies(flightRoutesData);
-    
-    // Track processed routes to avoid duplicates
-    const processedRoutes = new Set();
-    
-    // Add flight paths
-    flightRoutesData.forEach(route => {
-        // Create a consistent key for the route
-        const cities = [route.origin, route.destination].sort();
-        const routeKey = `${cities[0]}-${cities[1]}`;
-        
-        // Skip if we've already processed this route
-        if (processedRoutes.has(routeKey)) {
-            return;
-        }
-        processedRoutes.add(routeKey);
-        
-        const originLoc = findLocationByName(route.origin);
-        const destLoc = findLocationByName(route.destination);
-        
-        // Log missing cities
-        if (!originLoc) {
-            console.warn(`Missing location data for origin city: ${route.origin}`);
-        }
-        if (!destLoc) {
-            console.warn(`Missing location data for destination city: ${route.destination}`);
-        }
-        
-        if (!originLoc || !destLoc) {
-            console.warn(`Skipping route: ${route.origin} -> ${route.destination} due to missing location data`);
-            return;
-        }
+    // After creating earthMesh, add this:
+    populateFilterDropdowns(flightRoutesData);
 
-        const startPoint = latLonToVector3(originLoc.lat, originLoc.lon, earthRadius);
-        const endPoint = latLonToVector3(destLoc.lat, destLoc.lon, earthRadius);
-        
-        // Get the actual frequency for this route
-        const frequency = getRouteFrequency(route.origin, route.destination, routeFrequencies);
-        const numLines = Math.min(Math.max(frequency, 1), 10); // Cap between 1 and 5 lines
-        
-        const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
-        
-        // Create flight lines with airline-specific color
-        const airlineColors = {
-            'default': 0x00ff00
-        };
-        const flightLines = createFlightLines(pathsPoints, airlineColors[route.airline] || airlineColors.default);
-        
-        // Add all lines to the earth
-        flightLines.forEach(line => earthMesh.add(line));
-        
-    });
+    // Extract flight path initialization into a separate function
+    function initializeFlightPaths(routes, targetMesh) {
+        const routeFrequencies = countRouteFrequencies(routes);
+        const processedRoutes = new Set();
+
+        routes.forEach(route => {
+            const cities = [route.origin, route.destination].sort();
+            const routeKey = `${cities[0]}-${cities[1]}`;
+            
+            if (processedRoutes.has(routeKey)) return;
+            processedRoutes.add(routeKey);
+            
+            const originLoc = findLocationByName(route.origin);
+            const destLoc = findLocationByName(route.destination);
+            
+            if (!originLoc || !destLoc) {
+                console.warn(`Skipping route: ${route.origin} -> ${route.destination} due to missing location data`);
+                return;
+            }
+
+            const startPoint = latLonToVector3(originLoc.lat, originLoc.lon, earthRadius);
+            const endPoint = latLonToVector3(destLoc.lat, destLoc.lon, earthRadius);
+            
+            const frequency = getRouteFrequency(route.origin, route.destination, routeFrequencies);
+            const numLines = Math.min(Math.max(frequency, 1), 10);
+            
+            const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
+            
+            const airlineColors = {
+                'Lufthansa': 0x00B7FF,
+                'Emirates': 0xFF0000,
+                'Qatar': 0x8B0000,
+                'Turkish Airlines': 0xFF0000,
+                'Air France': 0x002157,
+                'default': 0x00ff00
+            };
+            
+            const flightLines = createFlightLines(
+                pathsPoints, 
+                airlineColors[route.airline] || airlineColors.default
+            );
+            
+            flightLines.forEach(line => targetMesh.add(line));
+        });
+    }
+
+    // Initialize flight paths with all data
+    initializeFlightPaths(flightRoutesData, earthMesh);
+
+    // Setup filter handlers
+    setupFilterHandlers(earthMesh, initializeFlightPaths);
 
     // Initial Camera Position
     camera.position.set(4, 8, 8); // Position camera above and to the side of Europe

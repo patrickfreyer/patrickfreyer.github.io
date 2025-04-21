@@ -5,6 +5,35 @@ permalink: /flights/
 ---
 
 <div class="earth-visualization-page">
+    <div id="filter-panel" class="filter-panel">
+        <h3>Filters</h3>
+        <div class="filter-group">
+            <label for="year-filter">Year</label>
+            <select id="year-filter" multiple>
+                <!-- Will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="airline-filter">Airline</label>
+            <select id="airline-filter" multiple>
+                <!-- Will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="occasion-filter">Occasion</label>
+            <select id="occasion-filter" multiple>
+                <!-- Will be populated by JavaScript -->
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="month-filter">Month</label>
+            <select id="month-filter" multiple>
+                <!-- Will be populated by JavaScript -->
+            </select>
+        </div>
+        <button id="apply-filters" class="filter-button">Apply Filters</button>
+        <button id="reset-filters" class="filter-button">Reset</button>
+    </div>
     <div id="earth-container" class="fullscreen"></div>
 </div>
 
@@ -33,15 +62,68 @@ permalink: /flights/
         top: 0;
         left: 0;
     }
-</style> 
-        justify-content: center;
+
+    .filter-panel {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
         color: white;
-        text-decoration: none;
-        transition: all 0.3s ease;
+        z-index: 1000;
+        max-width: 300px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .back-button:hover {
+    .filter-panel h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.2em;
+        color: #fff;
+    }
+
+    .filter-group {
+        margin-bottom: 15px;
+    }
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #ccc;
+    }
+
+    .filter-group select {
+        width: 100%;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        color: white;
+        outline: none;
+    }
+
+    .filter-group select option {
+        background: #1a1a1a;
+        color: white;
+    }
+
+    .filter-button {
+        padding: 8px 15px;
+        margin-right: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .filter-button:hover {
         background: rgba(255, 255, 255, 0.3);
-        transform: scale(1.1);
+    }
+
+    .filter-button:last-child {
+        margin-right: 0;
     }
 </style> 
