@@ -244,3 +244,12 @@
 - name: "Cancun"
   lat: 21.1619
   lon: -86.8515
+- name: "St. Petersburg"
+  lat: 59.9311
+  lon: 30.3609
+- name: "Moscow"
+  lat: 55.7558
+  lon: 37.6173
+- name: "Venice"
+  lat: 45.4408
+  lon: 12.3155

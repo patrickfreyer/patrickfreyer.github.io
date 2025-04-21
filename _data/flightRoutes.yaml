@@ -58,7 +58,7 @@
   destination: "Singapore"
   airline: "Lufthansa"
   year: 2016
-  month: "February"
+  month: "January"
   occasion: "Private"
   travelers: ["Patrick"]
 
@@ -66,9 +66,51 @@
   destination: "Frankfurt"
   airline: "Lufthansa"
   year: 2016
-  month: "March"
+  month: "February"
   occasion: "Private"
   travelers: ["Patrick"]
+
+- origin: "Brussels"
+  destination: "Moscow"
+  airline: "Aeroflot"
+  year: 2016
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "St. Petersburg"
+  destination: "Berlin"
+  airline: "Aeroflot"
+  year: 2016
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Berlin"
+  destination: "Brussels"
+  airline: "Aeroflot"
+  year: 2016
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Brussels"
+  destination: "Venice"
+  airline: "Ryanair"
+  year: 2016
+  month: "May"
+  occasion: "School"
+  travelers: ["Patrick"]
+
+- origin: "Venice"
+  destination: "Brussels"
+  airline: "Ryanair"
+  year: 2016
+  month: "May"
+  occasion: "School"
+  travelers: ["Patrick"]
+  
+  
 
 # More flights missing...
 
