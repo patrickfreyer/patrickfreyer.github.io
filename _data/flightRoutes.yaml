@@ -297,7 +297,7 @@
   occasion: "Private"
   travelers: ["Patrick", "Sophia"]
 
-- origin: "Delhi"
+- origin: "New Delhi"
   destination: "Frankfurt"
   airline: "Air India"
   year: 2018

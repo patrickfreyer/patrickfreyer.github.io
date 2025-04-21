@@ -129,7 +129,9 @@ function getSelectedValues(elementId) {
 
 function filterFlightData(data, filters) {
     return data.filter(flight => {
-        const yearMatch = filters.years.length === 0 || filters.years.includes(flight.year);
+        // Convert years to numbers for comparison
+        const yearMatch = filters.years.length === 0 || 
+            filters.years.map(Number).includes(Number(flight.year));
         const airlineMatch = filters.airlines.length === 0 || filters.airlines.includes(flight.airline);
         const occasionMatch = filters.occasions.length === 0 || filters.occasions.includes(flight.occasion);
         const monthMatch = filters.months.length === 0 || filters.months.includes(flight.month);
