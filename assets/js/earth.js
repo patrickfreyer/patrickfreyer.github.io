@@ -178,39 +178,28 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
 
 // Function to generate distinct colors
 function generateDistinctColors(count) {
+    // Colorblind-friendly palette (avoiding red tones)
+    const baseColors = [
+        0x4169E1, // Royal Blue
+        0x008080, // Teal
+        0xFFA500, // Orange
+        0x4B0082, // Indigo
+        0x006400, // Dark Green
+        0x800080, // Purple
+        0x008000, // Green
+        0x000080, // Navy
+        0x20B2AA, // Light Sea Green
+        0x6B8E23, // Olive Drab
+        0x483D8B, // Dark Slate Blue
+        0x2F4F4F  // Dark Slate Gray
+    ];
+
     const colors = [];
     for (let i = 0; i < count; i++) {
-        const hue = (i * (360 / count)) / 360;
-        const saturation = 0.7;  // High saturation for vibrant colors
-        const lightness = 0.5;   // Mid lightness for good visibility
-        
-        // Convert HSL to RGB
-        const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
-        const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
-        const m = lightness - c/2;
-        
-        let r, g, b;
-        if (hue < 1/6) {
-            [r, g, b] = [c, x, 0];
-        } else if (hue < 2/6) {
-            [r, g, b] = [x, c, 0];
-        } else if (hue < 3/6) {
-            [r, g, b] = [0, c, x];
-        } else if (hue < 4/6) {
-            [r, g, b] = [0, x, c];
-        } else if (hue < 5/6) {
-            [r, g, b] = [x, 0, c];
-        } else {
-            [r, g, b] = [c, 0, x];
-        }
-        
-        // Convert to hex color
-        const color = Math.round(((r + m) * 255)) << 16 | 
-                     Math.round(((g + m) * 255)) << 8 | 
-                     Math.round(((b + m) * 255));
-        
-        colors.push(color);
+        // Use modulo to cycle through colors if we need more than the base palette
+        colors.push(baseColors[i % baseColors.length]);
     }
+    
     return colors;
 }
 
@@ -342,8 +331,8 @@ function initEarth() {
         // Create a simple sphere for the location marker
         const headGeometry = new THREE.SphereGeometry(0.015, 8, 8); // Smaller and less detailed sphere
         const headMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0xff3333,
-            emissive: 0xff0000,
+            color: 0x4169E1,
+            emissive: 0x0000ff,
             emissiveIntensity: 0.3,
             shininess: 50
         });
@@ -352,7 +341,7 @@ function initEarth() {
         // Create a subtle glow effect
         const glowGeometry = new THREE.SphereGeometry(0.04, 12, 12);
         const glowMaterial = new THREE.MeshBasicMaterial({
-            color: 0xff6666,
+            color: 0x6495ED,
             transparent: true,
             opacity: 0.25
         });
