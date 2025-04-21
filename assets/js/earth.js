@@ -176,6 +176,44 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
     }
 }
 
+// Function to generate distinct colors
+function generateDistinctColors(count) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        const hue = (i * (360 / count)) / 360;
+        const saturation = 0.7;  // High saturation for vibrant colors
+        const lightness = 0.5;   // Mid lightness for good visibility
+        
+        // Convert HSL to RGB
+        const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
+        const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+        const m = lightness - c/2;
+        
+        let r, g, b;
+        if (hue < 1/6) {
+            [r, g, b] = [c, x, 0];
+        } else if (hue < 2/6) {
+            [r, g, b] = [x, c, 0];
+        } else if (hue < 3/6) {
+            [r, g, b] = [0, c, x];
+        } else if (hue < 4/6) {
+            [r, g, b] = [0, x, c];
+        } else if (hue < 5/6) {
+            [r, g, b] = [x, 0, c];
+        } else {
+            [r, g, b] = [c, 0, x];
+        }
+        
+        // Convert to hex color
+        const color = Math.round(((r + m) * 255)) << 16 | 
+                     Math.round(((g + m) * 255)) << 8 | 
+                     Math.round(((b + m) * 255));
+        
+        colors.push(color);
+    }
+    return colors;
+}
+
 function initEarth() {
     const container = document.getElementById('earth-container');
     if (!container) {
@@ -346,6 +384,15 @@ function initEarth() {
     function initializeFlightPaths(routes, targetMesh) {
         const routeFrequencies = countRouteFrequencies(routes);
         const processedRoutes = new Set();
+        
+        // Get unique airlines and generate colors
+        const uniqueAirlines = [...new Set(routes.map(route => route.airline))].filter(Boolean);
+        const colors = generateDistinctColors(uniqueAirlines.length);
+        const airlineColors = Object.fromEntries(
+            uniqueAirlines.map((airline, index) => [airline, colors[index]])
+        );
+        // Add default color
+        airlineColors['default'] = 0x00ff00;
 
         routes.forEach(route => {
             const cities = [route.origin, route.destination].sort();
@@ -369,10 +416,6 @@ function initEarth() {
             const numLines = Math.min(Math.max(frequency, 1), 10);
             
             const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
-            
-            const airlineColors = {
-                'default': 0x00ff00
-            };
             
             const flightLines = createFlightLines(
                 pathsPoints, 
