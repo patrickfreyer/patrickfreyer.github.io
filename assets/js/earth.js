@@ -371,11 +371,6 @@ function initEarth() {
             const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
             
             const airlineColors = {
-                'Lufthansa': 0x00B7FF,
-                'Emirates': 0xFF0000,
-                'Qatar': 0x8B0000,
-                'Turkish Airlines': 0xFF0000,
-                'Air France': 0x002157,
                 'default': 0x00ff00
             };
             
