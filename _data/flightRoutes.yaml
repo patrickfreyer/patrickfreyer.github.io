@@ -130,14 +130,60 @@
   occasion: "School"
   travelers: ["Patrick"]
   
-  
+- origin: "Frankfurt"
+  destination: "Miami"
+  airline: "XXX"
+  year: 2016
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Miami"
+  destination: "Belize"
+  airline: "American Airlines"
+  year: 2016
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Belize"
+  destination: "Miami"
+  airline: "American Airlines"
+  year: 2016
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Miami"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2016
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
 # More flights missing...
 
-### 2016
+### 2017
 - origin: "Frankfurt"
   destination: "Singapore"
   airline: "Lufthansa"
+  year: 2017
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Singapore"
+  destination: "Kota Kinabalu"
+  airline: "AirAsia"
+  year: 2017
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Kota Kinabalu"
+  destination: "Singapore"
+  airline: "AirAsia"
   year: 2017
   month: "July"
   occasion: "Private"

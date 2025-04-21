@@ -256,3 +256,12 @@
 - name: "Los Angeles"
   lat: 34.0522
   lon: -118.2437
+- name: "Miami"
+  lat: 25.7617
+  lon: -80.1918
+- name: "Belize"
+  lat: 17.1899
+  lon: -88.4976
+- name: "Kota Kinabalu"
+  lat: 5.9804
+  lon: 116.0735
