@@ -1,3 +1,96 @@
+# More flights missing...
+
+### 2014
+
+- origin: "Frankfurt"
+  destination: "Beijing"
+  airline: "Air China"
+  year: 2014
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Beijing"
+  destination: "Xi'an"
+  airline: "Air China"
+  year: 2014
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Shanghai"
+  destination: "Beijing"
+  airline: "Air China"
+  year: 2014
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Beijing"
+  destination: "Frankfurt"
+  airline: "Air China"
+  year: 2014
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+# More flights missing...
+
+### 2015
+- origin: "Frankfurt"
+  destination: "Cancun"
+  airline: "Condor"
+  year: 2015
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Cancun"
+  destination: "Frankfurt"
+  airline: "Condor"
+  year: 2015
+  month: "July"
+
+# More flights missing...
+
+### 2016
+- origin: "Frankfurt"
+  destination: "Singapore"
+  airline: "Lufthansa"
+  year: 2016
+  month: "February"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Singapore"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2016
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+# More flights missing...
+
+### 2016
+- origin: "Frankfurt"
+  destination: "Singapore"
+  airline: "Lufthansa"
+  year: 2017
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Singapore"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
+  year: 2017
+  month: "July"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+# More flights missing...
+
 ### 2018
 
 - origin: "Brussels"
