@@ -44,4 +44,14 @@
   in_development: true
   stealth: false
   tags: [Presentations, AI, Editing, File Formats]
+
+- title: Email Assistant
+  description: An AI assistant with native email access at a dedicated mailbox, allowing you to send emails directly to the AI and get responses. The AI can also proactively send emails to achieve tasks (e.g., book restaurants, conduct research, etc.)
+  icon: 📝
+  link: mailto:assistant@patrickfreyer.com
+  in_development: true
+  stealth: false
+  tags: [Email, AI, Assistant, Tasks]
+  
+  
   
