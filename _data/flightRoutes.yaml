@@ -1850,7 +1850,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "March"
-  occasion: "Access GenAI"
+  occasion: "Projects"
   travelers: ["Patrick", "Sofya"]
 
 - origin: "Seattle"
@@ -1866,7 +1866,7 @@
   airline: "Lufthansa"
   year: 2024
   month: "April"
-  occasion: "Access GenAI"
+  occasion: "Projects"
   travelers: ["Patrick", "Sofya"]
 
 - origin: "Munich"
@@ -2097,7 +2097,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "Toronto"
@@ -2105,7 +2105,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "Halifax"
@@ -2113,7 +2113,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "Toronto"
@@ -2121,7 +2121,7 @@
   airline: "Air Canada"
   year: 2024
   month: "November"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "New York"
@@ -2139,7 +2139,7 @@
   airline: "Lufthansa"
   year: 2025
   month: "January"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "Cologne"
@@ -2147,7 +2147,7 @@
   airline: "Lufthansa"
   year: 2025
   month: "January"
-  occasion: "Ovis"
+  occasion: "Projects"
   travelers: ["Patrick", "Matthias"]
 
 - origin: "Munich"
@@ -2163,7 +2163,7 @@
   airline: "Delta"
   year: 2025
   month: "February"
-  occasion: "LegalAI"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "San Diego"
@@ -2171,7 +2171,7 @@
   airline: "Delta"
   year: 2025
   month: "March"
-  occasion: "LegalAI"
+  occasion: "Projects"
   travelers: ["Patrick"]
 
 - origin: "New York"
