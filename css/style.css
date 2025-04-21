@@ -1472,4 +1472,65 @@ html {
 }
 
 /* Remove the specific max-width media query as defaults handle mobile now */
-/* @media (max-width: 991.98px) { ... } */ 
+/* @media (max-width: 991.98px) { ... } */
+
+.cta-button {
+    margin-top: 2rem;
+    animation: fadeIn 1s ease-out 0.9s backwards;
+    pointer-events: auto;
+}
+
+.cta-button .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(var(--primary-color-rgb), 0.2),
+                0 2px 4px -1px rgba(var(--primary-color-rgb), 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    transform: translateX(-100%) rotate(45deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px -3px rgba(var(--primary-color-rgb), 0.2),
+                0 4px 6px -2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.cta-button .btn:hover::before {
+    transform: translateX(100%) rotate(45deg);
+}
+
+.cta-button .btn:active {
+    transform: translateY(0);
+}
+
+.cta-button .btn i {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .cta-button .btn {
+        padding: 0.875rem 1.75rem;
+        font-size: 1rem;
+    }
+} 
