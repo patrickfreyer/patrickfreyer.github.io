@@ -8,15 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4a6cf7;
-            --secondary-color: #6c5ce7;
-            --accent-color: #00cec9;
-            --text-color: #2d3436;
+            --primary-color: #3A8DFF; /* Bright Blue */
+            --secondary-color: #F76B9A; /* Pink/Magenta */
+            --accent-color: #19E3E3; /* Turquoise/Teal */
+            --highlight-color: #FFC34D; /* Orange/Yellow */
+            --text-color: #222222; /* Dark Gray/Black */
             --light-text: #636e72;
-            --background: #f8f9fa;
-            --card-bg: #ffffff;
+            --background: #fff;
+            --card-bg: #fff;
             --border-radius: 16px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --box-shadow: 0 4px 20px rgba(58, 141, 255, 0.08);
         }
 
         body {
@@ -126,7 +127,7 @@
             color: var(--light-text);
             padding: 15px;
             border-left: 4px solid var(--accent-color);
-            background: rgba(0, 206, 201, 0.05);
+            background: rgba(25, 227, 227, 0.07);
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             margin: 20px 0;
         }
@@ -173,23 +174,23 @@
             margin-top: 15px;
             transition: all 0.3s ease;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(74, 108, 247, 0.2);
+            box-shadow: 0 4px 15px rgba(58, 141, 255, 0.15);
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.3);
+            box-shadow: 0 6px 20px rgba(247, 107, 154, 0.18);
         }
 
         .draft-banner {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: linear-gradient(135deg, var(--highlight-color), var(--secondary-color));
             color: white;
             text-align: center;
             padding: 12px;
             margin-bottom: 25px;
             border-radius: var(--border-radius);
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 195, 77, 0.18);
         }
 
         .markdown-content {
@@ -217,6 +218,10 @@
     </style>
 </head>
 <body>
+    <div style="text-align:center; margin-bottom: 30px;">
+        <img src="/assets/FineTunedBanner.png" alt="Fine-Tuned: Personal AI Hacks & News by Patrick C. Freyer" style="max-width: 350px; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 4px 24px rgba(74, 108, 247, 0.10); background: #fff; padding: 8px;" />
+    </div>
+    
     {% if include.newsletter.published == false %}
     <div class="draft-banner">
         <i class="fas fa-pencil-alt"></i> DRAFT VERSION - NOT PUBLISHED
