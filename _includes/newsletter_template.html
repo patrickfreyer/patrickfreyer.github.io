@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ include.newsletter.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -12,42 +13,67 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f5f7fa;
         }
         .header {
             text-align: center;
             margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .header h1 {
-            color: #2c3e50;
+            color: white;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
         .date {
-            color: #7f8c8d;
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1em;
         }
         .section {
             margin-bottom: 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         .section-title {
             color: #2c3e50;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: #3498db;
         }
         .trend-item, .tool-item, .essential-item {
             background: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+        .trend-item:hover, .tool-item:hover, .essential-item:hover {
+            transform: translateY(-2px);
         }
         .trend-item h3, .tool-item h3, .essential-item h3 {
             color: #2c3e50;
             margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .takeaway {
             font-style: italic;
             color: #7f8c8d;
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
         }
         .price-tiers {
             display: grid;
@@ -59,20 +85,28 @@
             padding: 20px;
             border-radius: 8px;
             text-align: center;
+            transition: transform 0.2s ease;
+        }
+        .price-tier:hover {
+            transform: translateY(-2px);
         }
         .price {
             font-size: 1.5em;
             color: #2c3e50;
             font-weight: bold;
+            margin: 15px 0;
         }
         .button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             padding: 10px 20px;
             background-color: #3498db;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             margin-top: 10px;
+            transition: background-color 0.2s ease;
         }
         .button:hover {
             background-color: #2980b9;
@@ -89,50 +123,50 @@
 </head>
 <body>
     <div class="header">
-        <h1>{{ include.newsletter.title }}</h1>
+        <h1><i class="fas fa-newspaper"></i> {{ include.newsletter.title }}</h1>
         <div class="date">Issue #{{ include.newsletter.issue }} | {{ include.newsletter.date }}</div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Trends to Follow</h2>
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Trends to Follow</h2>
         {% for trend in include.newsletter.trends %}
         <div class="trend-item">
-            <h3>{{ trend.title }}</h3>
+            <h3><i class="fas fa-lightbulb"></i> {{ trend.title }}</h3>
             <p class="takeaway">{{ trend.takeaway }}</p>
-            <a href="{{ trend.link }}" class="button">Learn More</a>
+            <a href="{{ trend.link }}" class="button"><i class="fas fa-arrow-right"></i> Learn More</a>
         </div>
         {% endfor %}
     </div>
 
     <div class="section">
-        <h2 class="section-title">New Tools & Hacks</h2>
+        <h2 class="section-title"><i class="fas fa-tools"></i> New Tools & Hacks</h2>
         {% for tool in include.newsletter.tools %}
         <div class="tool-item">
-            <h3>{{ tool.name }}</h3>
+            <h3><i class="fas fa-wrench"></i> {{ tool.name }}</h3>
             <p>{{ tool.description }}</p>
-            <p><strong>Ideal Use Case:</strong> {{ tool.use_case }}</p>
-            <a href="{{ tool.link }}" class="button">Try It Out</a>
+            <p><strong><i class="fas fa-bullseye"></i> Ideal Use Case:</strong> {{ tool.use_case }}</p>
+            <a href="{{ tool.link }}" class="button"><i class="fas fa-external-link-alt"></i> Try It Out</a>
         </div>
         {% endfor %}
     </div>
 
     <div class="section">
-        <h2 class="section-title">Price Index</h2>
+        <h2 class="section-title"><i class="fas fa-tags"></i> Price Index</h2>
         <div class="price-tiers">
             <div class="price-tier">
-                <h3>Basic Use Rate</h3>
+                <h3><i class="fas fa-rocket"></i> Basic Use Rate</h3>
                 <p>{{ include.newsletter.price_index.basic.model }}</p>
                 <p>{{ include.newsletter.price_index.basic.request }}</p>
                 <div class="price">{{ include.newsletter.price_index.basic.rate }}</div>
             </div>
             <div class="price-tier">
-                <h3>Budget Rate</h3>
+                <h3><i class="fas fa-piggy-bank"></i> Budget Rate</h3>
                 <p>{{ include.newsletter.price_index.budget.model }}</p>
                 <p>{{ include.newsletter.price_index.budget.optimization }}</p>
                 <div class="price">{{ include.newsletter.price_index.budget.rate }}</div>
             </div>
             <div class="price-tier">
-                <h3>Einstein Rate</h3>
+                <h3><i class="fas fa-brain"></i> Einstein Rate</h3>
                 <p>{{ include.newsletter.price_index.einstein.model }}</p>
                 <p>{{ include.newsletter.price_index.einstein.context }}</p>
                 <div class="price">{{ include.newsletter.price_index.einstein.rate }}</div>
@@ -141,12 +175,12 @@
     </div>
 
     <div class="section">
-        <h2 class="section-title">User Essentials</h2>
+        <h2 class="section-title"><i class="fas fa-star"></i> User Essentials</h2>
         {% for essential in include.newsletter.essentials %}
         <div class="essential-item">
-            <h3>{{ essential.name }}</h3>
+            <h3><i class="fas fa-check-circle"></i> {{ essential.name }}</h3>
             <p>{{ essential.description }}</p>
-            <a href="{{ essential.link }}" class="button">Get Started</a>
+            <a href="{{ essential.link }}" class="button"><i class="fas fa-play"></i> Get Started</a>
         </div>
         {% endfor %}
     </div>
