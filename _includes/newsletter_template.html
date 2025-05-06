@@ -119,9 +119,26 @@
                 grid-template-columns: 1fr;
             }
         }
+        .draft-banner {
+            background-color: #f39c12;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .markdown-content {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+    {% if include.newsletter.published == false %}
+    <div class="draft-banner">
+        <i class="fas fa-pencil-alt"></i> DRAFT VERSION - NOT PUBLISHED
+    </div>
+    {% endif %}
+    
     <div class="header">
         <h1><i class="fas fa-newspaper"></i> {{ include.newsletter.title }}</h1>
         <div class="date">Issue #{{ include.newsletter.issue }} | {{ include.newsletter.date }}</div>
@@ -132,6 +149,7 @@
         {% for trend in include.newsletter.trends %}
         <div class="trend-item">
             <h3><i class="fas fa-lightbulb"></i> {{ trend.title }}</h3>
+            <div class="markdown-content">{{ trend.description | markdownify }}</div>
             <p class="takeaway">{{ trend.takeaway }}</p>
             <a href="{{ trend.link }}" class="button"><i class="fas fa-arrow-right"></i> Learn More</a>
         </div>
@@ -156,19 +174,19 @@
             <div class="price-tier">
                 <h3><i class="fas fa-rocket"></i> Basic Use Rate</h3>
                 <p>{{ include.newsletter.price_index.basic.model }}</p>
-                <p>{{ include.newsletter.price_index.basic.request }}</p>
+                <p>{{ include.newsletter.price_index.basic.description }}</p>
                 <div class="price">{{ include.newsletter.price_index.basic.rate }}</div>
             </div>
             <div class="price-tier">
                 <h3><i class="fas fa-piggy-bank"></i> Budget Rate</h3>
                 <p>{{ include.newsletter.price_index.budget.model }}</p>
-                <p>{{ include.newsletter.price_index.budget.optimization }}</p>
+                <p>{{ include.newsletter.price_index.budget.description }}</p>
                 <div class="price">{{ include.newsletter.price_index.budget.rate }}</div>
             </div>
             <div class="price-tier">
                 <h3><i class="fas fa-brain"></i> Einstein Rate</h3>
                 <p>{{ include.newsletter.price_index.einstein.model }}</p>
-                <p>{{ include.newsletter.price_index.einstein.context }}</p>
+                <p>{{ include.newsletter.price_index.einstein.description }}</p>
                 <div class="price">{{ include.newsletter.price_index.einstein.rate }}</div>
             </div>
         </div>
@@ -179,7 +197,7 @@
         {% for essential in include.newsletter.essentials %}
         <div class="essential-item">
             <h3><i class="fas fa-check-circle"></i> {{ essential.name }}</h3>
-            <p>{{ essential.description }}</p>
+            <div class="markdown-content">{{ essential.description | markdownify }}</div>
             <a href="{{ essential.link }}" class="button"><i class="fas fa-play"></i> Get Started</a>
         </div>
         {% endfor %}

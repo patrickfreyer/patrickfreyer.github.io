@@ -2,13 +2,14 @@ issues:
   - title: "Fine-Tuned: Patrick's Personal AI Hacks & Insights"
     date: "2024-04-23"
     issue: 1
+    published: true
     trends:
       - title: "Trend Title"
+        description: "Detailed description of the trend with potential [hyperlinks](https://example.com) embedded in the text"
         takeaway: "Key takeaway from this trend"
-        link: "https://example.com"
       - title: "Another Trend"
+        description: "Another detailed description with [embedded links](https://example.com) if needed"
         takeaway: "Another key takeaway"
-        link: "https://example.com"
     tools:
       - name: "Tool Name"
         description: "Brief description of the tool"
@@ -21,20 +22,18 @@ issues:
     price_index:
       basic:
         model: "Average model"
-        request: "Average request"
+        description: "Description of the basic tier pricing and features"
         rate: "$X.XX"
       budget:
         model: "Mini model"
-        optimization: "Optimized conversation input"
+        description: "Description of the budget tier pricing and features"
         rate: "$X.XX"
       einstein:
         model: "Peak model"
-        context: "Maximum context window"
+        description: "Description of the einstein tier pricing and features"
         rate: "$X.XX"
     essentials:
       - name: "Essential Tool 1"
-        description: "Why it's essential"
-        link: "https://example.com"
+        description: "Why it's essential with potential [hyperlinks](https://example.com) in the text"
       - name: "Essential Tool 2"
-        description: "Why it's essential"
-        link: "https://example.com" 
+        description: "Why it's essential with potential [hyperlinks](https://example.com) in the text" 
