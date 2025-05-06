@@ -1,0 +1,40 @@
+issues:
+  - title: "Fine-Tuned: Patrick's Personal AI Hacks & Insights"
+    date: "2024-04-23"
+    issue: 1
+    trends:
+      - title: "Trend Title"
+        takeaway: "Key takeaway from this trend"
+        link: "https://example.com"
+      - title: "Another Trend"
+        takeaway: "Another key takeaway"
+        link: "https://example.com"
+    tools:
+      - name: "Tool Name"
+        description: "Brief description of the tool"
+        use_case: "Ideal use case for this tool"
+        link: "https://example.com"
+      - name: "Another Tool"
+        description: "Brief description"
+        use_case: "Use case"
+        link: "https://example.com"
+    price_index:
+      basic:
+        model: "Average model"
+        request: "Average request"
+        rate: "$X.XX"
+      budget:
+        model: "Mini model"
+        optimization: "Optimized conversation input"
+        rate: "$X.XX"
+      einstein:
+        model: "Peak model"
+        context: "Maximum context window"
+        rate: "$X.XX"
+    essentials:
+      - name: "Essential Tool 1"
+        description: "Why it's essential"
+        link: "https://example.com"
+      - name: "Essential Tool 2"
+        description: "Why it's essential"
+        link: "https://example.com" 

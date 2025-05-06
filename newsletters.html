@@ -1,0 +1,138 @@
+---
+layout: default
+title: AI Newsletter Archive
+---
+
+<div class="container">
+    <h1>AI Newsletter Archive</h1>
+    <p class="lead">A collection of past issues of Fine-Tuned: Patrick's Personal AI Hacks & Insights</p>
+
+    <div class="newsletter-grid">
+        {% assign sorted_newsletters = site.data.newsletters.issues | sort: 'date' | reverse %}
+        {% for newsletter in sorted_newsletters %}
+        <div class="newsletter-card">
+            <h2>{{ newsletter.title }}</h2>
+            <div class="meta">
+                <span class="date">Issue #{{ newsletter.issue }} | {{ newsletter.date | date: "%B %d, %Y" }}</span>
+            </div>
+            <div class="preview">
+                <h3>Trends to Follow</h3>
+                <ul>
+                    {% for trend in newsletter.trends limit:2 %}
+                    <li>{{ trend.title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="newsletter-content" style="display: none;">
+                {% include newsletter_template.html newsletter=newsletter %}
+            </div>
+            <button class="button" onclick="showNewsletter(this)">Read Full Issue</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.newsletter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.newsletter-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.newsletter-card:hover {
+    transform: translateY(-5px);
+}
+
+.newsletter-card h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.meta {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.preview {
+    margin-bottom: 1.5rem;
+}
+
+.preview h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.preview ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.preview li {
+    margin-bottom: 0.5rem;
+    color: #34495e;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .newsletter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function showNewsletter(button) {
+    const card = button.closest('.newsletter-card');
+    const content = card.querySelector('.newsletter-content');
+    const preview = card.querySelector('.preview');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        preview.style.display = 'none';
+        button.textContent = 'Hide Issue';
+    } else {
+        content.style.display = 'none';
+        preview.style.display = 'block';
+        button.textContent = 'Read Full Issue';
+    }
+}
+</script> 
