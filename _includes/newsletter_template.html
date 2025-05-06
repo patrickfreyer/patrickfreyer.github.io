@@ -8,25 +8,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3A8DFF; /* Bright Blue */
-            --secondary-color: #F76B9A; /* Pink/Magenta */
-            --accent-color: #19E3E3; /* Turquoise/Teal */
-            --highlight-color: #FFC34D; /* Orange/Yellow */
-            --text-color: #222222; /* Dark Gray/Black */
+            --primary-color: #3A8DFF;
+            --secondary-color: #F76B9A;
+            --accent-color: #19E3E3;
+            --highlight-color: #FFC34D;
+            --text-color: #222222;
             --light-text: #636e72;
-            --background: #fff;
-            --card-bg: #fff;
-            --border-radius: 16px;
-            --box-shadow: 0 4px 20px rgba(58, 141, 255, 0.08);
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            max-width: 800px;
+            max-width: 680px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0;
             background-color: var(--background);
         }
 
@@ -69,27 +69,22 @@
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             background: var(--card-bg);
-            padding: 30px;
+            padding: 24px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-2px);
         }
 
         .section-title {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--accent-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.5em;
+            gap: 8px;
+            font-size: 1.4em;
             font-weight: 600;
         }
 
@@ -100,16 +95,15 @@
 
         .trend-item, .tool-item, .essential-item {
             background: var(--card-bg);
-            padding: 25px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .trend-item:hover, .tool-item:hover, .essential-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: var(--box-shadow);
         }
 
         .trend-item h3, .tool-item h3, .essential-item h3 {
@@ -117,90 +111,84 @@
             margin-top: 0;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.3em;
+            gap: 8px;
+            font-size: 1.2em;
             font-weight: 600;
         }
 
         .takeaway {
             font-style: italic;
             color: var(--light-text);
-            padding: 15px;
-            border-left: 4px solid var(--accent-color);
-            background: rgba(25, 227, 227, 0.07);
+            padding: 12px;
+            border-left: 3px solid var(--accent-color);
+            background: rgba(25, 227, 227, 0.04);
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            margin: 20px 0;
+            margin: 16px 0;
         }
 
         .price-tiers {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
 
         .price-tier {
             background: var(--card-bg);
-            padding: 25px;
+            padding: 20px;
             border-radius: var(--border-radius);
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .price-tier:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: none;
+            box-shadow: var(--box-shadow);
         }
 
         .price {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: var(--primary-color);
             font-weight: 700;
-            margin: 20px 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin: 16px 0;
         }
 
         .button {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary-color);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
-            margin-top: 15px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            margin-top: 12px;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(58, 141, 255, 0.15);
+            transition: background-color 0.2s ease;
         }
 
         .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(247, 107, 154, 0.18);
+            background: var(--secondary-color);
+            transform: none;
         }
 
         .draft-banner {
-            background: linear-gradient(135deg, var(--highlight-color), var(--secondary-color));
-            color: white;
+            background: var(--highlight-color);
+            color: var(--text-color);
             text-align: center;
-            padding: 12px;
-            margin-bottom: 25px;
+            padding: 10px;
+            margin-bottom: 20px;
             border-radius: var(--border-radius);
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(255, 195, 77, 0.18);
         }
 
         .markdown-content {
-            margin-top: 15px;
+            margin-top: 12px;
             color: var(--light-text);
         }
 
         @media (max-width: 600px) {
             body {
-                padding: 15px;
+                padding: 0;
             }
             .header {
                 padding: 30px 20px;
@@ -208,18 +196,19 @@
             .header h1 {
                 font-size: 2.2em;
             }
+            .section {
+                padding: 16px;
+                margin-bottom: 24px;
+            }
             .price-tiers {
                 grid-template-columns: 1fr;
-            }
-            .section {
-                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div style="text-align:center; margin-bottom: 30px;">
-        <img src="/assets/FineTunedBanner.png" alt="Fine-Tuned: Personal AI Hacks & News by Patrick C. Freyer" style="max-width: 350px; width: 100%; height: auto; border-radius: 18px; box-shadow: 0 4px 24px rgba(74, 108, 247, 0.10); background: #fff; padding: 8px;" />
+    <div style="width: 100%; margin-bottom: 30px;">
+        <img src="/assets/FineTunedBanner.png" alt="Fine-Tuned: Personal AI Hacks & News by Patrick C. Freyer" style="width: 100%; height: auto; display: block;" />
     </div>
     
     {% if include.newsletter.published == false %}
@@ -228,9 +217,13 @@
     </div>
     {% endif %}
     
-    <div class="header">
-        <h1><i class="fas fa-newspaper"></i> {{ include.newsletter.title }}</h1>
-        <div class="date">Issue #{{ include.newsletter.issue }} | {{ include.newsletter.date }}</div>
+    <div class="section">
+        <h1 style="text-align: center; color: var(--primary-color); font-size: 2.8em; margin-bottom: 10px; font-weight: 700;">
+            <i class="fas fa-newspaper"></i> {{ include.newsletter.title }}
+        </h1>
+        <div style="text-align: center; color: var(--light-text); font-size: 1.2em; font-weight: 500; letter-spacing: 0.5px; margin-bottom: 20px;">
+            Issue #{{ include.newsletter.issue }} | {{ include.newsletter.date }}
+        </div>
     </div>
 
     <div class="section">
