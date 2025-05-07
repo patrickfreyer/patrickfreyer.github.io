@@ -2,7 +2,7 @@ issues:
   - title: "Fine-Tuned: Patrick's Personal AI Hacks & Insights"
     date: "2024-04-23"
     issue: 1
-    published: true
+    published: false
     trends:
       - title: "Trend Title"
         description: "Detailed description of the trend with potential [hyperlinks](https://example.com) embedded in the text"
