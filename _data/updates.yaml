@@ -5,8 +5,8 @@
   icon: 🎧
 
 - date: 2024-10-16
-  title: Engagement with Sofya
-  description: Sofya & I got engaged on a trip to the goldrush town of Breckenridge, CO. A drone nearly crashed in the process and altitude sickness started setting in, but we survived and had something to celebrate.
+  title: Engagemen
+  description: Sofya & I got engaged
   type: personal
   icon: 💍
 
@@ -22,23 +22,11 @@
   type: startup
   icon: 📱
 
-- date: 2022-06-01
-  title: Joined BCG
-  description: Following multiple internships in banking, I made a pivot and joined the Boston Consulting Group in the Munich office.
-  type: work
-  icon: 💼
-
 - date: 2021-10-01
   title: Built NebulaLabs
   description: Developed a patent trading platform and legal framework with support from Goodwin Procter. We enabled fractional investments in patents, allowing more flexible investments in university or startup R&D, including in liquidation events.
   type: startup
   icon: 🔒
-
-- date: 2020-06-01
-  title: Summer with UBS
-  description: I spent the summer working in the investment banking division of UBS in London, focusing on Financial Institutions M&A coverage (especially in the South European banking sector).
-  type: work
-  icon: 💼
 
 - date: 2019-06-01
   title: Hong Kong University Economics Research Scholarship
