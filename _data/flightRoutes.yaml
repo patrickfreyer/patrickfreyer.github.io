@@ -2214,21 +2214,21 @@
   occasion: "Private"
   travelers: ["Patrick"]
 
-- origin: "New York"
-  destination: "Geneva"
-  airline: "Swiss"
-  year: 2025
-  month: "May"
-  occasion: "Private"
-  travelers: ["Patrick", "Sofya"]
-
-- origin: "Geneva"
+- origin: "Denver"
   destination: "Munich"
-  airline: "Swiss"
+  airline: "Lufthansa"
   year: 2025
   month: "May"
-  occasion: "Private"
-  travelers: ["Patrick", "Sofya"]
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Vienna"
+  airline: "Austrian"
+  year: 2025
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
 
 - origin: "Munich"
   destination: "Istanbul"
@@ -2262,10 +2262,18 @@
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
 
-- origin: "Munich"
+- origin: "Vienna"
+  destination: "Frankfurt"
+  airline: "Austrian"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Frankfurt"
   destination: "Denver"
   airline: "Lufthansa"
   year: 2025
   month: "July"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick"]
