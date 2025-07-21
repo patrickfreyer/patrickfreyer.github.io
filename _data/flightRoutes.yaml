@@ -2277,3 +2277,35 @@
   month: "July"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Boston"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Boston"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
