@@ -86,7 +86,7 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
             color: brightColor,
             transparent: true,
             opacity: 0.9, // Increased from 0.6
-            linewidth: 1.5, // Increased from 1
+            linewidth: 3, // Increased from 1
             depthTest: true,
             depthWrite: false
         });
