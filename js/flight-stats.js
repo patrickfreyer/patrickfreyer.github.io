@@ -163,31 +163,69 @@ class FlightStatsCalculator {
         const yearStats = this.getStatsByYear();
         const years = Object.keys(yearStats).sort();
         const distances = years.map(year => Math.round(yearStats[year].distance));
+        const flightCounts = years.map(year => yearStats[year].count);
 
         const ctx = document.getElementById('year-chart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: years,
-                datasets: [{
-                    label: 'Distance (km)',
-                    data: distances,
-                    backgroundColor: 'rgba(37, 99, 235, 0.8)',
-                    borderColor: 'rgba(37, 99, 235, 1)',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
+                datasets: [
+                    {
+                        label: 'Distance (km)',
+                        data: distances,
+                        backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Number of Flights',
+                        data: flightCounts,
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        yAxisID: 'y1'
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            },
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                if (context.dataset.label === 'Distance (km)') {
+                                    return `Distance: ${context.parsed.y.toLocaleString()} km`;
+                                } else {
+                                    return `Flights: ${context.parsed.y}`;
+                                }
+                            }
+                        }
                     }
                 },
                 scales: {
                     y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
                         beginAtZero: true,
                         ticks: {
                             color: '#6b7280',
@@ -197,6 +235,37 @@ class FlightStatsCalculator {
                         },
                         grid: {
                             color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distance (km)',
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            }
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            }
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Flights',
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            }
                         }
                     },
                     x: {
