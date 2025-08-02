@@ -394,13 +394,18 @@ function initEarth() {
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.dampingFactor = 0.3; // Increased for smoother damping
     controls.screenSpacePanning = false;
     controls.minDistance = 6;
     controls.maxDistance = 12;
     controls.enablePan = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.3;
+    
+    // Zoom settings for smoother zooming
+    controls.zoomSpeed = 0.3; // Reduced zoom speed (default is 1.0)
+    controls.enableZoom = true;
+    controls.zoomDampingFactor = 0.1; // Smooth zoom damping
 
     // Function to convert Lat/Lon to 3D coordinates
     function latLonToVector3(lat, lon, radius) {
