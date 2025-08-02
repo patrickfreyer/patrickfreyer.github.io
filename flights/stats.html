@@ -1,0 +1,214 @@
+---
+layout: default
+title: Flight Statistics
+permalink: /flights/stats/
+---
+
+<div class="stats-page">
+    <div class="stats-header">
+        <h1>Flight Statistics</h1>
+        <p>Comprehensive analysis of travel patterns and distances</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stats-card">
+            <h3>Total Distance</h3>
+            <div class="stat-value" id="total-distance">Calculating...</div>
+            <div class="stat-unit">kilometers</div>
+        </div>
+        
+        <div class="stats-card">
+            <h3>Total Flights</h3>
+            <div class="stat-value" id="total-flights">Calculating...</div>
+            <div class="stat-unit">flights</div>
+        </div>
+        
+        <div class="stats-card">
+            <h3>Countries Visited</h3>
+            <div class="stat-value" id="countries-visited">Calculating...</div>
+            <div class="stat-unit">countries</div>
+        </div>
+        
+        <div class="stats-card">
+            <h3>Years of Travel</h3>
+            <div class="stat-value" id="years-traveled">Calculating...</div>
+            <div class="stat-unit">years</div>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <div class="chart-container">
+            <h3>Distance by Year</h3>
+            <canvas id="year-chart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h3>Distance by Companion</h3>
+            <canvas id="companion-chart"></canvas>
+        </div>
+    </div>
+
+    <div class="detailed-stats">
+        <h3>Top Destinations</h3>
+        <div class="destinations-list" id="top-destinations">
+            <!-- Will be populated by JavaScript -->
+        </div>
+        
+        <h3>Most Frequent Airlines</h3>
+        <div class="airlines-list" id="top-airlines">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const locationsData = {{ site.data.heroLocations | jsonify }};
+    const flightRoutesData = {{ site.data.flightRoutes | jsonify }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ '/js/flight-stats.js' | relative_url }}"></script>
+
+<style>
+    .stats-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: white;
+    }
+
+    .stats-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .stats-header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .stats-header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .stats-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stats-card h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat-unit {
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+    .charts-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .chart-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .chart-container h3 {
+        margin: 0 0 20px 0;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .detailed-stats {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .detailed-stats h3 {
+        margin: 0 0 20px 0;
+        font-size: 1.3rem;
+    }
+
+    .destinations-list, .airlines-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .destination-item, .airline-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .destination-name, .airline-name {
+        font-weight: 500;
+    }
+
+    .destination-count, .airline-count {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .stats-page {
+            padding: 20px 10px;
+        }
+        
+        .stats-header h1 {
+            font-size: 2rem;
+        }
+        
+        .charts-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style> 

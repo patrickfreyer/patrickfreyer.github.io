@@ -41,6 +41,9 @@ permalink: /flights/
                 <button id="apply-filters" class="filter-button">Apply</button>
                 <button id="reset-filters" class="filter-button">Reset</button>
             </div>
+            <div class="filter-group">
+                <a href="/flights/stats/" class="stats-link">📊 View Statistics</a>
+            </div>
         </div>
     </div>
     <div id="earth-container" class="fullscreen"></div>
@@ -134,5 +137,23 @@ permalink: /flights/
 
     .filter-button:last-child {
         margin-right: 0;
+    }
+
+    .stats-link {
+        display: block;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        color: white;
+        text-decoration: none;
+        text-align: center;
+        transition: background 0.3s ease;
+        margin-top: 15px;
+    }
+
+    .stats-link:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+        text-decoration: none;
     }
 </style> 
