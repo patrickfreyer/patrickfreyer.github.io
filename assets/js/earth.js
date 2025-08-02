@@ -77,15 +77,36 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
     const lines = [];
     pathsPoints.forEach(points => {
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        
+        // Create a brighter version of the color for better contrast
+        const brightColor = new THREE.Color(color);
+        brightColor.multiplyScalar(1.5); // Make it 50% brighter
+        
         const material = new THREE.LineBasicMaterial({
-            color: color,
+            color: brightColor,
             transparent: true,
-            opacity: 0.6,
-            linewidth: 1,
+            opacity: 0.9, // Increased from 0.6
+            linewidth: 2, // Increased from 1
             depthTest: true,
             depthWrite: false
         });
-        lines.push(new THREE.Line(geometry, material));
+        
+        const line = new THREE.Line(geometry, material);
+        
+        // Add a glow effect by creating a thicker line behind
+        const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
+        const glowMaterial = new THREE.LineBasicMaterial({
+            color: brightColor,
+            transparent: true,
+            opacity: 0.3,
+            linewidth: 4, // Thicker glow line
+            depthTest: false,
+            depthWrite: false
+        });
+        const glowLine = new THREE.Line(glowGeometry, glowMaterial);
+        
+        lines.push(glowLine); // Add glow first (behind)
+        lines.push(line); // Add main line on top
     });
     return lines;
 }
@@ -206,20 +227,20 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
 
 // Function to generate distinct colors
 function generateDistinctColors(count) {
-    // Colorblind-friendly palette (avoiding red tones)
+    // High contrast, vibrant colors for better visibility
     const baseColors = [
-        0x4169E1, // Royal Blue
-        0x008080, // Teal
-        0xFFA500, // Orange
-        0x4B0082, // Indigo
-        0x006400, // Dark Green
-        0x800080, // Purple
-        0x008000, // Green
-        0x000080, // Navy
-        0x20B2AA, // Light Sea Green
-        0x6B8E23, // Olive Drab
-        0x483D8B, // Dark Slate Blue
-        0x2F4F4F  // Dark Slate Gray
+        0xFF6B35, // Bright Orange
+        0x4ECDC4, // Bright Cyan
+        0x45B7D1, // Bright Blue
+        0x96CEB4, // Bright Green
+        0xFFEAA7, // Bright Yellow
+        0xDDA0DD, // Bright Purple
+        0xFF69B4, // Hot Pink
+        0x00CED1, // Dark Turquoise
+        0xFFD700, // Gold
+        0xFF6347, // Tomato
+        0x00FF7F, // Spring Green
+        0xFF1493  // Deep Pink
     ];
 
     const colors = [];
