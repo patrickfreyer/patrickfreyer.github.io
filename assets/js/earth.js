@@ -110,13 +110,11 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
         
         const material = new THREE.LineBasicMaterial({
             color: brightColor,
-            transparent: true,
-            opacity: 0.9,
+            transparent: false, // No transparency
             linewidth: 3,
             depthTest: true,
-            depthWrite: false, // Don't write to depth buffer
-            side: THREE.FrontSide,
-            blending: THREE.AdditiveBlending
+            depthWrite: true, // Write to depth buffer
+            side: THREE.FrontSide
         });
         
         const line = new THREE.Line(geometry, material);
@@ -127,15 +125,14 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
         const glowMaterial = new THREE.LineBasicMaterial({
             color: brightColor,
             transparent: true,
-            opacity: 0.3,
-            linewidth: 4, // Thicker glow line
+            opacity: 0.4,
+            linewidth: 5, // Thicker glow line
             depthTest: true,
             depthWrite: false, // Don't write to depth buffer
-            side: THREE.FrontSide,
-            blending: THREE.AdditiveBlending
+            side: THREE.FrontSide
         });
         const glowLine = new THREE.Line(glowGeometry, glowMaterial);
-        glowLine.renderOrder = 1; // Render after earth mesh
+        glowLine.renderOrder = 0; // Render before main line
         
         lines.push(glowLine); // Add glow first (behind)
         lines.push(line); // Add main line on top
@@ -322,6 +319,16 @@ function initEarth() {
     const roughnessTexture = loadTexture('earth_roughness.jpg');
     const bumpTexture = loadTexture('earth_bump.jpg');
     const cloudsTexture = loadTexture('earth_clouds.jpg');
+
+    // 0. Solid Base Sphere (to prevent flight routes from showing through)
+    const baseGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
+    const baseMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000, // Black color
+        side: THREE.FrontSide
+    });
+    const baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+    baseMesh.renderOrder = -1; // Render first, before everything else
+    scene.add(baseMesh);
 
     // 1. Base Earth Layer
     const globeGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
