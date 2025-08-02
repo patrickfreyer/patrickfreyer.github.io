@@ -309,7 +309,30 @@ class FlightStatsCalculator {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, checking for data...');
+    
     if (typeof locationsData !== 'undefined' && typeof flightRoutesData !== 'undefined') {
-        new FlightStatsCalculator(locationsData, flightRoutesData);
+        console.log('Data found, initializing calculator...');
+        console.log('Locations:', locationsData.length);
+        console.log('Flights:', flightRoutesData.length);
+        
+        try {
+            new FlightStatsCalculator(locationsData, flightRoutesData);
+            console.log('FlightStatsCalculator initialized successfully');
+        } catch (error) {
+            console.error('Error initializing FlightStatsCalculator:', error);
+        }
+    } else {
+        console.error('Required data is missing:', {
+            locationsData: typeof locationsData,
+            flightRoutesData: typeof flightRoutesData
+        });
+    }
+    
+    // Check if Chart.js is loaded
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js is not loaded!');
+    } else {
+        console.log('Chart.js is loaded successfully');
     }
 }); 
