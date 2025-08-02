@@ -4,6 +4,8 @@ title: Flight Statistics
 permalink: /flights/stats/
 ---
 
+<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+
 <div class="stats-page">
     <div class="stats-header">
         <h1>Flight Statistics</h1>
@@ -91,26 +93,26 @@ permalink: /flights/stats/
 
 <style>
     .stats-page {
-        max-width: var(--container-max);
+        max-width: 1400px;
         margin: 0 auto;
-        padding: var(--space-16) var(--container-padding);
+        padding: 4rem 2rem;
         font-family: 'Inter', sans-serif;
-        background-color: var(--background);
-        color: var(--text-color);
+        background-color: #ffffff;
+        color: #1f2937;
         min-height: 100vh;
     }
 
     .stats-header {
         text-align: center;
-        margin-bottom: var(--space-16);
+        margin-bottom: 4rem;
     }
 
     .stats-header h1 {
         font-size: 3rem;
         font-weight: 700;
-        margin-bottom: var(--space-4);
-        color: var(--text-color);
-        background: var(--gradient-primary);
+        margin-bottom: 1rem;
+        color: #1f2937;
+        background: linear-gradient(135deg, #2563eb, #6366f1);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -118,7 +120,7 @@ permalink: /flights/stats/
 
     .stats-header p {
         font-size: 1.2rem;
-        color: var(--text-light);
+        color: #6b7280;
         max-width: 600px;
         margin: 0 auto;
     }
@@ -126,26 +128,26 @@ permalink: /flights/stats/
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: var(--space-6);
-        margin-bottom: var(--space-16);
+        gap: 1.5rem;
+        margin-bottom: 4rem;
     }
 
     .stats-card {
-        background: var(--background);
+        background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--radius-lg);
-        padding: var(--space-8);
+        border-radius: 1rem;
+        padding: 2rem;
         display: flex;
         align-items: center;
-        gap: var(--space-6);
-        transition: var(--transition-normal);
-        box-shadow: var(--shadow-sm);
+        gap: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .stats-card:hover {
         transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--primary-color);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-color: #2563eb;
     }
 
     .stat-icon {
@@ -160,43 +162,43 @@ permalink: /flights/stats/
     .stat-value {
         font-size: 2rem;
         font-weight: 700;
-        color: var(--text-color);
-        margin-bottom: var(--space-2);
+        color: #1f2937;
+        margin-bottom: 0.5rem;
     }
 
     .stat-label {
         font-size: 0.9rem;
         font-weight: 500;
-        color: var(--text-light);
-        margin-bottom: var(--space-1);
+        color: #6b7280;
+        margin-bottom: 0.25rem;
     }
 
     .stat-unit {
         font-size: 0.8rem;
-        color: var(--text-lighter);
+        color: #9ca3af;
     }
 
     .charts-section {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: var(--space-8);
-        margin-bottom: var(--space-16);
+        gap: 2rem;
+        margin-bottom: 4rem;
     }
 
     .chart-container {
-        background: var(--background);
+        background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--radius-lg);
-        padding: var(--space-8);
-        box-shadow: var(--shadow-sm);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .chart-container h3 {
-        margin: 0 0 var(--space-6) 0;
+        margin: 0 0 1.5rem 0;
         text-align: center;
         font-size: 1.3rem;
         font-weight: 600;
-        color: var(--text-color);
+        color: #1f2937;
     }
 
     .chart-wrapper {
@@ -208,38 +210,38 @@ permalink: /flights/stats/
     .detailed-stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: var(--space-8);
+        gap: 2rem;
     }
 
     .stats-column {
-        background: var(--background);
+        background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--radius-lg);
-        padding: var(--space-8);
-        box-shadow: var(--shadow-sm);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .stats-column h3 {
-        margin: 0 0 var(--space-6) 0;
+        margin: 0 0 1.5rem 0;
         font-size: 1.3rem;
         font-weight: 600;
-        color: var(--text-color);
+        color: #1f2937;
     }
 
     .destinations-list, .airlines-list {
         display: flex;
         flex-direction: column;
-        gap: var(--space-3);
+        gap: 0.75rem;
     }
 
     .destination-item, .airline-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: var(--space-4);
-        background: var(--background-alt);
-        border-radius: var(--radius-md);
-        transition: var(--transition-fast);
+        padding: 1rem;
+        background: #f3f4f6;
+        border-radius: 0.5rem;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .destination-item:hover, .airline-item:hover {
@@ -249,14 +251,14 @@ permalink: /flights/stats/
 
     .destination-name, .airline-name {
         font-weight: 500;
-        color: var(--text-color);
+        color: #1f2937;
     }
 
     .destination-count, .airline-count {
-        background: var(--primary-color);
+        background: #2563eb;
         color: white;
-        padding: var(--space-2) var(--space-4);
-        border-radius: var(--radius-full);
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
         font-size: 0.9rem;
         font-weight: 600;
         min-width: 2rem;
@@ -265,7 +267,7 @@ permalink: /flights/stats/
 
     @media (max-width: 768px) {
         .stats-page {
-            padding: var(--space-8) var(--space-4);
+            padding: 2rem 1rem;
         }
         
         .stats-header h1 {
