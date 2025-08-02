@@ -111,10 +111,11 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
         const material = new THREE.LineBasicMaterial({
             color: brightColor,
             transparent: true,
-            opacity: 0.9, // Increased from 0.6
-            linewidth: 3, // Increased from 1
+            opacity: 0.9,
+            linewidth: 3,
             depthTest: true,
-            depthWrite: false
+            depthWrite: false,
+            side: THREE.FrontSide
         });
         
         const line = new THREE.Line(geometry, material);
@@ -126,8 +127,9 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
             transparent: true,
             opacity: 0.3,
             linewidth: 4, // Thicker glow line
-            depthTest: false,
-            depthWrite: false
+            depthTest: true, // Changed from false to true
+            depthWrite: false,
+            side: THREE.FrontSide
         });
         const glowLine = new THREE.Line(glowGeometry, glowMaterial);
         
@@ -204,7 +206,7 @@ function filterFlightData(data, filters) {
     });
 }
 
-function setupFilterHandlers(earthMesh, initializeFlightPaths) {
+function setupFilterHandlers(earthMesh, initializeFlightPaths, scene) {
     const applyButton = document.getElementById('apply-filters');
     const resetButton = document.getElementById('reset-filters');
     const toggleButton = document.getElementById('toggle-filters');
@@ -227,8 +229,8 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
                 travelers: getSelectedValues('travelers-filter')
             };
 
-            // Remove existing flight paths
-            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+            // Remove existing flight paths from scene
+            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
 
             // Apply filtered data
             const filteredData = filterFlightData(flightRoutesData, filters);
@@ -245,7 +247,7 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
             });
 
             // Reset to original data
-            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
             initializeFlightPaths(flightRoutesData, earthMesh);
         });
     }
@@ -486,7 +488,8 @@ function initEarth() {
                 airlineColors[route.airline] || airlineColors.default
             );
             
-            flightLines.forEach(line => targetMesh.add(line));
+            // Add lines directly to scene instead of as children of earthMesh
+            flightLines.forEach(line => scene.add(line));
         });
     }
 
@@ -494,7 +497,7 @@ function initEarth() {
     initializeFlightPaths(flightRoutesData, earthMesh);
 
     // Setup filter handlers
-    setupFilterHandlers(earthMesh, initializeFlightPaths);
+    setupFilterHandlers(earthMesh, initializeFlightPaths, scene);
 
     // Initial Camera Position
     camera.position.set(4, 8, 8); // Position camera above and to the side of Europe
