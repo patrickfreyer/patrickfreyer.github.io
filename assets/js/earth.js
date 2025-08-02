@@ -227,20 +227,20 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
 
 // Function to generate distinct colors
 function generateDistinctColors(count) {
-    // High contrast, vibrant colors for better visibility
+    // Simplified, bright color palette for better visibility
     const baseColors = [
-        0xFF6B35, // Bright Orange
-        0x4ECDC4, // Bright Cyan
-        0x45B7D1, // Bright Blue
-        0x96CEB4, // Bright Green
-        0xFFEAA7, // Bright Yellow
-        0xDDA0DD, // Bright Purple
+        0xFFFF00, // Bright Yellow
+        0xFF8C00, // Bright Orange
+        0x00BFFF, // Bright Blue
+        0xFFFFFF, // White
+        0xFF1493, // Deep Pink
+        0x00FF00, // Bright Green
+        0xFF4500, // Orange Red
+        0x00FFFF, // Cyan
+        0xFFD700, // Gold
         0xFF69B4, // Hot Pink
         0x00CED1, // Dark Turquoise
-        0xFFD700, // Gold
-        0xFF6347, // Tomato
-        0x00FF7F, // Spring Green
-        0xFF1493  // Deep Pink
+        0xFF6347  // Tomato
     ];
 
     const colors = [];
