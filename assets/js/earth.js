@@ -114,11 +114,13 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
             opacity: 0.9,
             linewidth: 3,
             depthTest: true,
-            depthWrite: false,
-            side: THREE.FrontSide
+            depthWrite: false, // Don't write to depth buffer
+            side: THREE.FrontSide,
+            blending: THREE.AdditiveBlending
         });
         
         const line = new THREE.Line(geometry, material);
+        line.renderOrder = 1; // Render after earth mesh
         
         // Add a glow effect by creating a thicker line behind
         const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -127,11 +129,13 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
             transparent: true,
             opacity: 0.3,
             linewidth: 4, // Thicker glow line
-            depthTest: true, // Changed from false to true
-            depthWrite: false,
-            side: THREE.FrontSide
+            depthTest: true,
+            depthWrite: false, // Don't write to depth buffer
+            side: THREE.FrontSide,
+            blending: THREE.AdditiveBlending
         });
         const glowLine = new THREE.Line(glowGeometry, glowMaterial);
+        glowLine.renderOrder = 1; // Render after earth mesh
         
         lines.push(glowLine); // Add glow first (behind)
         lines.push(line); // Add main line on top
@@ -332,6 +336,7 @@ function initEarth() {
         shininess: 15
     });
     const earthMesh = new THREE.Mesh(globeGeometry, globeMaterial);
+    earthMesh.renderOrder = 0; // Render first
     scene.add(earthMesh);
 
     // 2. Night Lights Layer
@@ -344,6 +349,7 @@ function initEarth() {
         depthWrite: false
     });
     const nightMesh = new THREE.Mesh(nightGeometry, nightMaterial);
+    nightMesh.renderOrder = 0; // Render first
     scene.add(nightMesh);
 
     // 3. Cloud Layer
@@ -357,6 +363,7 @@ function initEarth() {
         blending: THREE.NormalBlending
     });
     const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    cloudMesh.renderOrder = 0; // Render first
     scene.add(cloudMesh);
 
     // Enhanced Lighting System
