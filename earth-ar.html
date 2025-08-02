@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth AR Visualization</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .ar-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            z-index: 1000;
+        }
+
+        .ar-button {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .ar-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .ar-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .success {
+            color: #51cf66;
+        }
+    </style>
+</head>
+<body>
+    <div class="ar-container">
+        <div class="info-panel">
+            <h2>🌍 Earth AR Visualization</h2>
+            <p>Experience your flight routes in augmented reality!</p>
+            <ul>
+                <li>Point your camera at a flat surface</li>
+                <li>Tap to place the earth</li>
+                <li>Explore your flight routes in 3D space</li>
+            </ul>
+        </div>
+
+        <div class="status" id="status">
+            <div class="loading" id="loading">
+                <h3>Loading AR...</h3>
+                <p>Please wait while we initialize the AR session</p>
+            </div>
+            <div class="error" id="error" style="display: none;">
+                <h3>AR Not Available</h3>
+                <p>This device doesn't support AR or WebXR</p>
+            </div>
+        </div>
+
+        <button class="ar-button" id="arButton" style="display: none;">
+            Start AR Experience
+        </button>
+    </div>
+
+    <script type="module" src="assets/js/earth-ar.js"></script>
+    <script type="module">
+        let earthAR = null;
+
+        async function initAR() {
+            const statusEl = document.getElementById('status');
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const arButton = document.getElementById('arButton');
+
+            try {
+                // Show loading
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+
+                // Initialize AR
+                earthAR = new EarthAR();
+                const isSupported = await earthAR.init();
+
+                if (isSupported) {
+                    // Hide loading and show AR button
+                    loadingEl.style.display = 'none';
+                    arButton.style.display = 'block';
+                    
+                    // Setup AR scene
+                    earthAR.createARScene();
+                    earthAR.createEarthForAR();
+                    
+                    console.log('AR initialized successfully');
+                } else {
+                    throw new Error('AR not supported');
+                }
+            } catch (error) {
+                console.error('AR initialization failed:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorEl.innerHTML = `
+                    <h3>AR Not Available</h3>
+                    <p>This device doesn't support AR or WebXR</p>
+                    <p><small>Error: ${error.message}</small></p>
+                `;
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initAR);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (earthAR && earthAR.renderer) {
+                earthAR.renderer.setSize(window.innerWidth, window.innerHeight);
+                earthAR.camera.aspect = window.innerWidth / window.innerHeight;
+                earthAR.camera.updateProjectionMatrix();
+            }
+        });
+    </script>
+</body>
+</html> 
