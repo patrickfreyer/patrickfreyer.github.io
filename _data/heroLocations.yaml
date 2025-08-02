@@ -265,9 +265,15 @@
 - name: "Kota Kinabalu"
   lat: 5.9804
   lon: 116.0735
+<<<<<<< HEAD
 - name: "Valeta"
   lat: 35.8989
   lon: 14.5146
 - name: "Cape Town"
   lat: -33.9249
   lon: 18.4241
+=======
+- name: "Boston"
+  lat: 42.3656
+  lon: -71.0096
+>>>>>>> de61a73267252f8cd00b3ff27375be40fcc03489
