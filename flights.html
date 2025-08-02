@@ -51,6 +51,14 @@ permalink: /flights/
             </div>
         </div>
     </div>
+    
+    <!-- Mobile stats button -->
+    <div class="mobile-stats-button">
+        <a href="/flights/stats/" class="mobile-stats-link">
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </div>
+    
     <div id="earth-container" class="fullscreen"></div>
 </div>
 
@@ -205,5 +213,48 @@ permalink: /flights/
         background: rgba(255, 255, 255, 0.3);
         color: white;
         text-decoration: none;
+    }
+
+    /* Mobile stats button */
+    .mobile-stats-button {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .mobile-stats-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        font-size: 18px;
+    }
+
+    .mobile-stats-link:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: scale(1.1);
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .filter-panel {
+            display: none;
+        }
+        
+        .mobile-stats-button {
+            display: block;
+        }
     }
 </style> 
