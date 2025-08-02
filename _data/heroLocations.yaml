@@ -265,3 +265,9 @@
 - name: "Kota Kinabalu"
   lat: 5.9804
   lon: 116.0735
+- name: "Valeta"
+  lat: 35.8989
+  lon: 14.5146
+- name: "Cape Town"
+  lat: -33.9249
+  lon: 18.4241
