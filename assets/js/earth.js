@@ -34,25 +34,51 @@ function getRouteFrequency(origin, destination, frequencies) {
     return frequencies[routeKey] || 1;
 }
 
-// Function to create curved flight path
+// Function to create curved flight path using great circle
 function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
     const pathsPoints = [];
     const numPoints = 50;
+    
+    // Normalize the start and end points to get unit vectors
+    const startNormalized = startPoint.clone().normalize();
+    const endNormalized = endPoint.clone().normalize();
+    
+    // Calculate the great circle distance (angle between points)
+    const dotProduct = startNormalized.dot(endNormalized);
+    const angle = Math.acos(Math.max(-1, Math.min(1, dotProduct)));
     
     // Calculate distance for height scaling
     const distance = startPoint.distanceTo(endPoint);
     const maxHeightScale = 0.08;
     const baseScale = Math.atan(distance) / (Math.PI / 2) * maxHeightScale;
 
-    // Generate base curved path points
+    // Generate base curved path points using great circle interpolation
     const basePoints = [];
     for (let i = 0; i <= numPoints; i++) {
         const t = i / numPoints;
-        const point = startPoint.clone().normalize();
-        point.lerp(endPoint.clone().normalize(), t).normalize();
-        const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
-        point.multiplyScalar(heightScale);
-        basePoints.push(point);
+        
+        // Use spherical linear interpolation (slerp) for great circle
+        const sinAngle = Math.sin(angle);
+        if (sinAngle === 0) {
+            // Points are the same or opposite, use direct interpolation
+            const point = startNormalized.clone().lerp(endNormalized, t);
+            const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
+            point.normalize().multiplyScalar(heightScale);
+            basePoints.push(point);
+        } else {
+            // Use proper spherical interpolation
+            const sinT = Math.sin(t * angle);
+            const sinOneMinusT = Math.sin((1 - t) * angle);
+            
+            const point = new THREE.Vector3();
+            point.addScaledVector(startNormalized, sinOneMinusT / sinAngle);
+            point.addScaledVector(endNormalized, sinT / sinAngle);
+            
+            // Add height curve above the great circle
+            const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
+            point.normalize().multiplyScalar(heightScale);
+            basePoints.push(point);
+        }
     }
 
     // Calculate perpendicular direction for parallel lines

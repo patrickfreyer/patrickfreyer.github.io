@@ -45,9 +45,9 @@ permalink: /flights/
                 <a href="/flights/stats/" class="stats-link">📊 View Statistics</a>
             </div>
             <div class="filter-group">
-                <button id="ar-button" class="ar-button">
+                <a href="/flights/ar/" class="ar-button" style="text-decoration: none; display: block; text-align: center;">
                     🌍 Experience in AR
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -60,7 +60,6 @@ permalink: /flights/
 </script>
 
 <script src="{{ '/assets/js/earth.js' | relative_url }}" type="module"></script>
-<script src="{{ '/assets/js/earth-ar.js' | relative_url }}" type="module"></script>
 
 <style>
     .earth-visualization-page {
@@ -165,11 +164,29 @@ permalink: /flights/
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
-    .ar-button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
+    .ar-button {
+        width: 100%;
+        padding: 12px 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 10px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .ar-button:hover {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        color: white;
+        text-decoration: none;
     }
 
     .stats-link {
@@ -189,75 +206,4 @@ permalink: /flights/
         color: white;
         text-decoration: none;
     }
-</style>
-
-<script type="module">
-    // AR functionality
-    let earthAR = null;
-    let isARSupported = false;
-
-    async function initAR() {
-        try {
-            // Check if WebXR is supported
-            if (!navigator.xr) {
-                console.warn('WebXR not supported');
-                return false;
-            }
-
-            // Check if AR is supported
-            const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
-            if (!isARSupported) {
-                console.warn('AR not supported on this device');
-                return false;
-            }
-
-            return true;
-        } catch (error) {
-            console.error('AR check failed:', error);
-            return false;
-        }
-    }
-
-    async function setupARButton() {
-        const arButton = document.getElementById('ar-button');
-        if (!arButton) return;
-
-        // Check AR support
-        isARSupported = await initAR();
-        
-        if (!isARSupported) {
-            arButton.disabled = true;
-            arButton.textContent = '🌍 AR Not Available';
-            arButton.title = 'AR is not supported on this device';
-        } else {
-            arButton.addEventListener('click', async () => {
-                try {
-                    arButton.disabled = true;
-                    arButton.textContent = '🌍 Starting AR...';
-                    
-                    // Initialize AR
-                    earthAR = new EarthAR();
-                    await earthAR.init();
-                    
-                    // Create AR scene
-                    earthAR.createARScene();
-                    earthAR.createEarthForAR();
-                    
-                    // Show success message
-                    arButton.textContent = '🌍 AR Active!';
-                    arButton.style.background = 'linear-gradient(135deg, #51cf66 0%, #40c057 100%)';
-                    
-                    console.log('AR session started successfully');
-                } catch (error) {
-                    console.error('AR initialization failed:', error);
-                    arButton.disabled = false;
-                    arButton.textContent = '🌍 Experience in AR';
-                    arButton.title = 'Failed to start AR. Please try again.';
-                }
-            });
-        }
-    }
-
-    // Initialize AR button when page loads
-    document.addEventListener('DOMContentLoaded', setupARButton);
-</script> 
+</style> 

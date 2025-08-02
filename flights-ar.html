@@ -1,0 +1,325 @@
+---
+layout: default
+title: Flights AR Experience
+permalink: /flights/ar/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Flights AR Experience</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .ar-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .ar-button {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .ar-button:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .ar-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: translateX(-50%);
+            box-shadow: none;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .success {
+            color: #51cf66;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="ar-container">
+        <a href="/flights/" class="back-button">← Back to Flights</a>
+        
+        <div class="info-panel">
+            <h2>🌍 Flight Routes in AR</h2>
+            <p>Experience your flight routes in augmented reality!</p>
+            <ul>
+                <li>Point your camera at a flat surface</li>
+                <li>Tap to place the Earth</li>
+                <li>Explore your flight routes in 3D space</li>
+            </ul>
+        </div>
+
+        <div class="status" id="status">
+            <div class="loading" id="loading">
+                <h3>Loading AR...</h3>
+                <p>Please wait while we initialize the AR session</p>
+            </div>
+            <div class="error" id="error" style="display: none;">
+                <h3>AR Not Available</h3>
+                <p>This device doesn't support AR or WebXR</p>
+            </div>
+        </div>
+
+        <button class="ar-button" id="arButton" style="display: none;">
+            Start AR Experience
+        </button>
+    </div>
+
+    <script>
+        // Flight data from Jekyll
+        const locationsData = {{ site.data.heroLocations | jsonify }};
+        const flightRoutesData = {{ site.data.flightRoutes | jsonify }};
+    </script>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js';
+        import { ARButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/ARButton.js';
+
+        let earthAR = null;
+        let renderer = null;
+        let scene = null;
+        let camera = null;
+        let earthMesh = null;
+
+        async function initAR() {
+            const statusEl = document.getElementById('status');
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const arButton = document.getElementById('arButton');
+
+            try {
+                // Show loading
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+
+                // Check for iOS Safari specifically
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+                
+                console.log('Device detection:', { isIOS, isSafari, userAgent: navigator.userAgent });
+
+                if (isIOS && isSafari) {
+                    console.log('iOS Safari detected - proceeding with AR setup');
+                    
+                    // Hide loading and show AR button
+                    loadingEl.style.display = 'none';
+                    arButton.style.display = 'block';
+                    
+                    // Setup AR scene
+                    setupARScene();
+                    
+                    console.log('AR initialized successfully for iOS Safari');
+                } else if (navigator.xr) {
+                    // Check WebXR support for other devices
+                    const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
+                    if (isARSupported) {
+                        loadingEl.style.display = 'none';
+                        arButton.style.display = 'block';
+                        setupARScene();
+                        console.log('AR initialized successfully via WebXR');
+                    } else {
+                        throw new Error('AR not supported on this device');
+                    }
+                } else {
+                    throw new Error('WebXR not supported');
+                }
+            } catch (error) {
+                console.error('AR initialization failed:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorEl.innerHTML = `
+                    <h3>AR Not Available</h3>
+                    <p>This device doesn't support AR or WebXR</p>
+                    <p><small>Error: ${error.message}</small></p>
+                `;
+            }
+        }
+
+        function setupARScene() {
+            // Create scene
+            scene = new THREE.Scene();
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: true,
+                preserveDrawingBuffer: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.xr.enabled = true;
+            
+            // Add to DOM
+            document.body.appendChild(renderer.domElement);
+            
+            // Add AR button
+            const arButton = ARButton.createButton(renderer, {
+                sessionInit: {
+                    requiredFeatures: ['hit-test'],
+                    optionalFeatures: ['dom-overlay'],
+                    domOverlay: { root: document.body }
+                }
+            });
+            document.body.appendChild(arButton);
+            
+            // Setup lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(0, 10, 0);
+            scene.add(directionalLight);
+            
+            // Create Earth for AR
+            createEarthForAR();
+            
+            // Setup session events
+            renderer.xr.addEventListener('sessionstart', () => {
+                console.log('AR session started');
+            });
+            
+            renderer.xr.addEventListener('sessionend', () => {
+                console.log('AR session ended');
+            });
+            
+            // Start render loop
+            renderer.setAnimationLoop(render);
+        }
+
+        function createEarthForAR() {
+            // Create a simplified earth for AR
+            const earthRadius = 0.3;
+            const geometry = new THREE.SphereGeometry(earthRadius, 32, 32);
+            
+            // Simple material for AR
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x4B6CB7, // Blue color
+                shininess: 30
+            });
+            
+            earthMesh = new THREE.Mesh(geometry, material);
+            earthMesh.visible = false;
+            scene.add(earthMesh);
+            
+            // Add some flight paths
+            addFlightPaths();
+        }
+
+        function addFlightPaths() {
+            // Create simple curved paths for AR
+            const curve = new THREE.CubicBezierCurve3(
+                new THREE.Vector3(-0.5, 0, 0),
+                new THREE.Vector3(-0.2, 0.3, 0.2),
+                new THREE.Vector3(0.2, 0.3, -0.2),
+                new THREE.Vector3(0.5, 0, 0)
+            );
+            
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ color: 0xFFFF00 });
+            const line = new THREE.Line(geometry, material);
+            
+            earthMesh.add(line);
+        }
+
+        function render() {
+            renderer.render(scene, camera);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initAR);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (renderer && camera) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            }
+        });
+    </script>
+</body>
+</html> 

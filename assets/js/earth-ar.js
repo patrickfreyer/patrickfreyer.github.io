@@ -1,6 +1,14 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js';
 import { ARButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/ARButton.js';
 
+// WebXR Polyfill for better iOS support
+let WebXRPolyfill = null;
+try {
+    WebXRPolyfill = await import('https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.min.js');
+} catch (e) {
+    console.log('WebXR Polyfill not available, continuing without it');
+}
+
 class EarthAR {
     constructor() {
         this.scene = null;
@@ -13,20 +21,56 @@ class EarthAR {
     }
 
     async init() {
+        // Initialize WebXR Polyfill if available
+        if (WebXRPolyfill && !navigator.xr) {
+            new WebXRPolyfill();
+            console.log('WebXR Polyfill initialized');
+        }
+
+        // Wait a bit for polyfill to initialize
+        await new Promise(resolve => setTimeout(resolve, 100));
+
         // Check if WebXR is supported
         if (!navigator.xr) {
-            console.warn('WebXR not supported');
+            console.warn('WebXR not supported - trying alternative detection');
+            
+            // Alternative detection for iOS Safari
+            if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+                console.log('iOS device detected, attempting AR setup');
+                return this.setupForIOS();
+            }
+            
             return false;
         }
 
         // Check if AR is supported
-        const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
-        if (!isARSupported) {
-            console.warn('AR not supported on this device');
+        try {
+            const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
+            if (!isARSupported) {
+                console.warn('AR not supported on this device');
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.error('Error checking AR support:', error);
             return false;
         }
+    }
 
-        return true;
+    async setupForIOS() {
+        // iOS Safari specific setup
+        console.log('Setting up for iOS Safari');
+        
+        // Check for iOS version and Safari
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        
+        if (isIOS && isSafari) {
+            console.log('iOS Safari detected, AR should be available');
+            return true;
+        }
+        
+        return false;
     }
 
     createARScene() {
