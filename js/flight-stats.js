@@ -172,9 +172,10 @@ class FlightStatsCalculator {
                 datasets: [{
                     label: 'Distance (km)',
                     data: distances,
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    borderColor: 'rgba(255, 255, 255, 0.8)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
                 }]
             },
             options: {
@@ -182,27 +183,31 @@ class FlightStatsCalculator {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        labels: {
-                            color: 'white'
-                        }
+                        display: false
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            color: 'white'
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            }
                         },
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
+                            color: 'rgba(0, 0, 0, 0.1)'
                         }
                     },
                     x: {
                         ticks: {
-                            color: 'white'
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            }
                         },
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
+                            display: false
                         }
                     }
                 }
@@ -223,15 +228,26 @@ class FlightStatsCalculator {
                 datasets: [{
                     data: distances,
                     backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#4BC0C0',
-                        '#9966FF',
-                        '#FF9F40',
-                        '#FF6384',
-                        '#C9CBCF'
-                    ]
+                        'rgba(37, 99, 235, 0.8)',
+                        'rgba(99, 102, 241, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(107, 114, 128, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(37, 99, 235, 1)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(107, 114, 128, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -241,10 +257,15 @@ class FlightStatsCalculator {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: 'white'
+                            color: '#6b7280',
+                            font: {
+                                family: 'Inter'
+                            },
+                            padding: 20
                         }
                     }
-                }
+                },
+                cutout: '60%'
             }
         });
     }
