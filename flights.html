@@ -70,6 +70,15 @@ permalink: /flights/
 <script src="{{ '/assets/js/earth.js' | relative_url }}" type="module"></script>
 
 <style>
+    /* Reset all margins and padding */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
     .earth-visualization-page {
         position: relative;
         width: 100vw;
@@ -86,6 +95,16 @@ permalink: /flights/
         position: absolute;
         top: 0;
         left: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Ensure canvas elements also take full space */
+    #earth-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .filter-panel {
