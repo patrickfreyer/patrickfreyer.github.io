@@ -2444,7 +2444,23 @@
   destination: "Denver"
   airline: "United"
   year: 2025
-  month: "July"
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Washington DC"
+  destination: "Boston"
+  airline: "United"
+  year: 2025
+  month: "August"
   occasion: "Work"
   travelers: ["Patrick"]
 
