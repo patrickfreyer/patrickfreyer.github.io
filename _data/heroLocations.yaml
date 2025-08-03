@@ -274,3 +274,18 @@
 - name: "Boston"
   lat: 42.3656
   lon: -71.0096
+- name: "Santo Domingo"
+  lat: 18.4861
+  lon: -69.9312
+- name: "Lisbon"
+  lat: 38.7223
+  lon: -9.1393
+- name: "Mauritius"
+  lat: -20.3484
+  lon: 57.5522
+- name: "Cagliari"
+  lat: 39.2238
+  lon: 9.1217
+- name: "Reykjavik"
+  lat: 64.1466
+  lon: -21.9426
