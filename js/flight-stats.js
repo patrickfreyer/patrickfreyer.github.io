@@ -49,7 +49,7 @@ class FlightStatsCalculator {
                 totalDistance += distance;
             }
         });
-        return Math.round(totalDistance);
+        return Math.round(totalDistance*1.07);
     }
 
     // Get statistics by year
