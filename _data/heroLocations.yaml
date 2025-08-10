@@ -289,3 +289,6 @@
 - name: "Reykjavik"
   lat: 64.1466
   lon: -21.9426
+- name: "Chicago"
+  lat: 41.8781
+  lon: -87.6298
