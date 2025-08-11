@@ -34,25 +34,51 @@ function getRouteFrequency(origin, destination, frequencies) {
     return frequencies[routeKey] || 1;
 }
 
-// Function to create curved flight path
+// Function to create curved flight path using great circle
 function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
     const pathsPoints = [];
     const numPoints = 50;
+    
+    // Normalize the start and end points to get unit vectors
+    const startNormalized = startPoint.clone().normalize();
+    const endNormalized = endPoint.clone().normalize();
+    
+    // Calculate the great circle distance (angle between points)
+    const dotProduct = startNormalized.dot(endNormalized);
+    const angle = Math.acos(Math.max(-1, Math.min(1, dotProduct)));
     
     // Calculate distance for height scaling
     const distance = startPoint.distanceTo(endPoint);
     const maxHeightScale = 0.08;
     const baseScale = Math.atan(distance) / (Math.PI / 2) * maxHeightScale;
 
-    // Generate base curved path points
+    // Generate base curved path points using great circle interpolation
     const basePoints = [];
     for (let i = 0; i <= numPoints; i++) {
         const t = i / numPoints;
-        const point = startPoint.clone().normalize();
-        point.lerp(endPoint.clone().normalize(), t).normalize();
-        const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
-        point.multiplyScalar(heightScale);
-        basePoints.push(point);
+        
+        // Use spherical linear interpolation (slerp) for great circle
+        const sinAngle = Math.sin(angle);
+        if (sinAngle === 0) {
+            // Points are the same or opposite, use direct interpolation
+            const point = startNormalized.clone().lerp(endNormalized, t);
+            const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
+            point.normalize().multiplyScalar(heightScale);
+            basePoints.push(point);
+        } else {
+            // Use proper spherical interpolation
+            const sinT = Math.sin(t * angle);
+            const sinOneMinusT = Math.sin((1 - t) * angle);
+            
+            const point = new THREE.Vector3();
+            point.addScaledVector(startNormalized, sinOneMinusT / sinAngle);
+            point.addScaledVector(endNormalized, sinT / sinAngle);
+            
+            // Add height curve above the great circle
+            const heightScale = earthRadius * (1 + baseScale * Math.sin(Math.PI * t));
+            point.normalize().multiplyScalar(heightScale);
+            basePoints.push(point);
+        }
     }
 
     // Calculate perpendicular direction for parallel lines
@@ -77,15 +103,39 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
     const lines = [];
     pathsPoints.forEach(points => {
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        
+        // Create a brighter version of the color for better contrast
+        const brightColor = new THREE.Color(color);
+        brightColor.multiplyScalar(1.5); // Make it 50% brighter
+        
         const material = new THREE.LineBasicMaterial({
-            color: color,
-            transparent: true,
-            opacity: 0.6,
-            linewidth: 1,
+            color: brightColor,
+            transparent: false, // No transparency
+            linewidth: 3,
             depthTest: true,
-            depthWrite: false
+            depthWrite: true, // Write to depth buffer
+            side: THREE.FrontSide
         });
-        lines.push(new THREE.Line(geometry, material));
+        
+        const line = new THREE.Line(geometry, material);
+        line.renderOrder = 1; // Render after earth mesh
+        
+        // Add a glow effect by creating a thicker line behind
+        const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
+        const glowMaterial = new THREE.LineBasicMaterial({
+            color: brightColor,
+            transparent: true,
+            opacity: 0.4,
+            linewidth: 5, // Thicker glow line
+            depthTest: true,
+            depthWrite: false, // Don't write to depth buffer
+            side: THREE.FrontSide
+        });
+        const glowLine = new THREE.Line(glowGeometry, glowMaterial);
+        glowLine.renderOrder = 0; // Render before main line
+        
+        lines.push(glowLine); // Add glow first (behind)
+        lines.push(line); // Add main line on top
     });
     return lines;
 }
@@ -157,7 +207,7 @@ function filterFlightData(data, filters) {
     });
 }
 
-function setupFilterHandlers(earthMesh, initializeFlightPaths) {
+function setupFilterHandlers(earthMesh, initializeFlightPaths, scene) {
     const applyButton = document.getElementById('apply-filters');
     const resetButton = document.getElementById('reset-filters');
     const toggleButton = document.getElementById('toggle-filters');
@@ -180,8 +230,8 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
                 travelers: getSelectedValues('travelers-filter')
             };
 
-            // Remove existing flight paths
-            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+            // Remove existing flight paths from scene
+            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
 
             // Apply filtered data
             const filteredData = filterFlightData(flightRoutesData, filters);
@@ -198,7 +248,7 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
             });
 
             // Reset to original data
-            earthMesh.children = earthMesh.children.filter(child => !(child instanceof THREE.Line));
+            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
             initializeFlightPaths(flightRoutesData, earthMesh);
         });
     }
@@ -206,20 +256,20 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths) {
 
 // Function to generate distinct colors
 function generateDistinctColors(count) {
-    // Colorblind-friendly palette (avoiding red tones)
+    // Simplified, bright color palette for better visibility
     const baseColors = [
-        0x4169E1, // Royal Blue
-        0x008080, // Teal
-        0xFFA500, // Orange
-        0x4B0082, // Indigo
-        0x006400, // Dark Green
-        0x800080, // Purple
-        0x008000, // Green
-        0x000080, // Navy
-        0x20B2AA, // Light Sea Green
-        0x6B8E23, // Olive Drab
-        0x483D8B, // Dark Slate Blue
-        0x2F4F4F  // Dark Slate Gray
+        0xFFFF00, // Bright Yellow
+        0xFF8C00, // Bright Orange
+        0x00BFFF, // Bright Blue
+        0xFFFFFF, // White
+        0xFF1493, // Deep Pink
+        0x00FF00, // Bright Green
+        0xFF4500, // Orange Red
+        0x00FFFF, // Cyan
+        0xFFD700, // Gold
+        0xFF69B4, // Hot Pink
+        0x00CED1, // Dark Turquoise
+        0xFF6347  // Tomato
     ];
 
     const colors = [];
@@ -270,6 +320,16 @@ function initEarth() {
     const bumpTexture = loadTexture('earth_bump.jpg');
     const cloudsTexture = loadTexture('earth_clouds.jpg');
 
+    // 0. Solid Base Sphere (to prevent flight routes from showing through)
+    const baseGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
+    const baseMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000, // Black color
+        side: THREE.FrontSide
+    });
+    const baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+    baseMesh.renderOrder = -1; // Render first, before everything else
+    scene.add(baseMesh);
+
     // 1. Base Earth Layer
     const globeGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
     const globeMaterial = new THREE.MeshPhongMaterial({
@@ -283,6 +343,7 @@ function initEarth() {
         shininess: 15
     });
     const earthMesh = new THREE.Mesh(globeGeometry, globeMaterial);
+    earthMesh.renderOrder = 0; // Render first
     scene.add(earthMesh);
 
     // 2. Night Lights Layer
@@ -295,6 +356,7 @@ function initEarth() {
         depthWrite: false
     });
     const nightMesh = new THREE.Mesh(nightGeometry, nightMaterial);
+    nightMesh.renderOrder = 0; // Render first
     scene.add(nightMesh);
 
     // 3. Cloud Layer
@@ -308,6 +370,7 @@ function initEarth() {
         blending: THREE.NormalBlending
     });
     const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    cloudMesh.renderOrder = 0; // Render first
     scene.add(cloudMesh);
 
     // Enhanced Lighting System
@@ -331,13 +394,18 @@ function initEarth() {
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.dampingFactor = 0.3; // Increased for smoother damping
     controls.screenSpacePanning = false;
     controls.minDistance = 6;
     controls.maxDistance = 12;
     controls.enablePan = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.3;
+    
+    // Zoom settings for smoother zooming
+    controls.zoomSpeed = 0.3; // Reduced zoom speed (default is 1.0)
+    controls.enableZoom = true;
+    controls.zoomDampingFactor = 0.1; // Smooth zoom damping
 
     // Function to convert Lat/Lon to 3D coordinates
     function latLonToVector3(lat, lon, radius) {
@@ -439,7 +507,8 @@ function initEarth() {
                 airlineColors[route.airline] || airlineColors.default
             );
             
-            flightLines.forEach(line => targetMesh.add(line));
+            // Add lines directly to scene instead of as children of earthMesh
+            flightLines.forEach(line => scene.add(line));
         });
     }
 
@@ -447,7 +516,7 @@ function initEarth() {
     initializeFlightPaths(flightRoutesData, earthMesh);
 
     // Setup filter handlers
-    setupFilterHandlers(earthMesh, initializeFlightPaths);
+    setupFilterHandlers(earthMesh, initializeFlightPaths, scene);
 
     // Initial Camera Position
     camera.position.set(4, 8, 8); // Position camera above and to the side of Europe

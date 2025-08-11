@@ -1,0 +1,303 @@
+---
+layout: default
+title: Flight Statistics
+permalink: /flights/stats/
+---
+
+<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+
+<div class="stats-page">
+    <div class="stats-header">
+        <h1>Flight Statistics</h1>
+        <p>Comprehensive analysis of travel patterns and distances</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stats-card">
+            <div class="stat-icon">🌍</div>
+            <div class="stat-content">
+                <div class="stat-value" id="total-distance">Calculating...</div>
+                <div class="stat-label">Total Distance</div>
+                <div class="stat-unit">kilometers</div>
+            </div>
+        </div>
+        
+        <div class="stats-card">
+            <div class="stat-icon">✈️</div>
+            <div class="stat-content">
+                <div class="stat-value" id="total-flights">Calculating...</div>
+                <div class="stat-label">Total Flights</div>
+                <div class="stat-unit">flights</div>
+            </div>
+        </div>
+        
+        <div class="stats-card">
+            <div class="stat-icon">🏛️</div>
+            <div class="stat-content">
+                <div class="stat-value" id="countries-visited">Calculating...</div>
+                <div class="stat-label">Countries Visited</div>
+                <div class="stat-unit">countries</div>
+            </div>
+        </div>
+        
+        <div class="stats-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-content">
+                <div class="stat-value" id="years-traveled">Calculating...</div>
+                <div class="stat-label">Years of Travel</div>
+                <div class="stat-unit">years</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <div class="chart-container">
+            <h3>Distance and Flights by Year</h3>
+            <div class="chart-wrapper">
+                <canvas id="year-chart"></canvas>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3>Distance by Companion</h3>
+            <div class="chart-wrapper">
+                <canvas id="companion-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="detailed-stats">
+        <div class="stats-column">
+            <h3>Top Destinations</h3>
+            <div class="destinations-list" id="top-destinations">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="stats-column">
+            <h3>Most Frequent Airlines</h3>
+            <div class="airlines-list" id="top-airlines">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const locationsData = {{ site.data.heroLocations | jsonify }};
+    const flightRoutesData = {{ site.data.flightRoutes | jsonify }};
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+<script src="{{ '/js/flight-stats.js' | relative_url }}"></script>
+
+<style>
+    .stats-page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+        font-family: 'Inter', sans-serif;
+        background-color: #ffffff;
+        color: #1f2937;
+        min-height: 100vh;
+    }
+
+    .stats-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .stats-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1f2937;
+        background: linear-gradient(135deg, #2563eb, #6366f1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stats-header p {
+        font-size: 1.2rem;
+        color: #6b7280;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+    }
+
+    .stats-card {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .stats-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-color: #2563eb;
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        opacity: 0.8;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6b7280;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-unit {
+        font-size: 0.8rem;
+        color: #9ca3af;
+    }
+
+    .charts-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .chart-container {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .chart-container h3 {
+        margin: 0 0 1.5rem 0;
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .detailed-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+    }
+
+    .stats-column {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .stats-column h3 {
+        margin: 0 0 1.5rem 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .destinations-list, .airlines-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .destination-item, .airline-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: #f3f4f6;
+        border-radius: 0.5rem;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .destination-item:hover, .airline-item:hover {
+        background: rgba(37, 99, 235, 0.05);
+        transform: translateX(4px);
+    }
+
+    .destination-name, .airline-name {
+        font-weight: 500;
+        color: #1f2937;
+    }
+
+    .destination-count, .airline-count {
+        background: #2563eb;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        min-width: 2rem;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .stats-page {
+            padding: 2rem 1rem;
+        }
+        
+        .stats-header h1 {
+            font-size: 2rem;
+        }
+        
+        .charts-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .detailed-stats {
+            grid-template-columns: 1fr;
+        }
+        
+        .chart-wrapper {
+            height: 250px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .chart-wrapper {
+            height: 200px;
+        }
+    }
+</style> 

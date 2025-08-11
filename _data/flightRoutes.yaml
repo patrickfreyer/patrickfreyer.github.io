@@ -1,6 +1,212 @@
-# More flights missing...
+### 2000
+
+- origin: "Frankfurt"
+  destination: "Santo Domingo"
+  airline: "XXX"
+  year: 2000
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Santo Domingo"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2000
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+### 2002
+
+- origin: "Frankfurt"
+  destination: "Lisbon"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Lisbon"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Frankfurt"
+  destination: "Mombasa"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Mombasa"
+  destination: "Masai Mara"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Masai Mara"
+  destination: "Mombasa"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Mombasa"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2002
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+### 2004
+
+- origin: "Frankfurt"
+  destination: "Cape Town"
+  airline: "XXX"
+  year: 2004
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Cape Town"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2004
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Frankfurt"
+  destination: "Mauritius"
+  airline: "XXX"
+  year: 2004
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+- origin: "Mauritius"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2004
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Regina", "Harald"]
+
+### 2005
+
+### 2006
+
+- origin: "Frankfurt"
+  destination: "Cairo"
+  airline: "XXX"
+  year: 2006
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
+
+- origin: "Cairo"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2006
+  month: "XXX"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
+
+### 2007
+
+- origin: "Frankfurt"
+  destination: "Reykjavik"
+  airline: "XXX"
+  year: 2007
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Reykjavik"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2007
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+### 2008
+
+- origin: "Stuttgart"
+  destination: "London"
+  airline: "British Airways"
+  year: 2008
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald", "Pascal", "Regina", "Maria", "Manfred"]
+
+- origin: "London"
+  destination: "Cape Town"
+  airline: "British Airways"
+  year: 2008
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald", "Pascal", "Regina", "Maria", "Manfred"]
+
+### 2009
+
+- origin: "Cape Town"
+  destination: "London"
+  airline: "British Airways"
+  year: 2009
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald", "Pascal", "Regina", "Maria", "Manfred", "Zita"]
+
+- origin: "London"
+  destination: "Stuttgart"
+  airline: "British Airways"
+  year: 2009
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald", "Pascal", "Regina", "Maria", "Manfred", "Zita"]
+
 
 ### 2013
+- origin: "Stuttgart"
+  destination: "Zurich"
+  airline: "Lufthansa"
+  year: 2013
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
+
+- origin: "Zurich"
+  destination: "New York"
+  airline: "Lufthansa"
+  year: 2013
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
+
+- origin: "New York"
+  destination: "Zurich"
+  airline: "Lufthansa"
+  year: 2013
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
+
+- origin: "Zurich"
+  destination: "Stuttgart"
+  airline: "Lufthansa"
+  year: 2013
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Harald"]
 
 - origin: "Frankfurt"
   destination: "Beijing"
@@ -34,16 +240,12 @@
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
-# More flights missing...
 
 ### 2014
-# More flights missing...
-
-### 2015
 - origin: "Frankfurt"
   destination: "Los Angeles"
   airline: "Lufthansa"
-  year: 2015
+  year: 2014
   month: "August"
   occasion: "Private"
   travelers: ["Patrick"]
@@ -51,12 +253,29 @@
 - origin: "Los Angeles"
   destination: "Frankfurt"
   airline: "Lufthansa"
-  year: 2015
+  year: 2014
   month: "August"
   occasion: "Private"
   travelers: ["Patrick"]
 
 ### 2015
+
+- origin: "Brussels"
+  destination: "Valeta"
+  airline: "XXX"
+  year: 2015
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Valeta"
+  destination: "Brussels"
+  airline: "XXX"
+  year: 2015
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
 - origin: "Frankfurt"
   destination: "Cancun"
   airline: "Condor"
@@ -70,8 +289,6 @@
   airline: "Condor"
   year: 2015
   month: "July"
-
-# More flights missing...
 
 ### 2016
 - origin: "Frankfurt"
@@ -162,9 +379,40 @@
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
-# More flights missing...
-
 ### 2017
+
+- origin: "Brussels"
+  destination: "Budapest"
+  airline: "XXX"
+  year: 2017
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Budapest"
+  destination: "Brussels"
+  airline: "XXX"
+  year: 2017
+  month: "January"
+  occasion: "Private"
+  travelers: ["Patrick", "Pascal", "Regina", "Harald"]
+
+- origin: "Frankfurt"
+  destination: "Rome"
+  airline: "XXX"
+  year: 2017
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Zita"]
+
+- origin: "Rome"
+  destination: "Frankfurt"
+  airline: "XXX"
+  year: 2017
+  month: "June"
+  occasion: "Private"
+  travelers: ["Patrick", "Zita"]
+
 - origin: "Frankfurt"
   destination: "Singapore"
   airline: "Lufthansa"
@@ -197,7 +445,37 @@
   occasion: "Private"
   travelers: ["Patrick", "Pascal", "Regina", "Harald"]
 
-# More flights missing...
+- origin: "Brussels"
+  destination: "Hamburg"
+  airline: "XXX"
+  year: 2017
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Hamburg"
+  destination: "Brussels"
+  airline: "XXX"
+  year: 2017
+  month: "October"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Brussels"
+  destination: "Venice"
+  airline: "XXX"
+  year: 2017
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Venice"
+  destination: "Brussels"
+  airline: "XXX"
+  year: 2017
+  month: "November"
+  occasion: "Private"
+  travelers: ["Patrick"]
 
 ### 2018
 
@@ -2275,5 +2553,69 @@
   airline: "Lufthansa"
   year: 2025
   month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Boston"
+  airline: "United"
+  year: 2025
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Boston"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Washington DC"
+  destination: "Boston"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "London"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "August"
   occasion: "Work"
   travelers: ["Patrick"]
