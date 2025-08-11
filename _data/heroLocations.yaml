@@ -292,3 +292,7 @@
 - name: "Chicago"
   lat: 41.8781
   lon: -87.6298
+- name: "Raleigh Durham"
+  lat: 35.7796
+  lon: -78.6382
+

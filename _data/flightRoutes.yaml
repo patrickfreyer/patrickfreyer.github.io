@@ -2621,14 +2621,38 @@
   travelers: ["Patrick"]
 
 - origin: "Denver"
-  destination: "London"
+  destination: "Raleigh Durham"
   airline: "United"
   year: 2025
   month: "August"
   occasion: "Work"
   travelers: ["Patrick"]
 
+- origin: "Raleigh Durham"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "London"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
 - origin: "London"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "New York"
   destination: "Denver"
   airline: "United"
   year: 2025
