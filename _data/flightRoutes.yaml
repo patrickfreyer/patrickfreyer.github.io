@@ -2605,6 +2605,22 @@
   travelers: ["Patrick"]
 
 - origin: "Denver"
+  destination: "Chicago"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Chicago"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
   destination: "London"
   airline: "United"
   year: 2025
