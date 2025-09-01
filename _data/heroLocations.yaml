@@ -295,4 +295,7 @@
 - name: "Raleigh Durham"
   lat: 35.7796
   lon: -78.6382
+- name: "Goa"
+  lat: 15.4909
+  lon: 73.8278
 

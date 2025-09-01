@@ -2659,3 +2659,91 @@
   month: "August"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Toronto"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Toronto"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Toronto"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "New Delhi"
+  airline: "Air Canada"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New Delhi"
+  destination: "Goa"
+  airline: "Air India"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Goa"
+  destination: "New Delhi"
+  airline: "Air India"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Goa"
+  destination: "New Delhi"
+  airline: "Air India"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New Delhi"
+  destination: "Toronto"
+  airline: "Air Canada"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
