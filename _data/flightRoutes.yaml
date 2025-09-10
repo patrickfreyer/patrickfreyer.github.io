@@ -2786,7 +2786,7 @@
   year: 2025
   month: "October"
   occasion: "Work"
-  travelers: ["Patrick, "Sofya"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Denver"
   destination: "Boston"
