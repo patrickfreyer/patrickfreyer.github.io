@@ -2742,8 +2742,72 @@
 
 - origin: "Toronto"
   destination: "Denver"
+  airline: "Air Canada"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Mexico City"
+  airline: "Delta"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Mexico City"
+  destination: "Dallas"
   airline: "United"
   year: 2025
   month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dallas"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2025
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Washington DC"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick, "Sofya"]
+
+- origin: "Denver"
+  destination: "Boston"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Boston"
+  destination: "Toronto"
+  airline: "Air Canada"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "October"
   occasion: "Work"
   travelers: ["Patrick"]

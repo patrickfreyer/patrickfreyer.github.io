@@ -298,4 +298,10 @@
 - name: "Goa"
   lat: 15.4909
   lon: 73.8278
+- name: "Mexico City"
+  lat: 19.4326
+  lon: -99.1332
+- name: "Dallas"
+  lat: 32.7767
+  lon: -96.7970
 
