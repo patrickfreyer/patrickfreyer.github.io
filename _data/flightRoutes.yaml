@@ -2789,16 +2789,48 @@
   travelers: ["Patrick", "Sofya"]
 
 - origin: "Denver"
-  destination: "Boston"
+  destination: "London"
   airline: "United"
   year: 2025
   month: "October"
   occasion: "Work"
   travelers: ["Patrick"]
 
-- origin: "Boston"
+- origin: "London"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
   destination: "Toronto"
-  airline: "Air Canada"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "San Francisco"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Toronto"
+  airline: "United"
   year: 2025
   month: "October"
   occasion: "Work"
