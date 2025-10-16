@@ -304,4 +304,6 @@
 - name: "Dallas"
   lat: 32.7767
   lon: -96.7970
-
+- name: "Orlando"
+  lat: 28.5383
+  lon: -81.3792
