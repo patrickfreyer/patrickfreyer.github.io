@@ -2893,9 +2893,57 @@
   year: 2025
   month: "November"
   occasion: "Work"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Orlando"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Denver"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2025
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "San Francisco"
   destination: "Denver"
   airline: "United"
   year: 2025
