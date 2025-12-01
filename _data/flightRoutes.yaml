@@ -2950,3 +2950,51 @@
   month: "November"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Toronto"
+  airline: "United"
+  year: 2025
+  month: "Air Canada"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Toronto"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Berlin"
+  airline: "Lufthansa"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Berlin"
+  destination: "Stuttgart"
+  airline: "Eurowings"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
