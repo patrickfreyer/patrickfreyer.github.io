@@ -2998,3 +2998,19 @@
   month: "December"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Miami"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Miami"
+  destination: "Denver"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Work"
+  travelers: ["Patrick"]
