@@ -3014,3 +3014,21 @@
   month: "December"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2025
+  month: "December"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+### 2026
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
