@@ -35,9 +35,8 @@ function getRouteFrequency(origin, destination, frequencies) {
 }
 
 // Function to create curved flight path using great circle
-function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
+function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1, numPoints = 50) {
     const pathsPoints = [];
-    const numPoints = 50;
     
     // Normalize the start and end points to get unit vectors
     const startNormalized = startPoint.clone().normalize();
@@ -99,7 +98,7 @@ function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
 }
 
 // Function to create flight path lines
-function createFlightLines(pathsPoints, color = 0x00ff00) {
+function createFlightLines(pathsPoints, color = 0x00ff00, enableGlow = true) {
     const lines = [];
     pathsPoints.forEach(points => {
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -121,20 +120,21 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
         line.renderOrder = 1; // Render after earth mesh
         
         // Add a glow effect by creating a thicker line behind
-        const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
-        const glowMaterial = new THREE.LineBasicMaterial({
-            color: brightColor,
-            transparent: true,
-            opacity: 0.4,
-            linewidth: 5, // Thicker glow line
-            depthTest: true,
-            depthWrite: false, // Don't write to depth buffer
-            side: THREE.FrontSide
-        });
-        const glowLine = new THREE.Line(glowGeometry, glowMaterial);
-        glowLine.renderOrder = 0; // Render before main line
-        
-        lines.push(glowLine); // Add glow first (behind)
+        if (enableGlow) {
+            const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const glowMaterial = new THREE.LineBasicMaterial({
+                color: brightColor,
+                transparent: true,
+                opacity: 0.4,
+                linewidth: 5, // Thicker glow line
+                depthTest: true,
+                depthWrite: false, // Don't write to depth buffer
+                side: THREE.FrontSide
+            });
+            const glowLine = new THREE.Line(glowGeometry, glowMaterial);
+            glowLine.renderOrder = 0; // Render before main line
+            lines.push(glowLine); // Add glow first (behind)
+        }
         lines.push(line); // Add main line on top
     });
     return lines;
@@ -207,7 +207,7 @@ function filterFlightData(data, filters) {
     });
 }
 
-function setupFilterHandlers(earthMesh, initializeFlightPaths, scene) {
+function setupFilterHandlers(earthMesh, initializeFlightPaths, clearFlightLines, scene) {
     const applyButton = document.getElementById('apply-filters');
     const resetButton = document.getElementById('reset-filters');
     const toggleButton = document.getElementById('toggle-filters');
@@ -231,7 +231,7 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths, scene) {
             };
 
             // Remove existing flight paths from scene
-            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
+            clearFlightLines();
 
             // Apply filtered data
             const filteredData = filterFlightData(flightRoutesData, filters);
@@ -248,7 +248,7 @@ function setupFilterHandlers(earthMesh, initializeFlightPaths, scene) {
             });
 
             // Reset to original data
-            scene.children = scene.children.filter(child => !(child instanceof THREE.Line));
+            clearFlightLines();
             initializeFlightPaths(flightRoutesData, earthMesh);
         });
     }
@@ -288,17 +288,60 @@ function initEarth() {
         return;
     }
 
+    const deviceProfile = {
+        memory: navigator.deviceMemory || 4,
+        cores: navigator.hardwareConcurrency || 4,
+        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        smallScreen: window.matchMedia('(max-width: 768px)').matches
+    };
+
+    const lowPowerMode = deviceProfile.memory <= 4 || deviceProfile.cores <= 4 || deviceProfile.reducedMotion || deviceProfile.smallScreen;
+    const quality = lowPowerMode ? {
+        segments: 32,
+        cloudSegments: 24,
+        pixelRatio: 1,
+        enableClouds: false,
+        enableNight: false,
+        enableGlow: false,
+        maxRouteLines: 3,
+        pathPoints: 24,
+        pinDetail: 6,
+        useAdvancedMaterial: false,
+        frameRate: 30
+    } : {
+        segments: 64,
+        cloudSegments: 48,
+        pixelRatio: 1.5,
+        enableClouds: true,
+        enableNight: true,
+        enableGlow: true,
+        maxRouteLines: 10,
+        pathPoints: 60,
+        pinDetail: 12,
+        useAdvancedMaterial: true,
+        frameRate: 60
+    };
+
+    const performancePill = document.getElementById('performance-pill');
+    if (performancePill) {
+        performancePill.textContent = lowPowerMode ? 'Low power mode' : 'High fidelity mode';
+        performancePill.style.background = lowPowerMode ? 'rgba(234, 179, 8, 0.2)' : 'rgba(34, 197, 94, 0.2)';
+        performancePill.style.borderColor = lowPowerMode ? 'rgba(234, 179, 8, 0.4)' : 'rgba(34, 197, 94, 0.4)';
+        performancePill.style.color = lowPowerMode ? '#fde68a' : '#bbf7d0';
+    }
+
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ 
         alpha: true, 
-        antialias: true,
+        antialias: !lowPowerMode,
+        powerPreference: lowPowerMode ? 'low-power' : 'high-performance',
         logarithmicDepthBuffer: true // Helps with z-fighting
     });
 
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, quality.pixelRatio));
     container.appendChild(renderer.domElement);
 
     // Earth radius and state
@@ -308,20 +351,21 @@ function initEarth() {
     };
 
     // Texture Loader
-    const textureLoader = new THREE.TextureLoader();
+    const loadingManager = new THREE.LoadingManager();
+    const textureLoader = new THREE.TextureLoader(loadingManager);
     const loadTexture = (path) => textureLoader.load(`https://patrickfreyer.com/assets/${path}`);
 
     // Load all textures
     const earthDayTexture = loadTexture('earth_albedo.jpg');
-    const earthNightTexture = loadTexture('earth_night.jpg');
-    const normalTexture = loadTexture('earth_normal.jpg');
-    const specularTexture = loadTexture('earth_specular.jpg');
-    const roughnessTexture = loadTexture('earth_roughness.jpg');
-    const bumpTexture = loadTexture('earth_bump.jpg');
-    const cloudsTexture = loadTexture('earth_clouds.jpg');
+    const earthNightTexture = quality.enableNight ? loadTexture('earth_night.jpg') : null;
+    const normalTexture = quality.useAdvancedMaterial ? loadTexture('earth_normal.jpg') : null;
+    const specularTexture = quality.useAdvancedMaterial ? loadTexture('earth_specular.jpg') : null;
+    const roughnessTexture = quality.useAdvancedMaterial ? loadTexture('earth_roughness.jpg') : null;
+    const bumpTexture = quality.useAdvancedMaterial ? loadTexture('earth_bump.jpg') : null;
+    const cloudsTexture = quality.enableClouds ? loadTexture('earth_clouds.jpg') : null;
 
     // 0. Solid Base Sphere (to prevent flight routes from showing through)
-    const baseGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
+    const baseGeometry = new THREE.SphereGeometry(earthRadius, quality.segments, quality.segments);
     const baseMaterial = new THREE.MeshBasicMaterial({
         color: 0x000000, // Black color
         side: THREE.FrontSide
@@ -331,8 +375,8 @@ function initEarth() {
     scene.add(baseMesh);
 
     // 1. Base Earth Layer
-    const globeGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
-    const globeMaterial = new THREE.MeshPhongMaterial({
+    const globeGeometry = new THREE.SphereGeometry(earthRadius, quality.segments, quality.segments);
+    const globeMaterial = quality.useAdvancedMaterial ? new THREE.MeshPhongMaterial({
         map: earthDayTexture,
         normalMap: normalTexture,
         normalScale: new THREE.Vector2(0.8, 0.8),
@@ -341,37 +385,45 @@ function initEarth() {
         bumpScale: 0.02,
         specular: new THREE.Color(0x444444),
         shininess: 15
+    }) : new THREE.MeshLambertMaterial({
+        map: earthDayTexture
     });
     const earthMesh = new THREE.Mesh(globeGeometry, globeMaterial);
     earthMesh.renderOrder = 0; // Render first
     scene.add(earthMesh);
 
     // 2. Night Lights Layer
-    const nightGeometry = new THREE.SphereGeometry(earthRadius * 1.001, 64, 64);
-    const nightMaterial = new THREE.MeshBasicMaterial({
-        map: earthNightTexture,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        opacity: state.isDaylight ? 0 : 0.8,
-        depthWrite: false
-    });
-    const nightMesh = new THREE.Mesh(nightGeometry, nightMaterial);
-    nightMesh.renderOrder = 0; // Render first
-    scene.add(nightMesh);
+    let nightMesh = null;
+    if (quality.enableNight && earthNightTexture) {
+        const nightGeometry = new THREE.SphereGeometry(earthRadius * 1.001, quality.segments, quality.segments);
+        const nightMaterial = new THREE.MeshBasicMaterial({
+            map: earthNightTexture,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: state.isDaylight ? 0 : 0.8,
+            depthWrite: false
+        });
+        nightMesh = new THREE.Mesh(nightGeometry, nightMaterial);
+        nightMesh.renderOrder = 0; // Render first
+        scene.add(nightMesh);
+    }
 
     // 3. Cloud Layer
-    const cloudGeometry = new THREE.SphereGeometry(earthRadius * 1.008, 64, 64);
-    const cloudMaterial = new THREE.MeshPhongMaterial({
-        map: cloudsTexture,
-        transparent: true,
-        opacity: state.isDaylight ? 0.3 : 0.1,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-        blending: THREE.NormalBlending
-    });
-    const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
-    cloudMesh.renderOrder = 0; // Render first
-    scene.add(cloudMesh);
+    let cloudMesh = null;
+    if (quality.enableClouds && cloudsTexture) {
+        const cloudGeometry = new THREE.SphereGeometry(earthRadius * 1.008, quality.cloudSegments, quality.cloudSegments);
+        const cloudMaterial = new THREE.MeshPhongMaterial({
+            map: cloudsTexture,
+            transparent: true,
+            opacity: state.isDaylight ? 0.3 : 0.1,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+            blending: THREE.NormalBlending
+        });
+        cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+        cloudMesh.renderOrder = 0; // Render first
+        scene.add(cloudMesh);
+    }
 
     // Enhanced Lighting System
     // 1. Ambient Light
@@ -425,7 +477,7 @@ function initEarth() {
         const pinGroup = new THREE.Group();
         
         // Create a simple sphere for the location marker
-        const headGeometry = new THREE.SphereGeometry(0.015, 8, 8); // Smaller and less detailed sphere
+        const headGeometry = new THREE.SphereGeometry(0.015, quality.pinDetail, quality.pinDetail); // Smaller and less detailed sphere
         const headMaterial = new THREE.MeshPhongMaterial({ 
             color: 0x4169E1,
             emissive: 0x0000ff,
@@ -435,16 +487,17 @@ function initEarth() {
         const head = new THREE.Mesh(headGeometry, headMaterial);
         
         // Create a subtle glow effect
-        const glowGeometry = new THREE.SphereGeometry(0.04, 12, 12);
-        const glowMaterial = new THREE.MeshBasicMaterial({
-            color: 0x6495ED,
-            transparent: true,
-            opacity: 0.25
-        });
-        const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-
         pinGroup.add(head);
-        pinGroup.add(glow);
+        if (!lowPowerMode) {
+            const glowGeometry = new THREE.SphereGeometry(0.04, quality.pinDetail, quality.pinDetail);
+            const glowMaterial = new THREE.MeshBasicMaterial({
+                color: 0x6495ED,
+                transparent: true,
+                opacity: 0.25
+            });
+            const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+            pinGroup.add(glow);
+        }
 
         return pinGroup;
     };
@@ -498,13 +551,14 @@ function initEarth() {
             const endPoint = latLonToVector3(destLoc.lat, destLoc.lon, earthRadius);
             
             const frequency = getRouteFrequency(route.origin, route.destination, routeFrequencies);
-            const numLines = Math.min(Math.max(frequency, 1), 10);
+            const numLines = Math.min(Math.max(frequency, 1), quality.maxRouteLines);
             
-            const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
+            const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines, quality.pathPoints);
             
             const flightLines = createFlightLines(
                 pathsPoints, 
-                airlineColors[route.airline] || airlineColors.default
+                airlineColors[route.airline] || airlineColors.default,
+                quality.enableGlow
             );
             
             // Add lines directly to scene instead of as children of earthMesh
@@ -515,8 +569,27 @@ function initEarth() {
     // Initialize flight paths with all data
     initializeFlightPaths(flightRoutesData, earthMesh);
 
+    function clearFlightLines() {
+        for (let i = scene.children.length - 1; i >= 0; i -= 1) {
+            const child = scene.children[i];
+            if (child instanceof THREE.Line) {
+                if (child.geometry) {
+                    child.geometry.dispose();
+                }
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(material => material.dispose());
+                    } else {
+                        child.material.dispose();
+                    }
+                }
+                scene.remove(child);
+            }
+        }
+    }
+
     // Setup filter handlers
-    setupFilterHandlers(earthMesh, initializeFlightPaths, scene);
+    setupFilterHandlers(earthMesh, initializeFlightPaths, clearFlightLines, scene);
 
     // Initial Camera Position
     camera.position.set(4, 8, 8); // Position camera above and to the side of Europe
@@ -524,11 +597,15 @@ function initEarth() {
     controls.update(); // Update controls after changing camera position
 
     // Animation Loop with cloud rotation
-    let frameCount = 0;
+    let lastFrameTime = 0;
     function animate() {
         requestAnimationFrame(animate);
 
-        frameCount++;
+        const now = performance.now();
+        if (now - lastFrameTime < 1000 / quality.frameRate) {
+            return;
+        }
+        lastFrameTime = now;
 
         // Rotate clouds slightly faster than the Earth
         if (cloudMesh) {
@@ -552,22 +629,15 @@ function initEarth() {
     window.addEventListener('resize', onWindowResize, false);
 
     // Start animation when textures are loaded
-    Promise.all([
-        earthDayTexture,
-        earthNightTexture,
-        normalTexture,
-        specularTexture,
-        roughnessTexture,
-        bumpTexture,
-        cloudsTexture
-    ]).then(() => {
-        console.log("All textures loaded successfully");
-        animate();
-    }).catch(error => {
-        console.error('Error loading textures:', error);
-        // Start animation anyway to show at least something
-        animate();
-    });
+    const loadingOverlay = document.getElementById('earth-loading');
+    if (loadingOverlay) {
+        loadingManager.onLoad = () => {
+            setTimeout(() => loadingOverlay.classList.add('hidden'), 300);
+            setTimeout(() => loadingOverlay.remove(), 800);
+        };
+    }
+
+    animate();
 
     console.log("Three.js Earth initialized with enhanced visualization");
-} 
+}
