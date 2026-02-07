@@ -3032,3 +3032,51 @@
   month: "January"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Dallas"
+  airline: "United"
+  year: 2025
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Dallas"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "January"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
