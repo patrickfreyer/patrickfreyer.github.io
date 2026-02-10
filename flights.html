@@ -5,13 +5,26 @@ permalink: /flights/
 ---
 
 <div class="earth-visualization-page">
+    <div id="earth-loading" class="earth-loading" aria-live="polite">
+        <div class="loading-card">
+            <div class="loading-orb"></div>
+            <div>
+                <p class="loading-title">Loading the globe</p>
+                <p class="loading-subtitle">Optimizing visuals for your device…</p>
+            </div>
+        </div>
+    </div>
     <div id="filter-panel" class="filter-panel">
         <div class="filter-header">
-            <h3>Filters</h3>
+            <div>
+                <h3>Flights Explorer</h3>
+                <p class="filter-subtitle">Interactive 3D routes • Adaptive performance</p>
+            </div>
             <button id="toggle-filters" class="toggle-filters-btn">
                 <i class="fas fa-chevron-left"></i>
             </button>
         </div>
+        <div class="performance-pill" id="performance-pill">Adaptive mode</div>
         <div class="filter-content">
             <div class="filter-group">
                 <label for="year-filter">Year</label>
@@ -111,20 +124,30 @@ permalink: /flights/
         position: absolute;
         top: 20px;
         left: 20px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(9, 13, 26, 0.85);
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 16px;
         color: white;
         z-index: 1000;
-        max-width: 300px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 320px;
+        max-width: 90vw;
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        transition: transform 0.3s ease;
     }
 
     .filter-panel h3 {
-        margin: 0 0 15px 0;
-        font-size: 1.2em;
+        margin: 0;
+        font-size: 1.1em;
         color: #fff;
+        font-weight: 600;
+    }
+
+    .filter-subtitle {
+        margin: 6px 0 0;
+        font-size: 0.85em;
+        color: rgba(226, 232, 240, 0.7);
     }
 
     .filter-group {
@@ -139,10 +162,10 @@ permalink: /flights/
 
     .filter-group select {
         width: 100%;
-        padding: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
+        padding: 10px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 10px;
         color: white;
         outline: none;
     }
@@ -153,18 +176,18 @@ permalink: /flights/
     }
 
     .filter-button {
-        padding: 8px 15px;
+        padding: 10px 16px;
         margin-right: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        border-radius: 5px;
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.35);
+        border-radius: 10px;
         color: white;
         cursor: pointer;
         transition: background 0.3s ease;
     }
 
     .filter-button:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(59, 130, 246, 0.35);
     }
 
     .filter-button:last-child {
@@ -219,8 +242,8 @@ permalink: /flights/
     .stats-link {
         display: block;
         padding: 10px 15px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
+        background: rgba(148, 163, 184, 0.2);
+        border-radius: 10px;
         color: white;
         text-decoration: none;
         text-align: center;
@@ -229,9 +252,113 @@ permalink: /flights/
     }
 
     .stats-link:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(148, 163, 184, 0.35);
         color: white;
         text-decoration: none;
+    }
+
+    .filter-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .performance-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.2);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: #bbf7d0;
+        font-size: 0.75em;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .filter-panel.collapsed {
+        transform: translateX(calc(-100% + 48px));
+        transition: transform 0.3s ease;
+    }
+
+    .filter-panel.collapsed .filter-content,
+    .filter-panel.collapsed .performance-pill,
+    .filter-panel.collapsed .filter-subtitle {
+        display: none;
+    }
+
+    .toggle-filters-btn {
+        background: rgba(148, 163, 184, 0.2);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 12px;
+        color: white;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toggle-filters-btn:hover {
+        background: rgba(148, 163, 184, 0.4);
+    }
+
+    .earth-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at top, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.95));
+        z-index: 999;
+        transition: opacity 0.4s ease;
+    }
+
+    .earth-loading.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loading-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 24px;
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+        color: white;
+    }
+
+    .loading-orb {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        border-top-color: #60a5fa;
+        animation: spin 1.2s linear infinite;
+    }
+
+    .loading-title {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .loading-subtitle {
+        margin: 4px 0 0;
+        font-size: 0.85em;
+        color: rgba(226, 232, 240, 0.7);
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     /* Mobile stats button */
