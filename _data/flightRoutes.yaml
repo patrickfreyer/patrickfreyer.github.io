@@ -3117,15 +3117,15 @@
   destination: "Miami"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
-  travelers: ["Patrick"]
+  travelers: ["Patrick", "Sofya"]
 
 - origin: "Miami"
   destination: "New York"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
   travelers: ["Patrick"]
 
@@ -3133,7 +3133,7 @@
   destination: "Denver"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
   travelers: ["Patrick"]
 
@@ -3141,7 +3141,7 @@
   destination: "Houston"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
   travelers: ["Patrick"]
 
@@ -3149,7 +3149,7 @@
   destination: "New York"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
   travelers: ["Patrick"]
 
@@ -3157,6 +3157,60 @@
   destination: "Denver"
   airline: "United"
   year: 2026
-  month: "February"
+  month: "March"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Los Angeles"
+  airline: "United"
+  year: 2026
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true
+
+- origin: "Los Angeles"
+  destination: "Hong Kong"
+  airline: "United"
+  year: 2026
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true
+
+- origin: "Hong Kong"
+  destination: "Phu Quoc"
+  airline: "Hong Kong Airlines"
+  year: 2026
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true
+
+- origin: "Phu Quoc"
+  destination: "Hong Kong"
+  airline: "Hong Kong Airlines"
+  year: 2026
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true
+
+- origin: "Hong Kong"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true
+
+- origin: "San Francisco"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+  planned: true

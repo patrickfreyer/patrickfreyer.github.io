@@ -98,9 +98,12 @@ function createFlightPath(startPoint, endPoint, earthRadius, numLines = 1) {
     return pathsPoints;
 }
 
-// Function to create flight path lines
-function createFlightLines(pathsPoints, color = 0x00ff00) {
+// Function to create flight path lines (optional dashed for planned flights)
+function createFlightLines(pathsPoints, color = 0x00ff00, isPlanned = false) {
     const lines = [];
+    const dashSize = 0.15;
+    const gapSize = 0.08;
+
     pathsPoints.forEach(points => {
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         
@@ -108,30 +111,56 @@ function createFlightLines(pathsPoints, color = 0x00ff00) {
         const brightColor = new THREE.Color(color);
         brightColor.multiplyScalar(1.5); // Make it 50% brighter
         
-        const material = new THREE.LineBasicMaterial({
-            color: brightColor,
-            transparent: false, // No transparency
-            linewidth: 3,
-            depthTest: true,
-            depthWrite: true, // Write to depth buffer
-            side: THREE.FrontSide
-        });
+        const material = isPlanned
+            ? new THREE.LineDashedMaterial({
+                color: brightColor,
+                dashSize,
+                gapSize,
+                depthTest: true,
+                depthWrite: true,
+                side: THREE.FrontSide
+            })
+            : new THREE.LineBasicMaterial({
+                color: brightColor,
+                transparent: false,
+                linewidth: 3,
+                depthTest: true,
+                depthWrite: true,
+                side: THREE.FrontSide
+            });
         
         const line = new THREE.Line(geometry, material);
+        if (isPlanned) {
+            line.computeLineDistances(); // Required for dashed lines to render
+        }
         line.renderOrder = 1; // Render after earth mesh
         
-        // Add a glow effect by creating a thicker line behind
+        // Add a glow effect by creating a thicker line behind (dashed for planned)
         const glowGeometry = new THREE.BufferGeometry().setFromPoints(points);
-        const glowMaterial = new THREE.LineBasicMaterial({
-            color: brightColor,
-            transparent: true,
-            opacity: 0.4,
-            linewidth: 5, // Thicker glow line
-            depthTest: true,
-            depthWrite: false, // Don't write to depth buffer
-            side: THREE.FrontSide
-        });
+        const glowMaterial = isPlanned
+            ? new THREE.LineDashedMaterial({
+                color: brightColor,
+                transparent: true,
+                opacity: 0.4,
+                dashSize,
+                gapSize,
+                depthTest: true,
+                depthWrite: false,
+                side: THREE.FrontSide
+            })
+            : new THREE.LineBasicMaterial({
+                color: brightColor,
+                transparent: true,
+                opacity: 0.4,
+                linewidth: 5,
+                depthTest: true,
+                depthWrite: false,
+                side: THREE.FrontSide
+            });
         const glowLine = new THREE.Line(glowGeometry, glowMaterial);
+        if (isPlanned) {
+            glowLine.computeLineDistances();
+        }
         glowLine.renderOrder = 0; // Render before main line
         
         lines.push(glowLine); // Add glow first (behind)
@@ -469,6 +498,19 @@ function initEarth() {
     function initializeFlightPaths(routes, targetMesh) {
         const routeFrequencies = countRouteFrequencies(routes);
         const processedRoutes = new Set();
+
+        // Track which route keys have planned vs completed flights (for dashed vs solid lines)
+        const routeKeyPlanned = {};
+        const routeKeyCompleted = {};
+        routes.forEach(route => {
+            const cities = [route.origin, route.destination].sort();
+            const routeKey = `${cities[0]}-${cities[1]}`;
+            if (route.planned) {
+                routeKeyPlanned[routeKey] = true;
+            } else {
+                routeKeyCompleted[routeKey] = true;
+            }
+        });
         
         // Get unique airlines and generate colors
         const uniqueAirlines = [...new Set(routes.map(route => route.airline))].filter(Boolean);
@@ -501,14 +543,18 @@ function initEarth() {
             const numLines = Math.min(Math.max(frequency, 1), 10);
             
             const pathsPoints = createFlightPath(startPoint, endPoint, earthRadius, numLines);
-            
-            const flightLines = createFlightLines(
-                pathsPoints, 
-                airlineColors[route.airline] || airlineColors.default
-            );
-            
-            // Add lines directly to scene instead of as children of earthMesh
-            flightLines.forEach(line => scene.add(line));
+            const color = airlineColors[route.airline] || airlineColors.default;
+
+            // Draw solid line for completed flights on this route
+            if (routeKeyCompleted[routeKey]) {
+                const flightLines = createFlightLines(pathsPoints, color, false);
+                flightLines.forEach(line => scene.add(line));
+            }
+            // Draw dashed line for planned flights on this route
+            if (routeKeyPlanned[routeKey]) {
+                const plannedLines = createFlightLines(pathsPoints, color, true);
+                plannedLines.forEach(line => scene.add(line));
+            }
         });
     }
 
