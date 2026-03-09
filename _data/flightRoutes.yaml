@@ -3080,3 +3080,83 @@
   month: "February"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Munich"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Stuttgart"
+  airline: "Lufthansa"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Miami"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Miami"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Houston"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Houston"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "February"
+  occasion: "Work"
+  travelers: ["Patrick"]

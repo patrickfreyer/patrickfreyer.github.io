@@ -307,3 +307,6 @@
 - name: "Orlando"
   lat: 28.5383
   lon: -81.3792
+- name: "Houston"
+  lat: 29.7604
+  lon: -95.3698
