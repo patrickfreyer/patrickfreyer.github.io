@@ -3162,6 +3162,30 @@
   travelers: ["Patrick"]
 
 - origin: "Denver"
+  destination: "Miami"
+  airline: "United"
+  year: 2026
+  month: "March"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Miami"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "March"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
   destination: "Los Angeles"
   airline: "United"
   year: 2026
