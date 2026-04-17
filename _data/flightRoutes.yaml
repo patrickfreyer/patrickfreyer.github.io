@@ -3192,7 +3192,6 @@
   month: "March"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
 
 - origin: "Los Angeles"
   destination: "Hong Kong"
@@ -3201,7 +3200,6 @@
   month: "March"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
 
 - origin: "Hong Kong"
   destination: "Phu Quoc"
@@ -3210,7 +3208,6 @@
   month: "March"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
 
 - origin: "Phu Quoc"
   destination: "Hong Kong"
@@ -3219,7 +3216,6 @@
   month: "April"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
 
 - origin: "Hong Kong"
   destination: "San Francisco"
@@ -3228,7 +3224,6 @@
   month: "April"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
 
 - origin: "San Francisco"
   destination: "Denver"
@@ -3237,4 +3232,19 @@
   month: "April"
   occasion: "Private"
   travelers: ["Patrick", "Sofya"]
-  planned: true
+
+- origin: "Denver"
+  destination: "Calgary"
+  airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Calgary"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
