@@ -15,8 +15,6 @@ layout: default
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Add Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Add marked for Markdown parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body x-data="mainData()">
     <header class="header">
@@ -32,10 +30,6 @@ layout: default
             </div>
             <ul class="nav-links" :class="{ 'nav-open': isOpen }">
                 <li><a href="#about" @click="isOpen = false">About</a></li>
-                <li><a href="#updates" @click="isOpen = false">Updates</a></li>
-                <li><a href="#projects" @click="isOpen = false">Projects</a></li>
-                <li><a href="#thoughts" @click="isOpen = false">Thoughts</a></li>
-                <li><a href="/newsletters" @click="isOpen = false">Newsletter</a></li>
                 <li><a href="/flights/" @click="isOpen = false">Flights</a></li>
                 <li><a href="#social" @click="isOpen = false">Connect</a></li>
             </ul>
@@ -45,18 +39,10 @@ layout: default
     <main>
         {% include hero.html %}
 
-        {% assign updates = site.data.updates %}
-        {% assign projects = site.data.projects %}
-        {% assign thoughts = site.data.thoughts %}
         {% assign profiles = site.data.social %}
-        {% assign linkedin_posts = site.data.linkedin.embeds %}
 
         {% include about.html %}
-        {% include projects.html projects=projects %}
-        {% include updates.html updates=updates %}
-        {% include thoughts.html thoughts=thoughts %}
         {% include social.html profiles=profiles %}
-        {% include linkedin.html embeds=linkedin_posts %}
     </main>
 
     <footer class="footer">
