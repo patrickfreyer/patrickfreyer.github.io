@@ -3242,8 +3242,32 @@
   travelers: ["Patrick"]
 
 - origin: "Calgary"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "San Francisco"
   destination: "Denver"
   airline: "United"
+  year: 2026
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Frankfurt"
+  airline: "Lufthansa"
   year: 2026
   month: "April"
   occasion: "Work"
