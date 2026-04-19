@@ -3259,7 +3259,7 @@
 
 - origin: "Denver"
   destination: "Munich"
-  airline: "Lufthansa"
+  airline: "United"
   year: 2026
   month: "April"
   occasion: "Work"
@@ -3270,5 +3270,13 @@
   airline: "Lufthansa"
   year: 2026
   month: "April"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "May"
   occasion: "Work"
   travelers: ["Patrick"]
