@@ -3280,3 +3280,35 @@
   month: "May"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "San Francisco"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "May"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "United"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Mumbai"
+  airline: "Lufthansa"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
