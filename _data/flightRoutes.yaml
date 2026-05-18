@@ -3286,7 +3286,7 @@
   airline: "United"
   year: 2026
   month: "May"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick", "Sofya"]
 
 - origin: "San Francisco"
@@ -3294,12 +3294,12 @@
   airline: "United"
   year: 2026
   month: "May"
-  occasion: "Private"
+  occasion: "Work"
   travelers: ["Patrick", "Sofya"]
 
 - origin: "Denver"
   destination: "Munich"
-  airline: "United"
+  airline: "Lufthansa"
   year: 2026
   month: "May"
   occasion: "Work"
