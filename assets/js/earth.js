@@ -245,9 +245,11 @@ function initEarth() {
     const bumpTexture = loadTexture('earth_bump.jpg');
     const cloudsTexture = loadTexture('earth_clouds.jpg');
 
-    // Base sphere to prevent flight routes from showing through
+    // Base sphere to prevent flight routes from showing through.
+    // Radius is fractionally smaller so it sits definitively behind the
+    // earth sphere in the depth buffer regardless of tessellation mismatch.
     const baseMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(earthRadius, 32, 32),
+        new THREE.SphereGeometry(earthRadius * 0.999, 64, 64),
         new THREE.MeshBasicMaterial({ color: 0x000000 })
     );
     baseMesh.renderOrder = -1;
