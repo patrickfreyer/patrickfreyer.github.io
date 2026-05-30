@@ -3312,3 +3312,43 @@
   month: "May"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Mumbai"
+  destination: "New Delhi"
+  airline: "Air India"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New Delhi"
+  destination: "Mumbai"
+  airline: "Air India"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Mumbai"
+  destination: "New Delhi"
+  airline: "Air India"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New Delhi"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "May"
+  occasion: "Work"
+  travelers: ["Patrick"]
