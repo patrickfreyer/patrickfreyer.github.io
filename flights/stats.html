@@ -7,6 +7,12 @@ permalink: /flights/stats/
 <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 
 <div class="stats-page">
+    <div class="stats-nav">
+        <a href="{{ '/flights/' | relative_url }}">🌍 Globe</a>
+        <a href="{{ '/flights/map/' | relative_url }}">🗺️ Map</a>
+        <a href="{{ '/flights/network/' | relative_url }}">🕸️ Network</a>
+        <a href="{{ '/flights/stats/' | relative_url }}" class="active">📊 Stats</a>
+    </div>
     <div class="stats-header">
         <h1>Flight Statistics</h1>
         <p>Comprehensive analysis of travel patterns and distances</p>
@@ -121,6 +127,20 @@ permalink: /flights/stats/
         background-color: #ffffff;
         color: #1f2937;
         min-height: 100vh;
+    }
+
+    .stats-nav {
+        display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+    }
+    .stats-nav a {
+        color: #4b5563; text-decoration: none; padding: 8px 16px; border-radius: 999px;
+        font-size: 14px; font-weight: 600; border: 1px solid #e5e7eb; background: #f9fafb;
+        transition: all 0.2s ease;
+    }
+    .stats-nav a:hover { background: #eef2ff; color: #4338ca; border-color: #c7d2fe; }
+    .stats-nav a.active {
+        background: linear-gradient(135deg, #2563eb, #6366f1); color: #fff; border-color: transparent;
     }
 
     .stats-header {

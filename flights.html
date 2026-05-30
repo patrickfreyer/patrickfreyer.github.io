@@ -5,6 +5,13 @@ permalink: /flights/
 ---
 
 <div class="earth-visualization-page">
+    <div class="view-switcher">
+        <a href="{{ '/flights/' | relative_url }}" class="active">🌍 Globe</a>
+        <a href="{{ '/flights/map/' | relative_url }}">🗺️ Map</a>
+        <a href="{{ '/flights/network/' | relative_url }}">🕸️ Network</a>
+        <a href="{{ '/flights/stats/' | relative_url }}">📊 Stats</a>
+    </div>
+
     <div id="filter-panel" class="filter-panel">
         <div class="filter-header">
             <h3>Filters</h3>
@@ -220,6 +227,22 @@ permalink: /flights/
         background: rgba(255, 255, 255, 0.3);
         color: white;
         text-decoration: none;
+    }
+
+    /* View switcher */
+    .view-switcher {
+        position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+        z-index: 1100; display: flex; gap: 6px;
+        background: rgba(0,0,0,0.75); padding: 6px; border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+    }
+    .view-switcher a {
+        color: #cfd8ff; text-decoration: none; padding: 7px 14px; border-radius: 999px;
+        font-size: 13px; font-weight: 500; transition: all 0.2s ease; white-space: nowrap;
+    }
+    .view-switcher a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .view-switcher a.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;
     }
 
     /* Mobile stats button */

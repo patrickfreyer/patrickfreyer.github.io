@@ -1,0 +1,110 @@
+/* Shared styling for the 2D map + network-graph flight views.
+   Dark aesthetic matched to the 3D globe page. */
+
+html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    background: #000;
+}
+
+.flight-view-page {
+    position: relative; width: 100vw; height: 100vh; overflow: hidden;
+    background: #000; color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.view-canvas { position: absolute; inset: 0; }
+.view-canvas svg { display: block; }
+
+/* ---- Filter / control panel (mirrors the globe page) ---- */
+.filter-panel {
+    position: absolute; top: 20px; left: 20px;
+    background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px;
+    color: #fff; z-index: 1000; max-width: 280px; width: 240px;
+    backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+.filter-panel.collapsed { transform: translateX(-110%); }
+.filter-header { display: flex; align-items: center; justify-content: space-between; }
+.filter-header h3 { margin: 0 0 4px 0; font-size: 1.2em; }
+.toggle-filters-btn {
+    background: rgba(255,255,255,0.12); border: none; color: #fff; cursor: pointer;
+    border-radius: 6px; width: 28px; height: 28px;
+}
+.filter-group { margin-bottom: 15px; }
+.filter-group label { display: block; margin-bottom: 5px; color: #ccc; font-size: 0.9em; }
+.filter-group select {
+    width: 100%; padding: 8px; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: #fff; outline: none;
+}
+.filter-group select option { background: #1a1a1a; color: #fff; }
+.filter-actions { display: flex; gap: 10px; margin-bottom: 6px; }
+.filter-button {
+    padding: 8px 15px; background: rgba(255,255,255,0.2); border: none;
+    border-radius: 5px; color: #fff; cursor: pointer; transition: background 0.3s ease; flex: 1;
+}
+.filter-button:hover { background: rgba(255,255,255,0.3); }
+
+/* ---- View switcher ---- */
+.view-switcher {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 1100; display: flex; gap: 6px;
+    background: rgba(0,0,0,0.75); padding: 6px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+}
+.view-switcher a {
+    color: #cfd8ff; text-decoration: none; padding: 7px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 500; transition: all 0.2s ease; white-space: nowrap;
+}
+.view-switcher a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.view-switcher a.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;
+}
+
+/* ---- Legend ---- */
+.legend-panel {
+    position: absolute; bottom: 20px; right: 20px; z-index: 1000;
+    background: rgba(0,0,0,0.78); padding: 12px 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+    max-height: 42vh; overflow-y: auto; max-width: 220px;
+}
+.legend-panel h4 { margin: 0 0 8px 0; font-size: 0.8em; color: #bbb; text-transform: uppercase; letter-spacing: 0.05em; }
+.fv-legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 12px; color: #ddd; }
+.fv-legend-swatch { width: 12px; height: 12px; border-radius: 3px; flex: 0 0 auto; box-shadow: 0 0 4px rgba(255,255,255,0.25); }
+.fv-legend-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- Tooltip ---- */
+.fv-tooltip {
+    position: absolute; pointer-events: none; opacity: 0; z-index: 1200;
+    background: rgba(10, 14, 24, 0.95); color: #fff; padding: 8px 11px;
+    border-radius: 8px; font-size: 12.5px; line-height: 1.4;
+    border: 1px solid rgba(122,162,255,0.4); box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    transition: opacity 0.12s ease; max-width: 240px;
+}
+.fv-tooltip strong { color: #fff; }
+.fv-tip-sub { color: #9fb3ff; }
+
+/* ---- Reset-view button ---- */
+.reset-view-btn {
+    position: absolute; bottom: 20px; left: 20px; z-index: 1000;
+    background: rgba(0,0,0,0.75); color: #fff; border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 13px;
+    backdrop-filter: blur(10px); transition: background 0.2s ease;
+}
+.reset-view-btn:hover { background: rgba(255,255,255,0.15); }
+
+/* ---- Map specifics ---- */
+.map-sphere { fill: #05080f; stroke: rgba(122,162,255,0.25); stroke-width: 1; }
+.map-graticule { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 0.5; }
+.map-country { fill: #1b2436; stroke: #2c3852; stroke-width: 0.5; }
+.city { fill: #cfe0ff; stroke: #ffffff; stroke-width: 0.6; opacity: 0.85; cursor: pointer; }
+.city-label, .net-label {
+    fill: #e6ecff; font-size: 11px; font-weight: 500; pointer-events: none;
+    text-shadow: 0 0 4px #000, 0 0 4px #000;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 768px) {
+    .filter-panel { width: 200px; max-width: 70vw; }
+    .legend-panel { max-width: 140px; max-height: 30vh; }
+    .view-switcher a { padding: 6px 10px; font-size: 12px; }
+}
