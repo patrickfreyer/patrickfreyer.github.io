@@ -3352,3 +3352,91 @@
   month: "May"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "San Francisco"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick", "Sofya"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Washington DC"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Stockholm"
+  airline: "Lufthansa"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Stockholm"
+  destination: "London"
+  airline: "Norwegian"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Vienna"
+  airline: "Austrian"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Vienna"
+  destination: "Munich"
+  airline: "Austrian"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
