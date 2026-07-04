@@ -3426,17 +3426,35 @@
   travelers: ["Patrick"]
 
 - origin: "Vienna"
-  destination: "Munich"
+  destination: "Frankfurt"
   airline: "Austrian"
   year: 2026
   month: "June"
   occasion: "Work"
   travelers: ["Patrick"]
 
-- origin: "Munich"
+- origin: "Frankfurt"
+  destination: "Denver"
+  airline: "Lufthansa"
+  year: 2026
+  month: "June"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+### 2026 July
+
+- origin: "Denver"
+  destination: "Houston"
+  airline: "United"
+  year: 2026
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Houston"
   destination: "Denver"
   airline: "United"
   year: 2026
-  month: "June"
+  month: "July"
   occasion: "Work"
   travelers: ["Patrick"]
