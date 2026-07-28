@@ -3458,3 +3458,27 @@
   month: "July"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "United"
+  year: 2026
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Rome"
+  airline: "Lufthansa"
+  year: 2026
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Rome"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "July"
+  occasion: "Work"
+  travelers: ["Patrick"]
