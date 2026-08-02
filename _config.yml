@@ -20,6 +20,9 @@ include:
 exclude:
   - README.md
   - LICENSE
+  - docs
+  - test
+  - tools
   - .gitignore
   - Gemfile
   - Gemfile.lock
