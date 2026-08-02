@@ -313,3 +313,6 @@
 - name: "Calgary"
   lat: 51.0447
   lon: -114.0719
+- name: "Tokyo"
+  lat: 35.6762
+  lon: 139.6503

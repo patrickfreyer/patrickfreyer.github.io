@@ -3482,3 +3482,29 @@
   month: "July"
   occasion: "Work"
   travelers: ["Patrick"]
+
+### 2026 August
+
+- origin: "Denver"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "August"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "San Francisco"
+  destination: "Tokyo"
+  airline: "United"
+  year: 2026
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick"]
+
+- origin: "Tokyo"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "August"
+  occasion: "Private"
+  travelers: ["Patrick", "Sofya"]
