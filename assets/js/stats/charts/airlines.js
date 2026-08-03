@@ -402,10 +402,102 @@
         if (opts && opts.colorMap) return opts.colorMap;
         var FV = window.FV;
         if (opts && opts.routes && FV && FV.airlineColorMap) return FV.airlineColorMap(opts.routes);
-        var base = (FV && FV.BASE_COLORS) || FALLBACK_BASE;
+        var base = paletteOf();
         var map = {};
         order.forEach(function (a, i) { map[a] = base[i % base.length]; });
         return map;
+    }
+
+    function paletteOf() {
+        var FV = window.FV;
+        return (FV && FV.BASE_COLORS && FV.BASE_COLORS.length) ? FV.BASE_COLORS : FALLBACK_BASE;
+    }
+
+    /* '#00BFFF' and '#00bfff' are the same color; '#0bf' too. */
+    function normHex(c) {
+        var s = String(c == null ? '' : c).trim().toLowerCase();
+        var m = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/.exec(s);
+        if (m) return '#' + m[1] + m[1] + m[2] + m[2] + m[3] + m[3];
+        return s;
+    }
+
+    function hslHex(h, s, l) {
+        h = ((h % 360) + 360) % 360;
+        var C = (1 - Math.abs(2 * l - 1)) * s;
+        var X = C * (1 - Math.abs((h / 60) % 2 - 1));
+        var m = l - C / 2;
+        var t = h < 60 ? [C, X, 0] : h < 120 ? [X, C, 0] : h < 180 ? [0, C, X]
+            : h < 240 ? [0, X, C] : h < 300 ? [X, 0, C] : [C, 0, X];
+        return '#' + t.map(function (v) {
+            var n = Math.round((v + m) * 255).toString(16);
+            return n.length < 2 ? '0' + n : n;
+        }).join('');
+    }
+
+    /* Only reached if the whole palette is already claimed by this subset.
+       Golden-angle hue walk, so derived colors spread rather than cluster. */
+    function deriveHue(claimed, seed) {
+        for (var k = 0; k < 48; k += 1) {
+            var c = hslHex(seed * 137.508 + k * 29, 0.70, 0.62);
+            if (!claimed[normHex(c)]) return c;
+        }
+        return '#a3a3a3';
+    }
+
+    /* BASE_COLORS holds 12 colors handed out cyclically by first-appearance
+       across 41 airlines, so any two airlines exactly 12 apart in that order
+       share a color (Lufthansa #2 / Qatar #14, Emirates #10 / Cathay #22).
+       Globally that is harmless — the globe draws one arc at a time and the two
+       are never adjacent. Stacked bands sitting directly on top of each other
+       are a different matter: identical fills make them one band.
+
+       So resolve collisions WITHIN THE RENDERED SUBSET ONLY, never by editing
+       the shared palette (the globe, map and network views all read it):
+       walking series in descending km, the larger series keeps its globe color
+       and the smaller shifts to the next palette color this subset is not using.
+       United, Lufthansa and the other majors therefore still match their globe
+       arcs; only the small colliding tail moves. */
+    function resolveCollisions(series) {
+        var palette = paletteOf();
+        var claimed = {};
+        var losers = [];
+        var shifted = [];
+
+        /* Pass 1 — everyone who CAN keep their globe color claims it first.
+           This has to complete before any reassignment: otherwise a shifted
+           series could grab a color that a smaller, non-colliding series
+           legitimately owns, cascading a second needless recolor (Qatar landing
+           on Air Canada's yellow and bumping Air Canada in turn). */
+        series.forEach(function (ser) {
+            ser.globeColor = ser.color;
+            var want = normHex(ser.color);
+            if (want && !claimed[want]) claimed[want] = ser.key;
+            else losers.push(ser);
+        });
+
+        /* Pass 2 — only the genuine losers move, largest first. */
+        losers.forEach(function (ser, idx) {
+            var next = null;
+            for (var i = 0; i < palette.length; i += 1) {
+                if (!claimed[normHex(palette[i])]) { next = palette[i]; break; }
+            }
+            if (!next) next = deriveHue(claimed, idx + 1);
+            ser.color = next;
+            ser.recolored = true;
+            claimed[normHex(next)] = ser.key;
+            shifted.push(ser);
+        });
+
+        /* Guard: N rendered series must yield N distinct fills, always. */
+        var distinct = {};
+        series.forEach(function (s) { distinct[normHex(s.color)] = 1; });
+        var n = Object.keys(distinct).length;
+        if (n !== series.length) {
+            console.warn('[StatsCharts.airlines] unresolved color collision: ' + n +
+                ' distinct fills for ' + series.length + ' series —',
+                series.map(function (s) { return s.key + '=' + s.color; }).join(', '));
+        }
+        return shifted;
     }
 
     function prepare(data, opts) {
@@ -454,6 +546,11 @@
             series.push({ key: OTHER, color: OTHER_COLOR, km: otherKm, count: folded.length });
         }
 
+        /* `series` is already in descending-km order (Other last, and its
+           achromatic fill is outside the palette so it can never be the loser),
+           which is exactly the precedence the resolver needs. */
+        var recolored = resolveCollisions(series);
+
         var columns = allYears.map(function (yr) {
             var vals = byYear[yr] || {};
             var total = series.reduce(function (s, ser) { return s + (vals[ser.key] || 0); }, 0);
@@ -464,7 +561,8 @@
             series: series, columns: columns, years: allYears,
             maxTotal: Math.max.apply(null, columns.map(function (c) { return c.total; }).concat([1])),
             grandTotal: series.reduce(function (s, ser) { return s + ser.km; }, 0),
-            foldedCount: folded.length
+            foldedCount: folded.length,
+            recolored: recolored
         };
     }
 
@@ -662,6 +760,18 @@
         html += '</tbody></table>';
         wrap.innerHTML = html;
         det.appendChild(wrap);
+        /* If a color had to move to stay distinguishable, say so — a reader
+           comparing against the globe should not have to guess. */
+        if (model.recolored && model.recolored.length) {
+            var p = document.createElement('p');
+            p.className = 'sc-note';
+            p.textContent = model.recolored.length +
+                (model.recolored.length === 1 ? ' airline is' : ' airlines are') +
+                ' shown in a different color than on the globe (' +
+                model.recolored.map(function (s) { return s.key; }).join(', ') +
+                '), because the shared 12-color palette repeats and stacked bands must stay distinct.';
+            det.appendChild(p);
+        }
         fig.appendChild(det);
     }
 

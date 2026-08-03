@@ -577,9 +577,11 @@
             : '';
 
         var others = firstNum(totalFlights);
+        // "flown by someone else" rather than "flown by an airline": 33 legs have
+        // no recorded airline, so the stronger claim is not supported by the data.
         var opener = others !== null
-            ? 'All ' + fmtInt(others - 1) + ' other legs in this log were flown by an airline.'
-            : 'Every other leg in this log was flown by an airline.';
+            ? 'All ' + fmtInt(others - 1) + ' other legs in this log were flown by someone else.'
+            : 'Every other leg in this log was flown by someone else.';
 
         var copy = opener + ' This one was flown by Patrick: a training circuit out of ' +
             origin + ' for his pilot’s license' + companion +
