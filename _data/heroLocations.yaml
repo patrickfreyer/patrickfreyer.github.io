@@ -1,318 +1,530 @@
 - name: "New Haven"
   lat: 41.3083
   lon: -72.9279
+  country: "United States"
+  continent: "North America"
 - name: "Coventry"
   lat: 52.4068
   lon: -1.5197
+  country: "United Kingdom"
+  continent: "Europe"
 - name: "London"
   lat: 51.5074
   lon: -0.1278
+  country: "United Kingdom"
+  continent: "Europe"
 - name: "Munich"
   lat: 48.1351
   lon: 11.5820
+  country: "Germany"
+  continent: "Europe"
 - name: "Brussels"
   lat: 50.8503
   lon: 4.3517
+  country: "Belgium"
+  continent: "Europe"
 - name: "Singapore"
   lat: 1.3521
   lon: 103.8198
+  country: "Singapore"
+  continent: "Asia"
 - name: "Hong Kong"
   lat: 22.3193
   lon: 114.1694
+  country: "Hong Kong"
+  continent: "Asia"
 - name: "Dubai"
   lat: 25.2048
   lon: 55.2708
+  country: "United Arab Emirates"
+  continent: "Asia"
 - name: "Riyadh"
   lat: 24.7136
   lon: 46.6753
+  country: "Saudi Arabia"
+  continent: "Asia"
 - name: "Denver"
   lat: 39.7392
   lon: -104.9903
+  country: "United States"
+  continent: "North America"
 - name: "Toulouse"
   lat: 43.6047
   lon: 1.4442
+  country: "France"
+  continent: "Europe"
 - name: "Den Haag"
   lat: 52.0705
   lon: 4.3007
+  country: "Netherlands"
+  continent: "Europe"
 - name: "Muscat"
   lat: 23.5859
   lon: 58.4059
+  country: "Oman"
+  continent: "Asia"
 - name: "Doha"
   lat: 25.2854
   lon: 51.5310
+  country: "Qatar"
+  continent: "Asia"
 - name: "Frankfurt"
   lat: 50.0379
   lon: 8.5622
+  country: "Germany"
+  continent: "Europe"
 - name: "Düsseldorf"
   lat: 51.2895
   lon: 6.7668
+  country: "Germany"
+  continent: "Europe"
 - name: "Vienna"
   lat: 48.1200
   lon: 16.5700
+  country: "Austria"
+  continent: "Europe"
 - name: "Kuwait"
   lat: 29.2403
   lon: 47.9698
+  country: "Kuwait"
+  continent: "Asia"
 - name: "Dammam"
   lat: 26.4207
   lon: 50.0888
+  country: "Saudi Arabia"
+  continent: "Asia"
 - name: "Washington DC"
   lat: 38.9072
   lon: -77.0369
+  country: "United States"
+  continent: "North America"
 - name: "Abu Dhabi"
   lat: 24.4539
   lon: 54.6778
+  country: "United Arab Emirates"
+  continent: "Asia"
 - name: "Tabuk"
   lat: 28.3835
   lon: 36.5662
+  country: "Saudi Arabia"
+  continent: "Asia"
 - name: "Zurich"
   lat: 47.4502
   lon: 8.5616
+  country: "Switzerland"
+  continent: "Europe"
 - name: "Arar"
   lat: 30.9750
   lon: 41.0382
+  country: "Saudi Arabia"
+  continent: "Asia"
 - name: "Budapest"
   lat: 47.4979
   lon: 19.0402
+  country: "Hungary"
+  continent: "Europe"
 - name: "Dublin"
   lat: 53.4264
   lon: -6.2499
+  country: "Ireland"
+  continent: "Europe"
 - name: "Berlin"
   lat: 52.5200
   lon: 13.4050
+  country: "Germany"
+  continent: "Europe"
 - name: "Hanoi"
   lat: 21.0285
   lon: 105.8542
+  country: "Vietnam"
+  continent: "Asia"
 - name: "Da Nang"
   lat: 16.0544
   lon: 108.2022
+  country: "Vietnam"
+  continent: "Asia"
 - name: "Ho Chi Minh"
   lat: 10.8231
   lon: 106.6297
+  country: "Vietnam"
+  continent: "Asia"
 - name: "Phu Quoc"
   lat: 10.2276
   lon: 103.9809
+  country: "Vietnam"
+  continent: "Asia"
 - name: "Hamburg"
   lat: 53.6302
   lon: 10.0041
+  country: "Germany"
+  continent: "Europe"
 - name: "Almaty"
   lat: 43.2551
   lon: 76.9126
+  country: "Kazakhstan"
+  continent: "Asia"
 - name: "Nursultan"
   lat: 51.0924
   lon: 71.4304
+  country: "Kazakhstan"
+  continent: "Asia"
 - name: "Astana"
   lat: 51.0924
   lon: 71.4304
+  country: "Kazakhstan"
+  continent: "Asia"
 - name: "New York"
   lat: 40.7128
   lon: -74.0060
+  country: "United States"
+  continent: "North America"
 - name: "Panama"
   lat: 8.9824
   lon: -79.5199
+  country: "Panama"
+  continent: "North America"
 - name: "Montevideo"
   lat: -34.9011
   lon: -56.1645
+  country: "Uruguay"
+  continent: "South America"
 - name: "Stockholm"
   lat: 59.3293
   lon: 18.0686
+  country: "Sweden"
+  continent: "Europe"
 - name: "Copenhagen"
   lat: 55.6761
   lon: 12.5683
+  country: "Denmark"
+  continent: "Europe"
 - name: "San Francisco"
   lat: 37.7749
   lon: -122.4194
+  country: "United States"
+  continent: "North America"
 - name: "Oakland"
   lat: 37.8044
   lon: -122.2712
+  country: "United States"
+  continent: "North America"
 - name: "Big Island"
   lat: 19.8968
   lon: -155.5828
+  country: "United States"
+  continent: "North America"
 - name: "Honolulu"
   lat: 21.3069
   lon: -157.8583
+  country: "United States"
+  continent: "North America"
 - name: "Cologne"
   lat: 50.9375
   lon: 6.9603
+  country: "Germany"
+  continent: "Europe"
 - name: "Seattle"
   lat: 47.6062
   lon: -122.3321
+  country: "United States"
+  continent: "North America"
 - name: "Barcelona"
   lat: 41.3851
   lon: 2.1734
+  country: "Spain"
+  continent: "Europe"
 - name: "Bodrum"
   lat: 37.0343
   lon: 27.4305
+  country: "Turkey"
+  continent: "Asia"
 - name: "Chengdu"
   lat: 30.5728
   lon: 103.8652
+  country: "China"
+  continent: "Asia"
 - name: "Beijing"
   lat: 39.9042
   lon: 116.4074
+  country: "China"
+  continent: "Asia"
 - name: "Shenzhen"
   lat: 22.5431
   lon: 114.0579
+  country: "China"
+  continent: "Asia"
 - name: "Toronto"
   lat: 43.6532
   lon: -79.3832
+  country: "Canada"
+  continent: "North America"
 - name: "Halifax"
   lat: 44.6488
   lon: -63.5752
+  country: "Canada"
+  continent: "North America"
 - name: "Aruba"
   lat: 12.5211
   lon: -69.9683
+  country: "Aruba"
+  continent: "North America"
 - name: "San Diego"
   lat: 32.7157
   lon: -117.1611
+  country: "United States"
+  continent: "North America"
 - name: "Madrid"
   lat: 40.4168
   lon: -3.7038
+  country: "Spain"
+  continent: "Europe"
 - name: "Xi'an"
   lat: 34.3416
   lon: 108.9398
+  country: "China"
+  continent: "Asia"
 - name: "Shanghai"
   lat: 31.2304
   lon: 121.4737
+  country: "China"
+  continent: "Asia"
 - name: "Borneo"
   lat: 0.9619
   lon: 114.5548
+  country: "Indonesia"
+  continent: "Asia"
 - name: "Durban"
   lat: -29.8587
   lon: 31.0218
+  country: "South Africa"
+  continent: "Africa"
 - name: "Helsinki"
   lat: 60.1699
   lon: 24.9384
+  country: "Finland"
+  continent: "Europe"
 - name: "New Delhi"
   lat: 28.6139
   lon: 77.2090
+  country: "India"
+  continent: "Asia"
 - name: "Jaipur"
   lat: 26.9124
   lon: 75.7873
+  country: "India"
+  continent: "Asia"
 - name: "Mumbai"
   lat: 19.0760
   lon: 72.8777
+  country: "India"
+  continent: "Asia"
 - name: "Bangalore"
   lat: 12.9716
   lon: 77.5946
+  country: "India"
+  continent: "Asia"
 - name: "Bangkok"
   lat: 13.7563
   lon: 100.5018
+  country: "Thailand"
+  continent: "Asia"
 - name: "Addis Ababa"
   lat: 9.0320
   lon: 38.7492
+  country: "Ethiopia"
+  continent: "Africa"
 - name: "Mombasa"
   lat: -4.0435
   lon: 39.6682
+  country: "Kenya"
+  continent: "Africa"
 - name: "Nairobi"
   lat: -1.2921
   lon: 36.8219
+  country: "Kenya"
+  continent: "Africa"
 - name: "Masai Mara"
   lat: -1.5437
   lon: 35.1233
+  country: "Kenya"
+  continent: "Africa"
 - name: "Birmingham"
   lat: 52.4862
   lon: -1.8904
+  country: "United Kingdom"
+  continent: "Europe"
 - name: "Geneva"
   lat: 46.2044
   lon: 6.1432
+  country: "Switzerland"
+  continent: "Europe"
 - name: "Istanbul"
   lat: 41.0082
   lon: 28.9784
+  country: "Turkey"
+  continent: "Asia"
 - name: "Cairo"
   lat: 30.0444
   lon: 31.2357
+  country: "Egypt"
+  continent: "Africa"
 - name: "Rome"
   lat: 41.9028
   lon: 12.4964
+  country: "Italy"
+  continent: "Europe"
 - name: "Edinburgh"
   lat: 55.9533
   lon: -3.1883
+  country: "United Kingdom"
+  continent: "Europe"
 - name: "Athens"
   lat: 37.9838
   lon: 23.7275
+  country: "Greece"
+  continent: "Europe"
 - name: "Stuttgart"
   lat: 48.7758
   lon: 9.1829
+  country: "Germany"
+  continent: "Europe"
 - name: "Amsterdam"
   lat: 52.3676
   lon: 4.9041
+  country: "Netherlands"
+  continent: "Europe"
 - name: "Paris"
   lat: 48.8566
   lon: 2.3522
+  country: "France"
+  continent: "Europe"
 - name: "Marseille"
   lat: 43.2965
   lon: 5.3698
+  country: "France"
+  continent: "Europe"
 - name: "Cancun"
   lat: 21.1619
   lon: -86.8515
+  country: "Mexico"
+  continent: "North America"
 - name: "St. Petersburg"
   lat: 59.9311
   lon: 30.3609
+  country: "Russia"
+  continent: "Europe"
 - name: "Moscow"
   lat: 55.7558
   lon: 37.6173
+  country: "Russia"
+  continent: "Europe"
 - name: "Venice"
   lat: 45.4408
   lon: 12.3155
+  country: "Italy"
+  continent: "Europe"
 - name: "Los Angeles"
   lat: 34.0522
   lon: -118.2437
+  country: "United States"
+  continent: "North America"
 - name: "Miami"
   lat: 25.7617
   lon: -80.1918
+  country: "United States"
+  continent: "North America"
 - name: "Belize"
   lat: 17.1899
   lon: -88.4976
+  country: "Belize"
+  continent: "North America"
 - name: "Kota Kinabalu"
   lat: 5.9804
   lon: 116.0735
+  country: "Malaysia"
+  continent: "Asia"
 - name: "Valeta"
   lat: 35.8989
   lon: 14.5146
+  country: "Malta"
+  continent: "Europe"
 - name: "Cape Town"
   lat: -33.9249
   lon: 18.4241
+  country: "South Africa"
+  continent: "Africa"
 - name: "Boston"
   lat: 42.3656
   lon: -71.0096
+  country: "United States"
+  continent: "North America"
 - name: "Santo Domingo"
   lat: 18.4861
   lon: -69.9312
+  country: "Dominican Republic"
+  continent: "North America"
 - name: "Lisbon"
   lat: 38.7223
   lon: -9.1393
+  country: "Portugal"
+  continent: "Europe"
 - name: "Mauritius"
   lat: -20.3484
   lon: 57.5522
+  country: "Mauritius"
+  continent: "Africa"
 - name: "Cagliari"
   lat: 39.2238
   lon: 9.1217
+  country: "Italy"
+  continent: "Europe"
 - name: "Reykjavik"
   lat: 64.1466
   lon: -21.9426
+  country: "Iceland"
+  continent: "Europe"
 - name: "Chicago"
   lat: 41.8781
   lon: -87.6298
+  country: "United States"
+  continent: "North America"
 - name: "Raleigh Durham"
   lat: 35.7796
   lon: -78.6382
+  country: "United States"
+  continent: "North America"
 - name: "Goa"
   lat: 15.4909
   lon: 73.8278
+  country: "India"
+  continent: "Asia"
 - name: "Mexico City"
   lat: 19.4326
   lon: -99.1332
+  country: "Mexico"
+  continent: "North America"
 - name: "Dallas"
   lat: 32.7767
   lon: -96.7970
+  country: "United States"
+  continent: "North America"
 - name: "Orlando"
   lat: 28.5383
   lon: -81.3792
+  country: "United States"
+  continent: "North America"
 - name: "Houston"
   lat: 29.7604
   lon: -95.3698
+  country: "United States"
+  continent: "North America"
 - name: "Calgary"
   lat: 51.0447
   lon: -114.0719
+  country: "Canada"
+  continent: "North America"
 - name: "Tokyo"
   lat: 35.6762
   lon: 139.6503
+  country: "Japan"
+  continent: "Asia"

@@ -4,110 +4,140 @@ title: Flight Statistics
 permalink: /flights/stats/
 ---
 
-<link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/flight-stats.css' | relative_url }}">
 
 <div class="stats-page">
-    <div class="stats-nav">
+
+    <nav class="stats-nav">
         <a href="{{ '/flights/' | relative_url }}">🌍 Globe</a>
         <a href="{{ '/flights/map/' | relative_url }}">🗺️ Map</a>
         <a href="{{ '/flights/network/' | relative_url }}">🕸️ Network</a>
         <a href="{{ '/flights/stats/' | relative_url }}" class="active">📊 Stats</a>
-    </div>
-    <div class="stats-header">
-        <h1>Flight Statistics</h1>
-        <p>Comprehensive analysis of travel patterns and distances</p>
+    </nav>
+
+    <header class="stats-header">
+        <h1>Flight Log</h1>
+        <p class="stats-range" id="header-range">Loading&hellip;</p>
+    </header>
+
+    <!-- 1. Hero KPIs ------------------------------------------------------ -->
+    <section class="kpi-row" aria-label="Headline figures">
+        <div class="kpi" id="kpi-distance">
+            <div class="kpi-label">Distance flown</div>
+            <div class="kpi-value">&mdash;</div>
+            <div class="kpi-unit">kilometers</div>
+            <div class="kpi-spark"></div>
+        </div>
+        <div class="kpi" id="kpi-flights">
+            <div class="kpi-label">Flights</div>
+            <div class="kpi-value">&mdash;</div>
+            <div class="kpi-unit">legs logged</div>
+            <div class="kpi-spark"></div>
+        </div>
+        <div class="kpi" id="kpi-countries">
+            <div class="kpi-label">Countries</div>
+            <div class="kpi-value">&mdash;</div>
+            <div class="kpi-unit">landed in</div>
+            <div class="kpi-spark"></div>
+        </div>
+        <div class="kpi" id="kpi-years">
+            <div class="kpi-label">Years</div>
+            <div class="kpi-value">&mdash;</div>
+            <div class="kpi-unit">with a flight</div>
+            <div class="kpi-spark"></div>
+        </div>
+    </section>
+
+    <!-- 2. Scale strip ---------------------------------------------------- -->
+    <section class="scale-strip" id="scale-strip" aria-label="Distance in context"></section>
+
+    <!-- 3. Cumulative distance -------------------------------------------- -->
+    <section class="panel stats-section">
+        <div class="panel-head">
+            <h2 class="panel-title">Cumulative distance</h2>
+            <div class="panel-sub">Every leg, in order flown</div>
+        </div>
+        <div class="chart" id="chart-cumulative"></div>
+    </section>
+
+    <!-- 3b. Per-year magnitude ---------------------------------------------- -->
+    <section class="panel stats-section">
+        <div class="panel-head">
+            <h2 class="panel-title">Distance and legs by year</h2>
+            <div class="panel-sub">Bars are kilometers, the line is leg count</div>
+        </div>
+        <div class="chart" id="chart-years"></div>
+    </section>
+
+    <!-- 4. Pairs | cities -------------------------------------------------- -->
+    <div class="two-up">
+        <section class="panel">
+            <div class="panel-head">
+                <h2 class="panel-title">Top city pairs</h2>
+                <div class="panel-sub">Both directions counted</div>
+            </div>
+            <div class="chart chart--tall" id="chart-pairs"></div>
+        </section>
+        <section class="panel">
+            <div class="panel-head">
+                <h2 class="panel-title">Cities by total distance</h2>
+                <div class="panel-sub">Kilometers flown to or from</div>
+            </div>
+            <div class="chart chart--tall" id="chart-cities"></div>
+        </section>
     </div>
 
-    <div class="stats-grid">
-        <div class="stats-card">
-            <div class="stat-icon">🌍</div>
-            <div class="stat-content">
-                <div class="stat-value" id="total-distance">Calculating...</div>
-                <div class="stat-label">Total Distance</div>
-                <div class="stat-unit">kilometers</div>
-            </div>
+    <!-- 5. Month x year heatmap -------------------------------------------- -->
+    <section class="panel stats-section">
+        <div class="panel-head">
+            <h2 class="panel-title">When the flying happened</h2>
+            <div class="panel-sub">Month by year &middot; darker is further</div>
         </div>
-        
-        <div class="stats-card">
-            <div class="stat-icon">✈️</div>
-            <div class="stat-content">
-                <div class="stat-value" id="total-flights">Calculating...</div>
-                <div class="stat-label">Total Flights</div>
-                <div class="stat-unit">flights</div>
+        <div class="chart chart--tall" id="chart-heatmap"></div>
+    </section>
+
+    <!-- 6. Airlines | occasion --------------------------------------------- -->
+    <div class="two-up">
+        <section class="panel">
+            <div class="panel-head">
+                <h2 class="panel-title">Airline share over time</h2>
+                <div class="panel-sub">Colors match the globe</div>
             </div>
-        </div>
-        
-        <div class="stats-card">
-            <div class="stat-icon">🏛️</div>
-            <div class="stat-content">
-                <div class="stat-value" id="countries-visited">Calculating...</div>
-                <div class="stat-label">Countries Visited</div>
-                <div class="stat-unit">countries</div>
+            <div class="chart" id="chart-airlines"></div>
+        </section>
+        <section class="panel">
+            <div class="panel-head">
+                <h2 class="panel-title">Work &middot; Study &middot; Personal</h2>
+                <div class="panel-sub">Why the trip happened</div>
             </div>
-        </div>
-        
-        <div class="stats-card">
-            <div class="stat-icon">📅</div>
-            <div class="stat-content">
-                <div class="stat-value" id="years-traveled">Calculating...</div>
-                <div class="stat-label">Years of Travel</div>
-                <div class="stat-unit">years</div>
-            </div>
-        </div>
+            <div class="chart" id="chart-occasion"></div>
+        </section>
     </div>
 
-    <div class="charts-section">
-        <div class="chart-container">
-            <h3>Distance and Flights by Year</h3>
-            <div class="chart-wrapper">
-                <canvas id="year-chart"></canvas>
-            </div>
+    <!-- 7. Records ---------------------------------------------------------- -->
+    <section class="panel stats-section">
+        <div class="panel-head">
+            <h2 class="panel-title">Records</h2>
+            <div class="panel-sub">Extremes of the log</div>
         </div>
-        
-        <div class="chart-container">
-            <h3>Distance by Companion</h3>
-            <div class="chart-wrapper">
-                <canvas id="companion-chart"></canvas>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <h3>Cumulative Distance Over Time</h3>
-            <div class="chart-wrapper">
-                <canvas id="cumulative-chart"></canvas>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <h3>Distance by Month</h3>
-            <div class="chart-wrapper">
-                <canvas id="monthly-chart"></canvas>
-            </div>
-        </div>
-        
-        <div class="chart-container">
-            <h3>Top 10 Airports Over Time</h3>
-            <div class="chart-wrapper">
-                <canvas id="airports-timeline-chart"></canvas>
-            </div>
-        </div>
-    </div>
+        <div id="records"></div>
+    </section>
 
-    <div class="detailed-stats">
-        <div class="stats-column">
-            <h3>Top Destinations</h3>
-            <div class="destinations-list" id="top-destinations">
-                <!-- Will be populated by JavaScript -->
-            </div>
+    <!-- 8. Coverage --------------------------------------------------------- -->
+    <section class="panel stats-section">
+        <div class="panel-head">
+            <h2 class="panel-title">Countries &amp; continents</h2>
+            <div class="panel-sub">Where the log has been</div>
         </div>
-        
-        <div class="stats-column">
-            <h3>Most Frequent Airlines</h3>
-            <div class="airlines-list" id="top-airlines">
-                <!-- Will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
+        <div class="chart chart--tall" id="chart-coverage"></div>
+    </section>
+
+    <p class="stats-footnote">
+        Distances are great-circle between city centers, so they run a little short of
+        the real routes. Legs with an unrecorded airline or month still count toward
+        every total, but are left out of the rankings.
+    </p>
+
 </div>
 
 <script>
@@ -115,244 +145,18 @@ permalink: /flights/stats/
     const flightRoutesData = {{ site.data.flightRoutes | jsonify }};
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
-<script src="{{ '/js/flight-stats.js' | relative_url }}"></script>
-
-<style>
-    .stats-page {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #1f2937;
-        min-height: 100vh;
-    }
-
-    .stats-nav {
-        display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
-        margin-bottom: 2.5rem;
-    }
-    .stats-nav a {
-        color: #4b5563; text-decoration: none; padding: 8px 16px; border-radius: 999px;
-        font-size: 14px; font-weight: 600; border: 1px solid #e5e7eb; background: #f9fafb;
-        transition: all 0.2s ease;
-    }
-    .stats-nav a:hover { background: #eef2ff; color: #4338ca; border-color: #c7d2fe; }
-    .stats-nav a.active {
-        background: linear-gradient(135deg, #2563eb, #6366f1); color: #fff; border-color: transparent;
-    }
-
-    .stats-header {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .stats-header h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: #1f2937;
-        background: linear-gradient(135deg, #2563eb, #6366f1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .stats-header p {
-        font-size: 1.2rem;
-        color: #6b7280;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 4rem;
-    }
-
-    .stats-card {
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-
-    .stats-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        border-color: #2563eb;
-    }
-
-    .stat-icon {
-        font-size: 2.5rem;
-        opacity: 0.8;
-    }
-
-    .stat-content {
-        flex: 1;
-    }
-
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #6b7280;
-        margin-bottom: 0.25rem;
-    }
-
-    .stat-unit {
-        font-size: 0.8rem;
-        color: #9ca3af;
-    }
-
-    .charts-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-        gap: 2rem;
-        margin-bottom: 4rem;
-    }
-
-    .charts-section .chart-container:nth-child(3),
-    .charts-section .chart-container:nth-child(4),
-    .charts-section .chart-container:nth-child(5) {
-        grid-column: 1 / -1;
-        max-width: 800px;
-        justify-self: center;
-    }
-
-    .chart-container {
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-
-    .chart-container h3 {
-        margin: 0 0 1.5rem 0;
-        text-align: center;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #1f2937;
-    }
-
-    .chart-wrapper {
-        position: relative;
-        height: 300px;
-        width: 100%;
-    }
-
-    .detailed-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 2rem;
-    }
-
-    .stats-column {
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-
-    .stats-column h3 {
-        margin: 0 0 1.5rem 0;
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #1f2937;
-    }
-
-    .destinations-list, .airlines-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .destination-item, .airline-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem;
-        background: #f3f4f6;
-        border-radius: 0.5rem;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .destination-item:hover, .airline-item:hover {
-        background: rgba(37, 99, 235, 0.05);
-        transform: translateX(4px);
-    }
-
-    .destination-name, .airline-name {
-        font-weight: 500;
-        color: #1f2937;
-    }
-
-    .destination-count, .airline-count {
-        background: #2563eb;
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 9999px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        min-width: 2rem;
-        text-align: center;
-    }
-
-    @media (max-width: 768px) {
-        .stats-page {
-            padding: 2rem 1rem;
-        }
-        
-        .stats-header h1 {
-            font-size: 2rem;
-        }
-        
-        .charts-section {
-            grid-template-columns: 1fr;
-        }
-        
-        .charts-section .chart-container:nth-child(3),
-        .charts-section .chart-container:nth-child(4),
-        .charts-section .chart-container:nth-child(5) {
-            max-width: 100%;
-        }
-        
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .detailed-stats {
-            grid-template-columns: 1fr;
-        }
-        
-        .chart-wrapper {
-            height: 250px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .chart-wrapper {
-            height: 200px;
-        }
-    }
-</style> 
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="{{ '/assets/js/flight-views-common.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/format.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/flight-data.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/flight-metrics.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/sparkline.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/cumulative.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/year-bars.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/pairs.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/cities.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/heatmap.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/airlines.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/occasion.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/charts/coverage.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/stats/stats-page.js' | relative_url }}"></script>

@@ -289,6 +289,7 @@
   airline: "Condor"
   year: 2015
   month: "July"
+  occasion: "Private"
 
 ### 2016
 - origin: "Frankfurt"
@@ -561,7 +562,7 @@
 
 - origin: "Jaipur"
   destination: "Mumbai"
-  airline: "xxx"
+  airline: "XXX"
   year: 2018
   month: "August"
   occasion: "Private"
@@ -569,7 +570,7 @@
 
 - origin: "Bangalore"
   destination: "New Delhi"
-  airline: "xxx"
+  airline: "XXX"
   year: 2018
   month: "August"
   occasion: "Private"
@@ -733,7 +734,7 @@
 
 - origin: "Birmingham"
   destination: "Dublin"
-  airline: "AerLingus"
+  airline: "Aer Lingus"
   year: 2020
   month: "February"
   occasion: "Private"
@@ -741,7 +742,7 @@
 
 - origin: "Dublin"
   destination: "New York"
-  airline: "AerLingus"
+  airline: "Aer Lingus"
   year: 2020
   month: "February"
   occasion: "Private"
@@ -749,7 +750,7 @@
 
 - origin: "New York"
   destination: "Dublin"
-  airline: "AerLingus"
+  airline: "Aer Lingus"
   year: 2020
   month: "February"
   occasion: "Private"
@@ -757,7 +758,7 @@
 
 - origin: "Dublin"
   destination: "Birmingham"
-  airline: "AerLingus"
+  airline: "Aer Lingus"
   year: 2020
   month: "February"
   occasion: "Private"
@@ -1307,7 +1308,7 @@
 
 - origin: "Dubai"
   destination: "Riyadh"
-  airline: "Saudi"
+  airline: "Saudia"
   year: 2023
   month: "March"
   occasion: "Work"
@@ -1331,7 +1332,7 @@
 
 - origin: "Kuwait"
   destination: "Riyadh"
-  airline: "Saudi"
+  airline: "Saudia"
   year: 2023
   month: "March"
   occasion: "Work"
@@ -1355,7 +1356,7 @@
 
 - origin: "Riyadh"
   destination: "Dammam"
-  airline: "Saudi"
+  airline: "Saudia"
   year: 2023
   month: "April"
   occasion: "Work"
@@ -1363,7 +1364,7 @@
 
 - origin: "Dammam"
   destination: "Riyadh"
-  airline: "Saudi"
+  airline: "Saudia"
   year: 2023
   month: "April"
   occasion: "Work"
@@ -1731,7 +1732,7 @@
 
 - origin: "Munich"
   destination: "Dublin"
-  airline: "Air Lingus"
+  airline: "Aer Lingus"
   year: 2023
   month: "August"
   occasion: "Rowing"
@@ -1739,7 +1740,7 @@
 
 - origin: "Dublin"
   destination: "Munich"
-  airline: "Air Lingus"
+  airline: "Aer Lingus"
   year: 2023
   month: "August"
   occasion: "Rowing"
@@ -2955,7 +2956,7 @@
   destination: "Toronto"
   airline: "United"
   year: 2025
-  month: "Air Canada"
+  month: "December"
   occasion: "Work"
   travelers: ["Patrick"]
 

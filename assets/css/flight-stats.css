@@ -1,0 +1,591 @@
+/* ==========================================================================
+   Flight statistics — dark "mission control" theme.
+
+   Owns every style on /flights/stats/. Nothing is inlined in the page.
+   The design tokens on :root are the shared contract with the chart
+   modules in assets/js/stats/charts/ — read them with
+   getComputedStyle(document.documentElement).getPropertyValue('--text-dim')
+   rather than hard-coding colors inside a chart.
+   ========================================================================== */
+
+:root {
+    /* --- contract tokens (chart modules consume these) --- */
+    --bg: #0a0e1a;
+    --panel: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e5e7eb;
+    --text-dim: #94a3b8;
+    --text-faint: #64748b;
+    --accent-a: #667eea;
+    --accent-b: #764ba2;
+
+    /* --- derived, page-local --- */
+    --panel-hover: rgba(255, 255, 255, 0.05);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --grid-line: rgba(255, 255, 255, 0.06);
+    --glow-a: rgba(102, 126, 234, 0.55);
+    --glow-b: rgba(118, 75, 162, 0.28);
+
+    --radius: 16px;
+    --radius-sm: 10px;
+    --gap: 24px;
+    --page-pad: 40px;
+
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ---------- reset / page canvas ---------- */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+body {
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.stats-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--page-pad) var(--page-pad) 96px;
+    min-height: 100vh;
+    background:
+        radial-gradient(900px 480px at 12% -6%, rgba(102, 126, 234, 0.10), transparent 62%),
+        radial-gradient(760px 420px at 92% 2%, rgba(118, 75, 162, 0.09), transparent 60%);
+}
+
+/* All figures line up in columns. */
+.kpi-value, .scale-value, .record-value, .record-sub, .stats-range,
+.panel-sub, .rank-value, .kpi-unit, .kpi-delta, .scale-note {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- view switcher ---------- */
+
+.stats-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 44px;
+    padding: 5px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(10px);
+}
+
+.stats-nav a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.stats-nav a:hover { background: rgba(255, 255, 255, 0.09); color: var(--text); }
+
+.stats-nav a.active {
+    background: linear-gradient(135deg, var(--accent-a) 0%, var(--accent-b) 100%);
+    color: #fff;
+    box-shadow: 0 4px 18px rgba(102, 126, 234, 0.35);
+}
+
+/* ---------- page header ---------- */
+
+.stats-header {
+    text-align: center;
+    margin-bottom: 52px;
+}
+
+.stats-header h1 {
+    margin: 0;
+    font-size: clamp(2.1rem, 5.4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: linear-gradient(105deg, #ffffff 0%, #c7d2fe 46%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.stats-range {
+    margin: 14px 0 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.stats-range .sep { opacity: 0.4; padding: 0 8px; }
+
+/* ---------- shared panel ---------- */
+
+.panel {
+    position: relative;
+    padding: 22px 24px 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--panel);
+}
+
+.panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.panel-title {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.panel-sub {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    text-align: right;
+    line-height: 1.4;
+}
+
+/* Chart mount points. Height is a floor, not a cage: a module that sizes
+   itself from a viewBox is free to grow past it. */
+.chart {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.chart > svg { display: block; max-width: 100%; }
+
+.chart--tall { min-height: 380px; }
+
+.chart::-webkit-scrollbar { height: 6px; }
+.chart::-webkit-scrollbar-track { background: transparent; }
+.chart::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 3px;
+}
+
+/* ---------- section rhythm ---------- */
+
+.stats-section { margin-bottom: var(--gap); }
+
+.two-up {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap);
+    margin-bottom: var(--gap);
+}
+
+/* ---------- hero KPI row ---------- */
+
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    margin-bottom: var(--gap);
+}
+
+.kpi {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 22px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    overflow: hidden;
+    transition: border-color 0.22s ease, transform 0.22s ease;
+}
+
+.kpi::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-a), var(--accent-b), transparent);
+    opacity: 0.65;
+}
+
+.kpi:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+
+.kpi-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.kpi-value {
+    margin-top: 12px;
+    font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: #f2f5ff;
+    text-shadow: 0 0 26px var(--glow-a), 0 0 62px var(--glow-b);
+    word-break: break-word;
+}
+
+.kpi-unit {
+    margin-top: 8px;
+    font-size: 0.76rem;
+    color: var(--text-dim);
+}
+
+.kpi-spark {
+    height: 46px;
+    margin-top: auto;
+    padding-top: 16px;
+}
+
+.kpi-spark svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- scale strip ---------- */
+
+.scale-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-bottom: var(--gap);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--panel);
+    overflow: hidden;
+}
+
+.scale-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 26px 26px;
+    border-left: 1px solid var(--border);
+}
+
+.scale-item:first-child { border-left: 0; }
+
+.scale-value {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 650;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+}
+
+.scale-value .unit {
+    margin-left: 6px;
+    font-size: 0.58em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--text-dim);
+}
+
+.scale-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent-a);
+}
+
+.scale-note { font-size: 0.76rem; line-height: 1.5; color: var(--text-faint); }
+
+/* ---------- records ---------- */
+
+.records-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.record-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.record-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+}
+
+.record-value {
+    font-size: 1.06rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+}
+
+.record-sub { font-size: 0.8rem; color: var(--text-dim); }
+
+/* The one leg Patrick flew himself. Deliberately the loudest card here. */
+.record-hero {
+    grid-column: 1 / -1;
+    position: relative;
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    margin-top: 6px;
+    padding: 24px 26px;
+    border: 1px solid rgba(102, 126, 234, 0.42);
+    border-radius: var(--radius-sm);
+    background:
+        linear-gradient(120deg, rgba(102, 126, 234, 0.16), rgba(118, 75, 162, 0.09) 58%, transparent);
+    overflow: hidden;
+}
+
+.record-hero::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.22), transparent 68%);
+    pointer-events: none;
+}
+
+.record-hero-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    border: 1px solid rgba(102, 126, 234, 0.45);
+    border-radius: 50%;
+    background: rgba(10, 14, 26, 0.55);
+    font-size: 26px;
+    line-height: 1;
+}
+
+.record-hero-body { position: relative; z-index: 1; min-width: 0; }
+
+.record-hero-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+}
+
+.record-hero-title {
+    margin: 8px 0 0;
+    font-size: 1.28rem;
+    font-weight: 650;
+    line-height: 1.25;
+    color: #f2f5ff;
+}
+
+.record-hero-copy {
+    margin: 10px 0 0;
+    max-width: 62ch;
+    font-size: 0.9rem;
+    line-height: 1.62;
+    color: var(--text-dim);
+}
+
+.record-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.record-chip {
+    padding: 5px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.71rem;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    white-space: nowrap;
+}
+
+/* ---------- placeholders / notices ---------- */
+
+.panel-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: inherit;
+    padding: 34px 20px;
+    border: 1px dashed rgba(255, 255, 255, 0.11);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.012);
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* `min-height: inherit` above resolves to the .chart floor (290-380px), so an
+   empty panel reads as one deliberate empty state rather than a small dashed
+   box floating in dead space. A percentage would not resolve here: the parent
+   sets min-height, not height. */
+
+/* The strip is a 3-column grid, so its empty state has to span all of it. */
+.scale-strip > .panel-placeholder {
+    grid-column: 1 / -1;
+    margin: 18px;
+    min-height: 0;
+}
+
+.kpi-spark .panel-placeholder {
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    background: none;
+    font-size: 0.66rem;
+}
+
+.stats-notice {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: var(--gap);
+    padding: 14px 18px;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    border-radius: var(--radius-sm);
+    background: rgba(234, 179, 8, 0.07);
+    color: #fde68a;
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.stats-footnote {
+    margin: 32px 0 0;
+    font-size: 0.74rem;
+    line-height: 1.6;
+    color: var(--text-faint);
+    text-align: center;
+}
+
+/* ---------- shared chart furniture (used by chart modules) ---------- */
+
+.stats-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-top: 14px;
+    font-size: 0.73rem;
+    color: var(--text-dim);
+}
+
+.stats-legend-item { display: flex; align-items: center; gap: 7px; }
+
+.stats-legend-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex: 0 0 auto;
+}
+
+.stats-tooltip {
+    position: fixed;
+    z-index: 1200;
+    pointer-events: none;
+    opacity: 0;
+    padding: 8px 11px;
+    border: 1px solid rgba(122, 162, 255, 0.4);
+    border-radius: 8px;
+    background: rgba(10, 14, 26, 0.96);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+    color: var(--text);
+    font-size: 12.5px;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+    transition: opacity 0.12s ease;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1100px) {
+    :root { --page-pad: 32px; --gap: 20px; }
+    .records-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+    .two-up { grid-template-columns: minmax(0, 1fr); }
+    .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .scale-strip { grid-template-columns: minmax(0, 1fr); }
+    .scale-item { border-left: 0; border-top: 1px solid var(--border); padding: 20px 22px; }
+    .scale-item:first-child { border-top: 0; }
+    .chart { min-height: 280px; }
+    .chart--tall { min-height: 330px; }
+}
+
+@media (max-width: 640px) {
+    :root { --page-pad: 18px; --gap: 16px; }
+
+    .stats-page { padding-bottom: 64px; }
+    .stats-nav { gap: 2px; padding: 4px; margin-bottom: 32px; }
+    .stats-nav a { padding: 7px 11px; font-size: 12px; }
+    .stats-header { margin-bottom: 34px; }
+    .stats-header h1 { letter-spacing: 0.1em; }
+    .stats-range { letter-spacing: 0.14em; font-size: 0.72rem; }
+
+    .kpi-row { grid-template-columns: minmax(0, 1fr); }
+    .kpi { padding: 20px 18px 16px; }
+    .kpi-value { font-size: 2.4rem; }
+    .kpi-spark { height: 40px; padding-top: 12px; }
+
+    .panel { padding: 18px 16px 20px; }
+    .panel-head { flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 14px; }
+    .panel-sub { text-align: left; }
+
+    .chart { min-height: 240px; }
+    .chart--tall { min-height: 290px; }
+
+    .records-grid { grid-template-columns: minmax(0, 1fr); }
+    .record-hero {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding: 20px 18px;
+    }
+    .record-hero-mark { width: 52px; height: 52px; font-size: 22px; }
+    .record-hero-title { font-size: 1.1rem; }
+    .record-hero-copy { font-size: 0.86rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+}
