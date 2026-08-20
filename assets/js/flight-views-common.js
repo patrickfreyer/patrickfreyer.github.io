@@ -141,6 +141,13 @@ window.FV = (function () {
         const toggle = document.getElementById('toggle-filters');
         const panel = document.getElementById('filter-panel');
 
+        // Start collapsed on narrow screens so the panel doesn't sit on top of
+        // the map/graph by default; the toggle button (kept visible even when
+        // collapsed) still lets mobile users open it on demand.
+        if (panel && window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+            panel.classList.add('collapsed');
+        }
+
         if (toggle && panel) {
             toggle.addEventListener('click', () => panel.classList.toggle('collapsed'));
         }
