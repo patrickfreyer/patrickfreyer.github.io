@@ -108,7 +108,10 @@ html, body {
 
 /* ---- Mobile ---- */
 @media (max-width: 768px) {
-    .filter-panel { width: 200px; max-width: 70vw; }
+    /* Dropped below the view-switcher pill instead of sharing its top-left
+       corner — the switcher sits at a higher z-index and was intercepting
+       taps meant for the (now-collapsed-by-default) filter toggle. */
+    .filter-panel { top: 72px; width: 200px; max-width: 70vw; }
     .legend-panel { max-width: 140px; max-height: 30vh; }
     .view-switcher a { padding: 6px 10px; font-size: 12px; }
 }
