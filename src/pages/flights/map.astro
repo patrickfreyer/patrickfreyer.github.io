@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ViewSwitcher from '../../components/ViewSwitcher.astro';
+import heroLocations from '../../data/heroLocations.yaml';
+import flightRoutes from '../../data/flightRoutes.yaml';
+---
+
+<BaseLayout
+  title="Flight Map | Patrick Freyer"
+  stylesheets={["/assets/css/flight-views.css"]}
+  fullBleed
+>
+  <ViewSwitcher current="map" />
+
+  <script is:inline define:vars={{ heroLocations, flightRoutes }}>
+    window.locationsData = heroLocations;
+    window.flightRoutesData = flightRoutes;
+  </script>
+
+  <div class="flight-view-page">
+      <div id="filter-panel" class="filter-panel">
+          <div class="filter-header">
+              <h3>Filters</h3>
+              <button id="toggle-filters" class="toggle-filters-btn">‹</button>
+          </div>
+          <div class="filter-content">
+              <div class="filter-group">
+                  <label for="year-filter">Year</label>
+                  <select id="year-filter" multiple size="6"></select>
+              </div>
+              <div class="filter-group">
+                  <label for="airline-filter">Airline</label>
+                  <select id="airline-filter" multiple size="6"></select>
+              </div>
+              <div class="filter-actions">
+                  <button id="apply-filters" class="filter-button">Apply</button>
+                  <button id="reset-filters" class="filter-button">Reset</button>
+              </div>
+          </div>
+      </div>
+
+      <div class="legend-panel">
+          <h4>Airlines</h4>
+          <div id="legend-content"></div>
+      </div>
+
+      <button id="reset-view" class="reset-view-btn">⟲ Reset view</button>
+
+      <div id="map-container" class="view-canvas"></div>
+  </div>
+
+  <script is:inline src="/vendor/d3.min.js"></script>
+  <script is:inline src="/vendor/topojson-client.min.js"></script>
+  <script is:inline src="/assets/js/flight-views-common.js"></script>
+  <script is:inline src="/assets/js/flight-map.js"></script>
+</BaseLayout>

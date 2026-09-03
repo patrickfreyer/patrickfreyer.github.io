@@ -1,0 +1,68 @@
+---
+/**
+ * The single owner of <head> for every page.
+ *
+ * The Jekyll version had _layouts/default.html wrapping pages that each carried
+ * their OWN <!DOCTYPE>/<html>/<head>, so the live site shipped two DOCTYPEs,
+ * two <html> elements and three <head> tags per page. It also meant the layout's
+ * <title> won every time, leaving all five pages titled "Patrick Freyer".
+ * Owning the document here, and taking the title as a prop, fixes both.
+ */
+export interface Props {
+  title: string;
+  description?: string;
+  /** Page-specific stylesheets under /assets/css/ */
+  stylesheets?: string[];
+  /** Set on the full-bleed visualization pages, which own the whole viewport. */
+  fullBleed?: boolean;
+}
+
+const {
+  title,
+  description = "Personal website of Patrick Freyer, Generative AI Builder, Developer, and Strategist",
+  stylesheets = [],
+  fullBleed = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+
+    <!-- Self-hosted: these were unpkg / cdnjs / jsdelivr / fonts.googleapis at runtime -->
+    <link rel="stylesheet" href="/vendor/inter/inter.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css" />
+    {stylesheets.map((href) => <link rel="stylesheet" href={href} />)}
+
+    <slot name="head" />
+  </head>
+  <body class={fullBleed ? "full-bleed" : undefined}>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Visualization pages take over the viewport; Jekyll did this with a per-page
+     <style> block that reset html/body. Scoped to a body class instead so it
+     cannot leak onto the content pages. */
+  body.full-bleed,
+  html:has(body.full-bleed) {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+</style>

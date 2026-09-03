@@ -1,0 +1,14 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# wrangler (Cloudflare) local cache
+.wrangler/
+
+# os / editor
+.DS_Store
+*.log
+public/vendor/

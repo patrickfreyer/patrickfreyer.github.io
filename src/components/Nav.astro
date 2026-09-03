@@ -1,0 +1,19 @@
+---
+// Ported from the inline <header> in the old index.html.
+// Alpine drives the mobile toggle, same as before - now self-hosted.
+---
+<header class="header">
+  <nav class="nav-container" x-data="{ isOpen: false }">
+    <div class="nav-header">
+      <div class="logo">PF</div>
+      <button @click="isOpen = !isOpen" class="mobile-menu-button" aria-label="Toggle menu">
+        <i class="fas" :class="isOpen ? 'fa-times' : 'fa-bars'"></i>
+      </button>
+    </div>
+    <ul class="nav-links" :class="{ 'nav-open': isOpen }">
+      <li><a href="#about" @click="isOpen = false">About</a></li>
+      <li><a href="/flights/" @click="isOpen = false">Flights</a></li>
+      <li><a href="#social" @click="isOpen = false">Connect</a></li>
+    </ul>
+  </nav>
+</header>

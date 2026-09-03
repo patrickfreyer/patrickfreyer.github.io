@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Social from '../components/Social.astro';
+import Footer from '../components/Footer.astro';
+
+import heroLocations from '../data/heroLocations.yaml';
+import flightRoutes from '../data/flightRoutes.yaml';
+---
+
+<BaseLayout
+  title="Patrick Freyer | Generative AI Builder, Developer, and Strategist"
+  stylesheets={["/css/style.css"]}
+>
+  <Nav />
+
+  <main>
+    <Hero />
+    <About />
+    <Social />
+  </main>
+
+  <Footer />
+
+  {/*
+    earth.js reads these as globals. `is:inline` keeps this a classic script so it
+    executes before the deferred module below, guaranteeing the globals exist.
+  */}
+  <script is:inline define:vars={{ heroLocations, flightRoutes }}>
+    window.locationsData = heroLocations;
+    window.flightRoutesData = flightRoutes;
+  </script>
+
+  <script>
+    import '../scripts/alpine.js';
+    import '../scripts/earth.js';
+  </script>
+</BaseLayout>

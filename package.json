@@ -1,0 +1,27 @@
+{
+  "name": "patrickfreyer-site",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal website of Patrick Freyer",
+  "scripts": {
+    "vendor": "node tools/vendor.mjs",
+    "textures": "node tools/optimize-textures.mjs",
+    "dev": "npm run vendor && astro dev",
+    "build": "npm run vendor && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.13.5",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.1.0",
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@rollup/plugin-yaml": "^4.1.2",
+    "alpinejs": "^3.14.8",
+    "d3": "^7.9.0",
+    "sharp": "^0.33.5",
+    "topojson-client": "^3.1.0"
+  }
+}

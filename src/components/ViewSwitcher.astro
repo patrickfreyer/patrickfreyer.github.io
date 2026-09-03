@@ -1,0 +1,17 @@
+---
+/** The globe/map/network/stats pill nav shared by all four flight pages. */
+export interface Props { current: 'globe' | 'map' | 'network' | 'stats'; }
+const { current } = Astro.props;
+
+const views = [
+  { key: 'globe',   href: '/flights/',         label: '🌍 Globe'   },
+  { key: 'map',     href: '/flights/map/',     label: '🗺️ Map'     },
+  { key: 'network', href: '/flights/network/', label: '🕸️ Network' },
+  { key: 'stats',   href: '/flights/stats/',   label: '📊 Stats'   },
+];
+---
+<div class="view-switcher">
+  {views.map((v) => (
+    <a href={v.href} class={v.key === current ? 'active' : undefined}>{v.label}</a>
+  ))}
+</div>

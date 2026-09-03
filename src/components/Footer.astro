@@ -1,0 +1,9 @@
+---
+// Year is computed at build time, as Jekyll's {{ 'now' | date: "%Y" }} was.
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <p>&copy; {year} Patrick Freyer. All rights reserved.</p>
+  </div>
+</footer>
