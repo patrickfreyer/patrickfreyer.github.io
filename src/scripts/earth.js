@@ -286,8 +286,20 @@ function initEarth() {
         textureLoader.load(
             fullUrl,
             (full) => {
+                // dispose() BEFORE swapping the image is load-bearing, not tidiness.
+                //
+                // WebGLTextures.js:772 computes
+                //   allocateMemory = ( sourceProperties.__version === undefined ) || forceUpload
+                // and only calls texStorage2D when that is true. texStorage2D allocates
+                // IMMUTABLE storage, so the GPU texture is fixed at whatever size the
+                // FIRST upload had - here the 256x128 preview. Swapping in the 4096x2048
+                // image without disposing leaves that 256x128 allocation in place and the
+                // globe renders permanently blurry, even though texture.image on the JS
+                // side correctly reads 4096x2048. Disposing clears __version so the next
+                // render reallocates at full size.
+                tex.dispose();
                 tex.image = full.image;
-                tex.needsUpdate = true;   // re-uploads and regenerates mipmaps
+                tex.needsUpdate = true;
                 full.dispose();           // the wrapper is redundant once copied
             },
             undefined,
