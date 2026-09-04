@@ -29,8 +29,13 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const assets = join(root, 'public', 'assets');
 const DRY = process.argv.includes('--dry');
 
-const TARGET_W = 2048;
-const TARGET_H = 1024;
+// 4096x2048 is the resolution Patrick settled on in 583d378 (down from 8k).
+// An earlier pass took these to 2048x1024 and the globe was visibly softer --
+// the sphere fills a large part of the viewport on /flights/, so the earlier
+// "renders at 600-800px" reasoning was wrong for the fullscreen view.
+// Do not lower this without looking at /flights/ full-screen on a retina display.
+const TARGET_W = 4096;
+const TARGET_H = 2048;
 
 // The six textures earth.js actually applies to a material.
 const TEXTURES = [
