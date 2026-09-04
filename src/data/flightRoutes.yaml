@@ -3557,3 +3557,67 @@
   month: "August"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Boston"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Boston"
+  destination: "New York"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "New York"
+  airline: "Lufthansa"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "New York"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
