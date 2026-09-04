@@ -1,0 +1,98 @@
+name: Deploy to Cloudflare Pages
+
+# Push to main -> production (patrickfreyer.com).
+# Pull requests  -> an isolated preview URL, so changes can be seen before merge.
+#
+# Why Actions rather than Cloudflare's native Git integration: the Pages project
+# was created as Direct Upload, and Cloudflare cannot add Git integration to an
+# existing project (it requires creating a new one, which would mean detaching
+# and reattaching the custom domain). This achieves the same push-to-deploy
+# without touching the live project.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Never let two deploys race to the same project.
+concurrency:
+  group: pages-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+  pull-requests: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Fail loudly rather than shipping an empty or half-built site.
+      - name: Sanity-check the build
+        run: |
+          set -euo pipefail
+          for page in \
+            dist/index.html \
+            dist/flights/index.html \
+            dist/flights/map/index.html \
+            dist/flights/network/index.html \
+            dist/flights/stats/index.html
+          do
+            test -s "$page" || { echo "::error::missing or empty: $page"; exit 1; }
+          done
+
+          # The nested-document bug this rebuild fixed - make sure it cannot return.
+          for page in $(find dist -name '*.html'); do
+            n=$(grep -oic '<!DOCTYPE' "$page" || true)
+            if [ "$n" != "1" ]; then
+              echo "::error::$page has $n DOCTYPE declarations (expected 1)"; exit 1
+            fi
+          done
+
+          # Third-party assets are vendored; nothing should be fetched at runtime.
+          if grep -rlE 'cdn\.skypack\.dev|unpkg\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|fonts\.googleapis\.com' dist --include='*.html' | grep .; then
+            echo "::error::a third-party CDN reference reached the build output"; exit 1
+          fi
+
+          echo "build OK: $(find dist -name '*.html' | wc -l) pages, $(du -sh dist | cut -f1)"
+
+      - name: Deploy
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >-
+            pages deploy dist
+            --project-name=patrickfreyer-site
+            --branch=${{ github.head_ref || github.ref_name }}
+
+      - name: Comment the preview URL on the PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${{ steps.deploy.outputs.deployment-url }}`;
+            if (!url) return;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Preview deployed: ${url}`,
+            });
