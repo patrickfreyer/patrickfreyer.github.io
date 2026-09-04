@@ -14,14 +14,12 @@ import nightFull     from '../assets/textures/earth_night.jpg?url';
 import cloudsFull    from '../assets/textures/earth_clouds.jpg?url';
 import normalFull    from '../assets/textures/earth_normal.jpg?url';
 import specularFull  from '../assets/textures/earth_specular.jpg?url';
-import bumpFull      from '../assets/textures/earth_bump.jpg?url';
 
 import albedoLow     from '../assets/textures/lowres/earth_albedo.jpg?url';
 import nightLow      from '../assets/textures/lowres/earth_night.jpg?url';
 import cloudsLow     from '../assets/textures/lowres/earth_clouds.jpg?url';
 import normalLow     from '../assets/textures/lowres/earth_normal.jpg?url';
 import specularLow   from '../assets/textures/lowres/earth_specular.jpg?url';
-import bumpLow       from '../assets/textures/lowres/earth_bump.jpg?url';
 
 // Ensure required data is available
 if (typeof locationsData === 'undefined' || typeof flightRoutesData === 'undefined') {
@@ -252,10 +250,13 @@ function initEarth() {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    // Filmic roll-off. Without it the ocean glint and the city lights clip to
+    // flat white discs; ACES compresses them instead.
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
 
     const earthRadius = 5;
-    const state = { isDaylight: true };
 
     const textureLoader = new THREE.TextureLoader();
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -301,7 +302,6 @@ function initEarth() {
     const cloudsTexture     = loadTexture(cloudsLow,   cloudsFull,   { color: true });
     const normalTexture     = loadTexture(normalLow,   normalFull);
     const specularTexture   = loadTexture(specularLow, specularFull);
-    const bumpTexture       = loadTexture(bumpLow,     bumpFull);
     // NOTE: earth_roughness.jpg used to be loaded here and applied to nothing.
     // MeshPhongMaterial has no roughnessMap (that is MeshStandardMaterial), so
     // it cost a request plus ~45 MB of VRAM for no visual effect. Removed.
@@ -316,6 +316,11 @@ function initEarth() {
     baseMesh.renderOrder = -1;
     scene.add(baseMesh);
 
+    // The sun. Everything day/night derives from this single vector: the
+    // DirectionalLight's position AND the terminator maths in the shaders below,
+    // so three's own dot(N,L) and our night-light blend can never disagree.
+    const sunDirection = new THREE.Vector3(1, 0.15, 0.35).normalize();
+
     // Earth layer
     const globeGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
     const globeMaterial = new THREE.MeshPhongMaterial({
@@ -323,51 +328,220 @@ function initEarth() {
         normalMap: normalTexture,
         normalScale: new THREE.Vector2(0.8, 0.8),
         specularMap: specularTexture,
-        bumpMap: bumpTexture,
-        bumpScale: 0.02,
-        specular: new THREE.Color(0x444444),
+        // NOTE: no bumpMap. three's normal_fragment_maps chunk is an #elif chain
+        // where USE_NORMALMAP_TANGENTSPACE is tested BEFORE USE_BUMPMAP, so with a
+        // normalMap set the bump branch is unreachable. It bound a sampler and cost
+        // ~45 MB of VRAM while perturbing nothing.
+        specular: new THREE.Color(0x333333),
         shininess: 15
     });
+
+    // Keep this material's compiled program distinct from any other MeshPhongMaterial.
+    globeMaterial.customProgramCacheKey = () => 'earth-terminator-v1';
+
+    globeMaterial.onBeforeCompile = (shader) => {
+        shader.uniforms.nightMap = { value: earthNightTexture };
+        shader.uniforms.cloudMap = { value: cloudsTexture };
+        shader.uniforms.sunDirection = { value: sunDirection };
+        shader.uniforms.terminatorSoftness = { value: 0.09 };
+        shader.uniforms.nightLightIntensity = { value: 3.2 };
+        shader.uniforms.cloudShadowStrength = { value: 0.32 };
+        shader.uniforms.landShininess = { value: 6.0 };
+        shader.uniforms.oceanShininess = { value: 120.0 };
+
+        // The terminator must use the SMOOTH macro-surface normal. three's own
+        // vNormal is view-space and is overwritten by normal mapping, so a
+        // per-texel detail normal would make the day/night edge crawl with terrain.
+        shader.vertexShader = shader.vertexShader
+            .replace('#include <clipping_planes_pars_vertex>',
+                '#include <clipping_planes_pars_vertex>\nvarying vec3 vWorldNormal;')
+            .replace('#include <beginnormal_vertex>',
+                '#include <beginnormal_vertex>\n\tvWorldNormal = normalize( mat3( modelMatrix ) * objectNormal );');
+
+        shader.fragmentShader = shader.fragmentShader
+            .replace('#include <clipping_planes_pars_fragment>',
+                `#include <clipping_planes_pars_fragment>
+                varying vec3 vWorldNormal;
+                uniform sampler2D nightMap;
+                uniform sampler2D cloudMap;
+                uniform vec3 sunDirection;
+                uniform float terminatorSoftness;
+                uniform float nightLightIntensity;
+                uniform float cloudShadowStrength;
+                uniform float landShininess;
+                uniform float oceanShininess;`)
+            // dayMix once, at the top, reused by the shadow and emissive terms below
+            .replace('#include <clipping_planes_fragment>',
+                `#include <clipping_planes_fragment>
+                float sunFacing = dot( normalize( vWorldNormal ), normalize( sunDirection ) );
+                float dayMix = smoothstep( -terminatorSoftness, terminatorSoftness, sunFacing );`)
+            // clouds darken the ground beneath them, but only on the lit side
+            .replace('#include <map_fragment>',
+                `#include <map_fragment>
+                float cloudCover = texture2D( cloudMap, vMapUv ).r;
+                diffuseColor.rgb *= mix( 1.0, 1.0 - cloudShadowStrength, cloudCover * dayMix );`)
+            // tight bright glint on water, broad dull response on land.
+            // specularStrength is three's own read of our specularMap - no extra sample.
+            .replace('#include <lights_phong_fragment>',
+                `#include <lights_phong_fragment>
+                material.specularColor = mix( specular, vec3( 1.0 ), specularStrength * 0.6 );
+                material.specularShininess = mix( landShininess, oceanShininess, specularStrength );`)
+            // city lights as emissive on the dark side, gated by the SAME dayMix.
+            // This replaces the old additive night-lights mesh entirely.
+            .replace('#include <emissivemap_fragment>',
+                `#include <emissivemap_fragment>
+                vec3 nightColor = texture2D( nightMap, vMapUv ).rgb;
+                totalEmissiveRadiance += nightColor * nightLightIntensity * ( 1.0 - dayMix );`);
+
+        globeMaterial.userData.shader = shader;
+    };
+
     const earthMesh = new THREE.Mesh(globeGeometry, globeMaterial);
     earthMesh.renderOrder = 0;
     scene.add(earthMesh);
 
-    // Night lights layer
-    const nightMesh = new THREE.Mesh(
-        new THREE.SphereGeometry(earthRadius * 1.001, 64, 64),
-        new THREE.MeshBasicMaterial({
-            map: earthNightTexture,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-            opacity: state.isDaylight ? 0 : 0.8,
-            depthWrite: false
-        })
-    );
-    nightMesh.renderOrder = 0;
-    scene.add(nightMesh);
+    // The separate additive night-lights mesh is gone: it is now a per-fragment
+    // emissive term above. It had been rendering at opacity 0 on every frame
+    // anyway, because `state.isDaylight` was initialised true and never reassigned,
+    // so the city lights had never actually been visible.
 
-    // Cloud layer
+    // Cloud layer.
+    // FrontSide, not DoubleSide: the camera can never get inside this shell
+    // (controls.minDistance 6 vs shell radius 5.04), so back faces were pure waste -
+    // double the rasterisation, plus a lit-far-hemisphere ghost at the limb.
+    const cloudMaterial = new THREE.MeshPhongMaterial({
+        map: cloudsTexture,
+        transparent: true,
+        opacity: 1.0,               // real opacity now comes from the shader below
+        depthWrite: false,
+        side: THREE.FrontSide,
+        blending: THREE.NormalBlending
+    });
+
+    cloudMaterial.customProgramCacheKey = () => 'clouds-terminator-v1';
+    cloudMaterial.onBeforeCompile = (shader) => {
+        shader.uniforms.sunDirection = { value: sunDirection };   // same vector object as the earth
+        shader.uniforms.terminatorSoftness = { value: 0.09 };
+
+        shader.vertexShader = shader.vertexShader
+            .replace('#include <clipping_planes_pars_vertex>',
+                '#include <clipping_planes_pars_vertex>\nvarying vec3 vWorldNormal;')
+            .replace('#include <beginnormal_vertex>',
+                '#include <beginnormal_vertex>\n\tvWorldNormal = normalize( mat3( modelMatrix ) * objectNormal );');
+
+        shader.fragmentShader = shader.fragmentShader
+            .replace('#include <clipping_planes_pars_fragment>',
+                `#include <clipping_planes_pars_fragment>
+                varying vec3 vWorldNormal;
+                uniform vec3 sunDirection;
+                uniform float terminatorSoftness;`)
+            .replace('#include <map_fragment>',
+                `#include <map_fragment>
+                float sunFacing = dot( normalize( vWorldNormal ), normalize( sunDirection ) );
+                float dayMix = smoothstep( -terminatorSoftness, terminatorSoftness, sunFacing );
+                // Cloud brightness follows the sun, and the map's own luminance
+                // becomes the alpha, so clear sky is genuinely transparent rather
+                // than a uniform grey wash.
+                float coverage = max( diffuseColor.r, max( diffuseColor.g, diffuseColor.b ) );
+                diffuseColor.a *= coverage * mix( 0.10, 0.55, dayMix );`);
+
+        cloudMaterial.userData.shader = shader;
+    };
+
     const cloudMesh = new THREE.Mesh(
         new THREE.SphereGeometry(earthRadius * 1.008, 64, 64),
-        new THREE.MeshPhongMaterial({
-            map: cloudsTexture,
-            transparent: true,
-            opacity: state.isDaylight ? 0.3 : 0.1,
-            depthWrite: false,
-            side: THREE.DoubleSide,
-            blending: THREE.NormalBlending
-        })
+        cloudMaterial
     );
-    cloudMesh.renderOrder = 0;
+    cloudMesh.renderOrder = 2;
     scene.add(cloudMesh);
 
-    scene.add(new THREE.AmbientLight(0xffffff, state.isDaylight ? 0.3 : 0.1));
+    // ---- Atmosphere -------------------------------------------------------
+    // Two cheap shells. Without these the globe has a razor-hard edge against
+    // black; every real photograph of Earth has a soft blue limb.
+    const atmosphereVertexShader = `
+        varying vec3 vViewDir;
+        varying vec3 vNormalView;
+        void main() {
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+            vViewDir = normalize( mvPosition.xyz );
+            vNormalView = normalize( normalMatrix * normal );
+            gl_Position = projectionMatrix * mvPosition;
+        }`;
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, state.isDaylight ? 2.0 : 0.15);
-    directionalLight.position.set(5, 3, 5);
+    // (a) inner limb haze, sitting just outside the clouds
+    const rimUniforms = {
+        uColor: { value: new THREE.Color(0x8fc4ff) },
+        uPower: { value: 3.2 },
+        uIntensity: { value: 0.5 },
+    };
+    const rimMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(earthRadius * 1.012, 48, 48),
+        new THREE.ShaderMaterial({
+            uniforms: rimUniforms,
+            vertexShader: atmosphereVertexShader,
+            fragmentShader: `
+                varying vec3 vViewDir;
+                varying vec3 vNormalView;
+                uniform vec3 uColor;
+                uniform float uPower;
+                uniform float uIntensity;
+                void main() {
+                    // clamp before pow(): pow() of a negative base is undefined in
+                    // GLSL and flickers black on some drivers.
+                    float grazing = clamp( 1.0 - abs( dot( vViewDir, vNormalView ) ), 0.0, 1.0 );
+                    gl_FragColor = vec4( uColor, pow( grazing, uPower ) * uIntensity );
+                }`,
+            transparent: true,
+            side: THREE.FrontSide,
+            depthWrite: false,
+            blending: THREE.NormalBlending,
+        })
+    );
+    rimMesh.renderOrder = 5;
+    scene.add(rimMesh);
+
+    // (b) outer glow bleeding past the silhouette.
+    // 1.08r = 5.40 against controls.minDistance 6 leaves 0.60 of clearance. Do not
+    // enlarge this without raising minDistance: if the camera crosses inside a
+    // BackSide shell the glow floods the entire screen.
+    const glowUniforms = {
+        uColor: { value: new THREE.Color(0x3f9dff) },
+        uPower: { value: 2.6 },
+        uIntensity: { value: 0.9 },
+    };
+    const glowMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(earthRadius * 1.08, 48, 48),
+        new THREE.ShaderMaterial({
+            uniforms: glowUniforms,
+            vertexShader: atmosphereVertexShader,
+            fragmentShader: `
+                varying vec3 vViewDir;
+                varying vec3 vNormalView;
+                uniform vec3 uColor;
+                uniform float uPower;
+                uniform float uIntensity;
+                void main() {
+                    float facing = clamp( dot( vViewDir, vNormalView ), 0.0, 1.0 );
+                    gl_FragColor = vec4( uColor, pow( facing, uPower ) * uIntensity );
+                }`,
+            transparent: true,
+            side: THREE.BackSide,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+        })
+    );
+    glowMesh.renderOrder = 6;
+    scene.add(glowMesh);
+
+    // ---- Lights -----------------------------------------------------------
+    // One sun, plus a faint cool fill so the night limb reads as shadowed rather
+    // than as a hole. The old HemisphereLight is gone: it lit the night side
+    // uniformly, which is exactly what destroys a terminator.
+    scene.add(new THREE.AmbientLight(0x4d6180, 1.75));
+
+    const directionalLight = new THREE.DirectionalLight(0xfff4e0, 5.2);
+    directionalLight.position.copy(sunDirection).multiplyScalar(earthRadius * 50);
     scene.add(directionalLight);
-
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, state.isDaylight ? 0.6 : 0));
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -552,8 +726,57 @@ function initEarth() {
     camera.lookAt(0, 0, 0);
     controls.update();
 
+    // The sun is anchored RELATIVE TO THE CAMERA, not to world space.
+    //
+    // A sun fixed in world space is more physically honest, but it leaves the
+    // visible hemisphere fully dark for half of every rotation - fine for a
+    // simulation, wrong for a hero visual someone lands on at a random moment.
+    // Offsetting it from the view direction keeps the face you are looking at lit
+    // while parking the terminator near the right-hand limb, which is the classic
+    // "Earth from space" framing and always shows a crescent of city lights.
+    //
+    // The offset breathes slowly so the scene is not frozen.
+    const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SUN_YAW_BASE = THREE.MathUtils.degToRad(22);   // how far round the limb the terminator sits
+    const SUN_YAW_SWING = THREE.MathUtils.degToRad(9);  // gentle drift either side of that
+    const SUN_BREATH_SECONDS = 45;
+    const SUN_PITCH = 0.28;                              // lift, so the terminator is not a vertical line
+    let sunPhase = 0;
+    let lastFrame = performance.now();
+    const _camDir = new THREE.Vector3();
+
+    function updateSun(delta) {
+        if (!prefersReducedMotion) {
+            sunPhase += (delta / SUN_BREATH_SECONDS) * Math.PI * 2;
+        }
+        const yaw = SUN_YAW_BASE + Math.sin(sunPhase) * SUN_YAW_SWING;
+
+        // camera direction, flattened to the horizontal plane, then rotated round Y
+        _camDir.copy(camera.position).normalize();
+        const flatLen = Math.hypot(_camDir.x, _camDir.z) || 1;
+        const camYaw = Math.atan2(_camDir.z, _camDir.x);
+
+        sunDirection.set(
+            Math.cos(camYaw + yaw) * flatLen,
+            _camDir.y * 0.35 + SUN_PITCH,
+            Math.sin(camYaw + yaw) * flatLen,
+        ).normalize();
+
+        directionalLight.position.copy(sunDirection).multiplyScalar(earthRadius * 50);
+
+        // The shader uniforms hold the SAME Vector3 instance, so they follow
+        // automatically; three re-uploads it each frame. Nothing to copy.
+    }
+
     function animate() {
         requestAnimationFrame(animate);
+
+        const now = performance.now();
+        const delta = Math.min((now - lastFrame) / 1000, 0.1);  // clamp after tab-switch
+        lastFrame = now;
+
+        updateSun(delta);
         if (cloudMesh) cloudMesh.rotation.y = earthMesh.rotation.y * 1.1;
         controls.update();
         renderer.render(scene, camera);
