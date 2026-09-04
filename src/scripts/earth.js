@@ -1,6 +1,28 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+// Textures are imported (not referenced by a literal /assets/ path) so Vite
+// emits them with a content hash in the filename. Changing a texture changes
+// its URL, which makes a stale browser cache structurally impossible.
+//
+// This is not theoretical: the textures were briefly published at 2048x1024
+// and then restored to 4096x2048 under the SAME /assets/ URL, so browsers that
+// had seen the site in between kept serving the low-resolution copy for the
+// full `max-age=14400` window. Content-hashed URLs remove that whole class of bug.
+import albedoFull    from '../assets/textures/earth_albedo.jpg?url';
+import nightFull     from '../assets/textures/earth_night.jpg?url';
+import cloudsFull    from '../assets/textures/earth_clouds.jpg?url';
+import normalFull    from '../assets/textures/earth_normal.jpg?url';
+import specularFull  from '../assets/textures/earth_specular.jpg?url';
+import bumpFull      from '../assets/textures/earth_bump.jpg?url';
+
+import albedoLow     from '../assets/textures/lowres/earth_albedo.jpg?url';
+import nightLow      from '../assets/textures/lowres/earth_night.jpg?url';
+import cloudsLow     from '../assets/textures/lowres/earth_clouds.jpg?url';
+import normalLow     from '../assets/textures/lowres/earth_normal.jpg?url';
+import specularLow   from '../assets/textures/lowres/earth_specular.jpg?url';
+import bumpLow       from '../assets/textures/lowres/earth_bump.jpg?url';
+
 // Ensure required data is available
 if (typeof locationsData === 'undefined' || typeof flightRoutesData === 'undefined') {
     console.error('Required data is not defined. Make sure locationsData and flightRoutesData are passed correctly from Jekyll.');
@@ -251,17 +273,17 @@ function initEarth() {
     // visible right away; stage 2 swaps the full 4096x2048 image into the SAME
     // texture object as it arrives, so every material referencing it upgrades
     // without needing to know which material that was.
-    const loadTexture = (path, { color = false } = {}) => {
+    const loadTexture = (lowUrl, fullUrl, { color = false } = {}) => {
         const configure = (tex) => {
             tex.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
             tex.anisotropy = maxAnisotropy;
             return tex;
         };
 
-        const tex = configure(textureLoader.load(`/assets/lowres/${path}`));
+        const tex = configure(textureLoader.load(lowUrl));
 
         textureLoader.load(
-            `/assets/${path}`,
+            fullUrl,
             (full) => {
                 tex.image = full.image;
                 tex.needsUpdate = true;   // re-uploads and regenerates mipmaps
@@ -274,12 +296,12 @@ function initEarth() {
         return tex;
     };
 
-    const earthDayTexture   = loadTexture('earth_albedo.jpg', { color: true });
-    const earthNightTexture = loadTexture('earth_night.jpg',  { color: true });
-    const cloudsTexture     = loadTexture('earth_clouds.jpg', { color: true });
-    const normalTexture     = loadTexture('earth_normal.jpg');
-    const specularTexture   = loadTexture('earth_specular.jpg');
-    const bumpTexture       = loadTexture('earth_bump.jpg');
+    const earthDayTexture   = loadTexture(albedoLow,   albedoFull,   { color: true });
+    const earthNightTexture = loadTexture(nightLow,    nightFull,    { color: true });
+    const cloudsTexture     = loadTexture(cloudsLow,   cloudsFull,   { color: true });
+    const normalTexture     = loadTexture(normalLow,   normalFull);
+    const specularTexture   = loadTexture(specularLow, specularFull);
+    const bumpTexture       = loadTexture(bumpLow,     bumpFull);
     // NOTE: earth_roughness.jpg used to be loaded here and applied to nothing.
     // MeshPhongMaterial has no roughnessMap (that is MeshStandardMaterial), so
     // it cost a request plus ~45 MB of VRAM for no visual effect. Removed.
