@@ -1,0 +1,160 @@
+/*
+ * Dark theme for the content pages.
+ *
+ * The four flight pages have always been dark (#000 canvas, translucent panels)
+ * while the homepage was light, so the site read as two different products.
+ * This brings the homepage into the flight pages' world.
+ *
+ * Deliberately a LAYER on top of style.css rather than an edit to it: style.css
+ * stays byte-identical to what shipped under Jekyll, so this is one file to
+ * review and one file to delete if it is ever unwanted. Load it after style.css.
+ *
+ * Most of the work is done by re-pointing the existing custom properties. Only
+ * the handful of rules that hardcode a light value need explicit overrides, and
+ * each of those is commented with why.
+ */
+
+:root {
+  /* Text: warm-neutral greys with a slight blue bias, matching the accent. */
+  --text-color: #e8edf5;
+  --text-light: #9aa8bd;
+  --text-lighter: #6f7d92;
+
+  /* Ground: near-black with the same blue bias, never pure #000 - the globe
+     canvas is true black, so a slightly lifted page ground keeps it distinct. */
+  --background: #0d1219;
+  --background-alt: #151c26;
+  --background-dark: #070a0f;
+
+  /* Accents lifted for contrast against a dark ground. The mid-blue that read
+     well on white is too dense here. */
+  --primary-color: #6b9bff;
+  --secondary-color: #8b93ff;
+  --accent-color: #a78bfa;
+
+  --primary-color-rgb: 107, 155, 255;
+  --secondary-color-rgb: 139, 147, 255;
+  --accent-color-rgb: 167, 139, 250;
+
+  /* Shadows do almost nothing on a dark ground; depth comes from borders
+     instead, so these are softened and a border token is introduced. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.55);
+
+  --hairline: rgba(255, 255, 255, 0.09);
+  --surface: #151c26;
+  --surface-raised: #1b2431;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+/* --- Header -------------------------------------------------------------
+   Hardcoded rgba(255,255,255,0.8) + a white bottom border. The frosted-glass
+   effect is worth keeping; it just needs a dark pane. */
+.header {
+  background: rgba(13, 18, 25, 0.72);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.nav-links a {
+  color: var(--text-light);
+}
+.nav-links a:hover {
+  color: var(--text-color);
+}
+
+/* --- Hero ---------------------------------------------------------------
+   The gradients are already token-driven, so they follow the new accents.
+   The tint is raised slightly because low-alpha colour reads much fainter
+   against black than against white. */
+.hero-section {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--primary-color-rgb), 0.14),
+    rgba(var(--secondary-color-rgb), 0.10)
+  );
+}
+.hero-section::before {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(var(--accent-color-rgb), 0.16) 0%,
+    transparent 55%
+  );
+}
+
+/* --- Sections -----------------------------------------------------------
+   style.css alternates section grounds with `section:nth-child(even)`, whose
+   specificity (0-1-1) beats a plain class, so do NOT try to set these per
+   section - the alternation already follows the re-pointed tokens above and
+   any `.about-section {}` rule here would silently lose. */
+
+.about-image,
+.profile-image {
+  border-color: var(--hairline);
+}
+
+/* --- Cards --------------------------------------------------------------
+   On white, elevation came from box-shadow. On a dark ground shadows are
+   nearly invisible, so cards need a surface genuinely lighter than whichever
+   alternating ground they land on - --surface-raised sits above BOTH
+   --background and --background-alt - plus a hairline to define the edge. */
+.social-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--hairline);
+  color: var(--text-color);
+}
+.social-card:hover {
+  background: #212c3b;
+  border-color: rgba(var(--primary-color-rgb), 0.5);
+}
+.social-platform {
+  color: var(--text-color);
+}
+.social-username,
+.social-description {
+  color: var(--text-light);
+}
+
+/* --- Footer -------------------------------------------------------------
+   style.css sets `background-color: var(--text-color)` - an invert trick that
+   gave a dark footer on a light page. With the token now light, that would
+   produce a glaring white bar, so it must be set explicitly. */
+.footer {
+  background-color: var(--background-dark);
+  color: var(--text-light);
+  border-top: 1px solid var(--hairline);
+}
+
+/* --- Floating hero decorations -----------------------------------------
+   Deliberately NOT styled. `.floating-element` has no rule in style.css, so
+   those four divs have never rendered - they are dead markup. Giving them a
+   background here made them appear as plain hard-edged rectangles (no radius,
+   no blur) stacked over the hero. Leave them invisible; the globe is the
+   hero visual and does not need competing decoration. */
+
+/* --- Form controls ------------------------------------------------------
+   Inherit the dark scheme so native widgets (scrollbars, selects, autofill)
+   are rendered dark by the browser rather than defaulting to light. */
+:root {
+  color-scheme: dark;
+}
+
+/* --- Motion -------------------------------------------------------------
+   The hero fade-ins and the globe's auto-rotation are decorative. Honour a
+   reader's stated preference rather than animating regardless. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

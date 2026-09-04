@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+// Cloudflare Pages serves dist/404.html for unmatched paths automatically.
+// Without this file every unknown URL returned HTTP 200 with the homepage,
+// which lets search engines index unlimited duplicate pages.
+---
+
+<BaseLayout
+  title="Page not found | Patrick Freyer"
+  description="That page does not exist."
+  stylesheets={["/css/style.css", "/css/theme-dark.css"]}
+>
+  <Nav />
+
+  <main class="notfound">
+    <div class="container">
+      <p class="code">404</p>
+      <h1>That page does not exist.</h1>
+      <p class="sub">The link may be out of date, or the page may have moved.</p>
+      <nav class="links" aria-label="Suggested pages">
+        <a href="/">Home</a>
+        <a href="/flights/">Flight globe</a>
+        <a href="/flights/map/">Map</a>
+        <a href="/flights/network/">Network</a>
+        <a href="/flights/stats/">Statistics</a>
+      </nav>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>import '../scripts/alpine.js';</script>
+</BaseLayout>
+
+<style>
+  .notfound {
+    min-height: 68vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 4rem 1.5rem;
+  }
+  .code {
+    font-size: clamp(4rem, 14vw, 8rem);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  h1 {
+    font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+  .sub {
+    color: var(--text-light);
+    margin: 0 0 2rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .links a {
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--hairline, rgba(255, 255, 255, 0.12));
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: var(--transition-fast, all 0.2s ease);
+  }
+  .links a:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+</style>

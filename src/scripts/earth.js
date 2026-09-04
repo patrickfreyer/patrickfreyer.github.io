@@ -245,12 +245,32 @@ function initEarth() {
     // `colorSpace` matters as of three r152: colour maps (albedo/night/clouds)
     // must be tagged sRGB, while data maps (normal/specular/bump) stay linear.
     // Tagging them wrong renders the globe visibly too dark.
+    // Progressive two-stage load. The full texture set is ~4.7 MB, which used
+    // to leave the hero blank until every map had decoded. Stage 1 pulls a
+    // 256x128 preview (a few KB, decodes almost immediately) so the globe is
+    // visible right away; stage 2 swaps the full 4096x2048 image into the SAME
+    // texture object as it arrives, so every material referencing it upgrades
+    // without needing to know which material that was.
     const loadTexture = (path, { color = false } = {}) => {
-        const tex = textureLoader.load(`/assets/${path}`);
-        tex.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
-        // Keeps the surface sharp at grazing angles, which is what lets the
-        // 2048x1024 maps look equivalent to the old 4096x2048 ones.
-        tex.anisotropy = maxAnisotropy;
+        const configure = (tex) => {
+            tex.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+            tex.anisotropy = maxAnisotropy;
+            return tex;
+        };
+
+        const tex = configure(textureLoader.load(`/assets/lowres/${path}`));
+
+        textureLoader.load(
+            `/assets/${path}`,
+            (full) => {
+                tex.image = full.image;
+                tex.needsUpdate = true;   // re-uploads and regenerates mipmaps
+                full.dispose();           // the wrapper is redundant once copied
+            },
+            undefined,
+            () => { /* keep the preview if the full texture fails */ },
+        );
+
         return tex;
     };
 

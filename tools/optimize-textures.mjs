@@ -20,7 +20,7 @@
  *
  * Pass --dry to preview without writing.
  */
-import { readFile, writeFile, stat } from 'node:fs/promises';
+import { readFile, writeFile, stat, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -101,5 +101,27 @@ const shrunk = await sharp(portrait)
   .toBuffer();
 if (!DRY && shrunk.length < before) await writeFile(portrait, shrunk);
 console.log(`  portrait  profile.png  ${mb(before)} -> ${mb(shrunk.length)} MB`);
+
+
+// ---------------------------------------------------------------------------
+// Progressive loading: a tiny first-paint set.
+//
+// The full textures are ~4.7 MB, so the globe used to sit invisible until all
+// of them decoded. earth.js now loads these 256x128 previews first (a few KB
+// total, decoded almost immediately), shows the globe, then swaps in the full
+// resolution as each one arrives. Same final image, no blank hero.
+// ---------------------------------------------------------------------------
+const LOW_W = 256, LOW_H = 128;
+console.log('\n  low-res previews:');
+for (const name of TEXTURES) {
+  const out = join(assets, 'lowres', name);
+  await mkdir(join(assets, 'lowres'), { recursive: true });
+  const buf = await sharp(join(assets, name))
+    .resize(LOW_W, LOW_H, { fit: 'fill' })
+    .jpeg({ quality: 62, mozjpeg: true })
+    .toBuffer();
+  if (!DRY) await writeFile(out, buf);
+  console.log(`    ${name.padEnd(22)} ${LOW_W}x${LOW_H}  ${(buf.length / 1024).toFixed(1)} KB`);
+}
 
 if (DRY) console.log('\n  --dry: nothing written.');
