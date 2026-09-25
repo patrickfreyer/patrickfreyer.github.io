@@ -3600,21 +3600,29 @@
 
 - origin: "Denver"
   destination: "Munich"
-  airline: "Lufthansa"
+  airline: "United"
   year: 2026
   month: "September"
   occasion: "Work"
   travelers: ["Patrick"]
 
 - origin: "Munich"
-  destination: "New York"
-  airline: "Lufthansa"
+  destination: "Boston"
+  airline: "United"
   year: 2026
   month: "September"
   occasion: "Work"
   travelers: ["Patrick"]
 
-- origin: "New York"
+- origin: "Hartford"
+  destination: "Washington DC"
+  airline: "United"
+  year: 2026
+  month: "September"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Washington DC"
   destination: "Denver"
   airline: "United"
   year: 2026
