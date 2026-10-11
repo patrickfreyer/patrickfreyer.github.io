@@ -528,3 +528,8 @@
   lon: 139.6503
   country: "Japan"
   continent: "Asia"
+- name: "Colombo"
+  lat: 6.9271
+  lon: 79.8612
+  country: "Sri Lanka"
+  continent: "Asia"

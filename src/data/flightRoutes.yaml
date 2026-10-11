@@ -3629,3 +3629,51 @@
   month: "September"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Mumbai"
+  airline: "Lufthansa"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Mumbai"
+  destination: "Colombo"
+  airline: "SriLankan"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Colombo"
+  destination: "Mumbai"
+  airline: "SriLankan"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Mumbai"
+  destination: "Munich"
+  airline: "Lufthansa"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "Munich"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
