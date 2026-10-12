@@ -3677,3 +3677,19 @@
   month: "October"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "London"
+  airline: "United"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "London"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "October"
+  occasion: "Work"
+  travelers: ["Patrick"]
