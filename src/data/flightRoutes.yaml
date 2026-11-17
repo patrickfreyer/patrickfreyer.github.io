@@ -3741,3 +3741,19 @@
   month: "November"
   occasion: "Work"
   travelers: ["Patrick"]
+
+- origin: "Denver"
+  destination: "San Francisco"
+  airline: "United"
+  year: 2026
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
+
+- origin: "San Francisco"
+  destination: "Denver"
+  airline: "United"
+  year: 2026
+  month: "November"
+  occasion: "Work"
+  travelers: ["Patrick"]
