@@ -533,3 +533,8 @@
   lon: 79.8612
   country: "Sri Lanka"
   continent: "Asia"
+- name: "Austin"
+  lat: 30.2672
+  lon: -97.7431
+  country: "United States"
+  continent: "North America"
