@@ -1,0 +1,22 @@
+---
+/**
+ * The one header on every flights page, in the WorldRewind atlas style: wordmark, subtitle, quiet
+ * small-caps menu with a vermilion underline. Mark the current page with `current`.
+ */
+export interface Props { current: 'globe' | 'map' | 'network' | 'stats'; }
+const { current } = Astro.props;
+const views = [
+  { key: 'globe', href: '/flights/', label: 'Globe' },
+  { key: 'map', href: '/flights/map/', label: 'Map' },
+  { key: 'network', href: '/flights/network/', label: 'Network' },
+  { key: 'stats', href: '/flights/stats/', label: 'Stats' },
+];
+---
+<header class="at-head">
+  <a class="at-brand" href="/">Patrick<em>Freyer</em></a>
+  <span class="at-tag">A log of flights</span>
+  <nav class="at-menu" aria-label="Flights">
+    {views.map(v => <a href={v.href} aria-current={v.key === current ? 'page' : undefined}>{v.label}</a>)}
+    <a href="/" class="at-home">Home</a>
+  </nav>
+</header>

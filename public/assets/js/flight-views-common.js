@@ -7,12 +7,13 @@
 
 window.FV = (function () {
     // Same palette + cyclic assignment as earth.js generateDistinctColors()
+    // Atlas inks (the WorldRewind palette): vermilion, ink blue, green, plum, ochre, olive and their kin
     const BASE_COLORS = [
-        '#FFFF00', '#FF8C00', '#00BFFF', '#FFFFFF', '#FF1493',
-        '#00FF00', '#FF4500', '#00FFFF', '#FFD700', '#FF69B4',
-        '#00CED1', '#FF6347'
+        '#2f4a78', '#a8341c', '#2e6b58', '#7a3b6e', '#a5670f',
+        '#5a6327', '#3f6f8f', '#8a4a2a', '#4a3a6e', '#6b7a2e',
+        '#9a3a4e', '#2b2116'
     ];
-    const DEFAULT_COLOR = '#00FF00';
+    const DEFAULT_COLOR = '#7a6a54';
 
     // Build airline -> color using first-appearance order (matches earth.js,
     // which uses [...new Set(routes.map(r => r.airline))]).

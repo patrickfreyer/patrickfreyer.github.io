@@ -336,7 +336,7 @@
         });
         return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
     }
-    function inkOn(hex) { return luminance(hex) > 0.33 ? '#0a0e1a' : '#e5e7eb'; }
+    function inkOn(hex) { return luminance(hex) > 0.33 ? '#2b2116' : '#f7f1e3'; }
 
     /* Rounded-end bar path: square at the baseline, r-rounded at the data end. */
     function hBarPath(x, y, w, h, r) {
@@ -386,8 +386,8 @@
 
     /* Single-hue ordinal ramp off --accent-a, validated for the dark surface:
        monotone lightness, >=0.06 adjacent dL, light end clears 2:1 vs #0a0e1a. */
-    var RAMP = ['#3a4785', '#4a5aa8', '#5c6ecb', '#7688e8', '#9dabf2'];
-    var UNKNOWN_BG = '#333947';
+    var RAMP = ['#ead9bf', '#dcb99a', '#c98f6c', '#b5603f', '#a8341c'];
+    var UNKNOWN_BG = '#e6dbc2';
     var UNKNOWN = 'Unknown';
 
     function norm(v) {

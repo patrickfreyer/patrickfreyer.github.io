@@ -152,8 +152,8 @@
 
     function sparkGradient(id) {
         return '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1">' +
-            '<stop offset="0%" stop-color="#a5b4fc"/>' +
-            '<stop offset="100%" stop-color="#667eea" stop-opacity="0.22"/>' +
+            '<stop offset="0%" style="stop-color:var(--spark-hi, #a5b4fc)"/>' +
+            '<stop offset="100%" style="stop-color:var(--accent-a, #667eea)" stop-opacity="0.22"/>' +
             '</linearGradient></defs>';
     }
 
@@ -188,7 +188,7 @@
         var area = line + ' L 100 30 L 0 30 Z';
         return svgWrap(
             '<path d="' + area + '" fill="url(#' + id + ')" opacity="0.5"/>' +
-            '<path d="' + line + '" fill="none" stroke="#a5b4fc" stroke-width="1.6" ' +
+            '<path d="' + line + '" fill="none" style="stroke:var(--spark-hi, #a5b4fc)" stroke-width="1.6" ' +
             'stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>',
             sparkGradient(id)
         );
@@ -203,7 +203,7 @@
             var h = on ? 30 : 8;
             var x = i * step + (step - bw) / 2;
             return '<rect x="' + x.toFixed(2) + '" y="' + (30 - h) + '" width="' + bw.toFixed(2) +
-                '" height="' + h + '" fill="' + (on ? '#8ea2ff' : 'rgba(148,163,184,0.28)') + '"/>';
+                '" height="' + h + '" style="fill:' + (on ? 'var(--spark-hi, #8ea2ff)' : 'var(--spark-off, rgba(148,163,184,0.28))') + '"/>';
         }).join(''));
     }
 

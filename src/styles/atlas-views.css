@@ -1,0 +1,73 @@
+/* The map, network and stats pages in the atlas look.
+   Those pages keep their own scripts and stylesheets (public/assets/); this file only re-skins them,
+   scoped to body.atlas so it wins over the old dark theme without editing it rule by rule. */
+
+/* ---------- Map and network ---------- */
+html:has(body.atlas-views), body.atlas.atlas-views { height: 100%; overflow: hidden; background: var(--paper); }
+body.atlas.atlas-views { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+body.atlas .flight-view-page { flex: 1; width: 100%; height: auto; min-height: 0; color: var(--ink); font-family: var(--f-read);
+  background: radial-gradient(ellipse at 50% 48%, var(--paper-hi) 0%, var(--paper) 60%, var(--paper-2) 100%); }
+body.atlas .view-switcher { display: none; }
+
+body.atlas .filter-panel, body.atlas .legend-panel {
+  background: rgba(247,241,227,.78); color: var(--ink); border: 0; border-radius: 14px;
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 18px 40px -24px rgba(60,40,15,.55); }
+body.atlas .filter-panel { top: 14px; left: var(--gutter); }
+body.atlas .legend-panel { right: var(--gutter); bottom: 16px; scrollbar-width: thin; }
+body.atlas .filter-header h3 { font: 400 24px/1.1 var(--f-display); color: var(--ink); }
+body.atlas .legend-panel h4, body.atlas .filter-group label { font: 14px/1.2 var(--f-sc); letter-spacing: .06em; text-transform: none; color: var(--accent); }
+body.atlas .filter-group select { background: rgba(255,255,255,.35); border: 0; box-shadow: inset 0 0 0 1px var(--line); border-radius: 8px; color: var(--ink); font: 15px/1.3 var(--f-read); scrollbar-width: thin; }
+body.atlas .filter-group select option { background: transparent; color: var(--ink); }
+body.atlas .filter-group select option:checked { background: rgba(168,52,28,.16); }
+body.atlas .toggle-filters-btn { background: rgba(43,33,22,.07); color: var(--ink); border-radius: 50%; }
+body.atlas .filter-button { background: transparent; color: var(--accent); border-radius: 999px; box-shadow: inset 0 0 0 1px rgba(168,52,28,.38); font: 15px/1 var(--f-sc); letter-spacing: .05em; }
+body.atlas .filter-button:hover { background: var(--accent); color: var(--paper-hi); }
+body.atlas .fv-legend-row { color: var(--body); font: 14px/1.3 var(--f-read); }
+body.atlas .fv-legend-swatch { box-shadow: none; height: 3px; width: 16px; border-radius: 2px; }
+body.atlas .reset-view-btn { left: var(--gutter); background: rgba(247,241,227,.62); color: var(--ink); border: 0; border-radius: 999px; box-shadow: 0 4px 14px -6px rgba(60,40,15,.35); font: 15px/1 var(--f-sc); letter-spacing: .05em; }
+body.atlas .reset-view-btn:hover { color: var(--accent); background: rgba(247,241,227,.9); }
+body.atlas .fv-tooltip { background: radial-gradient(closest-side, rgba(247,241,227,.97) 70%, rgba(247,241,227,.0)); border: 0; box-shadow: none; color: var(--ink); font: 15px/1.35 var(--f-read); padding: 14px 26px; }
+body.atlas .fv-tooltip strong { color: var(--ink); font-weight: 500; }
+body.atlas .fv-tip-sub { color: var(--muted); font-style: italic; }
+
+body.atlas .map-sphere { fill: #c9d3cc; stroke: rgba(43,33,22,.55); stroke-width: 1.2; }
+body.atlas .map-graticule { stroke: rgba(58,44,30,.14); stroke-dasharray: 1 3; }
+body.atlas .map-country { fill: #e8dcc0; stroke: rgba(43,33,22,.42); stroke-width: .5; }
+body.atlas .city { fill: var(--paper-hi); stroke: var(--ink); stroke-width: 1; opacity: 1; }
+body.atlas .city-label, body.atlas .net-label { fill: var(--ink); font: italic 400 14px var(--f-display); text-shadow: none; paint-order: stroke; stroke: var(--paper-hi); stroke-width: 3.5px; stroke-linejoin: round; }
+body.atlas .flight-view-page svg circle[stroke="#7aa2ff"] { fill: var(--paper-hi); stroke: var(--ink); }
+@media (max-width: 768px) { body.atlas .filter-panel { top: 10px; } }
+
+/* ---------- Stats: the chart modules read these tokens ---------- */
+:root:has(body.atlas-stats), body.atlas.atlas-stats {
+  --bg: var(--paper);
+  --panel: rgba(247,241,227,.6);
+  --border: rgba(43,33,22,.12);
+  --text: #2b2116;
+  --text-dim: #5d4e3b;
+  --text-faint: #7a6a54;
+  --accent-a: #a8341c;
+  --accent-b: #2f4a78;
+  --panel-hover: rgba(247,241,227,.85);
+  --border-strong: rgba(43,33,22,.22);
+  --grid-line: rgba(43,33,22,.1);
+  --glow-a: rgba(168,52,28,.0);
+  --glow-b: rgba(47,74,120,.0);
+  --font: var(--f-read);
+  --mono: var(--f-data);
+  --spark-hi: #a8341c;
+  --spark-off: rgba(43,33,22,.14);
+  background: var(--paper); color: var(--ink);
+}
+html:has(body.atlas-stats) { background: var(--paper); }
+body.atlas-stats .stats-nav { display: none; }
+body.atlas-stats .stats-header h1 { font: 400 clamp(44px, 7vw, 72px)/1 var(--f-display); letter-spacing: 0; text-transform: none; background: none; -webkit-text-fill-color: currentColor; color: var(--ink); text-shadow: none; }
+body.atlas-stats .stats-range { font: 15px/1.3 var(--f-sc); letter-spacing: .06em; color: var(--muted); text-transform: none; }
+body.atlas-stats .kpi, body.atlas-stats .stats-page section, body.atlas-stats .panel { box-shadow: 0 18px 40px -30px rgba(60,40,15,.45); }
+body.atlas-stats .kpi-value { font-family: var(--f-display); font-weight: 400; color: var(--ink); text-shadow: none; font-variant-numeric: oldstyle-nums; }
+body.atlas-stats .kpi-label, body.atlas-stats h2, body.atlas-stats h3 { font-family: var(--f-sc); letter-spacing: .06em; text-transform: none; }
+body.atlas-stats .record-hero { border: 0; background: rgba(168,52,28,.06); box-shadow: inset 0 0 0 1px rgba(168,52,28,.22); }
+body.atlas-stats .record-hero::after { background: radial-gradient(circle, rgba(168,52,28,.1), transparent 68%); }
+body.atlas-stats .record-hero-mark { border-color: rgba(168,52,28,.35); background: var(--paper-hi); }
+body.atlas-stats .record-hero-label { font: 15px/1.2 var(--f-sc); letter-spacing: .06em; text-transform: none; color: var(--accent); }
+body.atlas-stats .record-hero-title { font: 400 28px/1.15 var(--f-display); color: var(--ink); }

@@ -320,7 +320,7 @@
         });
         return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
     }
-    function inkOn(hex) { return luminance(hex) > 0.33 ? '#0a0e1a' : '#e5e7eb'; }
+    function inkOn(hex) { return luminance(hex) > 0.33 ? '#2b2116' : '#f7f1e3'; }
 
     /* Rounded-end bar path: square at the baseline, r-rounded at the data end. */
     function hBarPath(x, y, w, h, r) {

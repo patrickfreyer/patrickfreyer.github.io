@@ -334,7 +334,7 @@
         });
         return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
     }
-    function inkOn(hex) { return luminance(hex) > 0.33 ? '#0a0e1a' : '#e5e7eb'; }
+    function inkOn(hex) { return luminance(hex) > 0.33 ? '#2b2116' : '#f7f1e3'; }
 
     /* Rounded-end bar path: square at the baseline, r-rounded at the data end. */
     function hBarPath(x, y, w, h, r) {
@@ -386,10 +386,10 @@
        repaint the survivors. Validated as a dark-mode categorical trio
        (lightness band, chroma floor, protan/deutan separation, contrast). */
     var GROUPS = [
-        { key: 'Work', color: '#667eea' },
-        { key: 'Study', color: '#0d9488' },
-        { key: 'Personal', color: '#dd6b20' },
-        { key: 'Unknown', color: '#5a6478' }
+        { key: 'Work', color: '#2f4a78' },
+        { key: 'Study', color: '#7a3b6e' },
+        { key: 'Personal', color: '#a8341c' },
+        { key: 'Unknown', color: '#9a8a74' }
     ];
 
     function hexRgba(hex, a) {
@@ -438,7 +438,7 @@
             if (rows.some(function (r) { return r.key === k; })) return;
             var d = byKey[k];
             rows.push({
-                key: k, color: '#5a6478', km: d.km || 0, flights: d.flights || 0,
+                key: k, color: '#9a8a74', km: d.km || 0, flights: d.flights || 0,
                 breakdown: (d.breakdown || []).slice()
             });
         });
