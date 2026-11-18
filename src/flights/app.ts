@@ -11,7 +11,7 @@ import type { Topology, GeometryCollection } from 'topojson-specification';
 import { createGlobe, greatCircle, type Globe, type LonLat } from './globe/globe';
 import {
   prepare, edges as toEdges, cities as toCities, summary, GROUPS, groupColor, groupLabel,
-  fmtInt, fmtKm, when, pairKey, type Flight, type Edge, type CityStat, type GroupKey, type RawFlight, type Place,
+  fmtInt, fmtKm, type Flight, type Edge, type CityStat, type GroupKey, type RawFlight, type Place,
 } from './data';
 
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T;
@@ -106,7 +106,8 @@ const rgba = (hex: string, a: number) => {
   const n = parseInt(hex.slice(1), 16);
   return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
 };
-const width = (e: Edge, k: number) => Math.min(4.2, .75 + Math.sqrt(e.count) * .5) * Math.min(1.5, .85 + k * .15);
+// busier routes get clearly heavier lines: 1 flight about 1.2px, 5 about 2.3px, 15 about 3.9px, 30 about 5.6px
+const width = (e: Edge, k: number) => Math.min(6.5, .6 + Math.pow(e.count, .65) * .6) * Math.min(1.5, .85 + k * .15);
 
 function focusEdges(): Set<string> | null {
   const f = state.focus;
@@ -264,13 +265,13 @@ $('#zhome').addEventListener('click', () => globe.flyTo([-35, 38], 1, 900));
 
 /* ---------- The card ---------- */
 const cardIn = $('#card-in');
-const cardToggle = $('#card-toggle');
-cardToggle.addEventListener('click', () => {
-  card.classList.toggle('closed');
-  cardToggle.setAttribute('aria-expanded', String(!card.classList.contains('closed')));
+// The card only opens for a clicked city or route; the totals live on the stats page
+function setCard(open: boolean) {
+  if (card.classList.contains('closed') === !open) return;
+  card.classList.toggle('closed', !open);
+  card.setAttribute('aria-hidden', String(!open));
   globe.relayout();
-});
-if (matchMedia('(max-width: 720px)').matches) { card.classList.add('closed'); cardToggle.setAttribute('aria-expanded', 'false'); }
+}
 
 const span = () => state.y0 === state.y1 ? `${state.y0}` : `${state.y0} to ${state.y1}`;
 const bar = (n: number, max: number, col = 'var(--ink)') => `<span class="bar" style="--w:${(n / max * 100).toFixed(1)}%;--c:${col}"></span>`;
@@ -281,42 +282,15 @@ function listFlights(fl: Flight[], other?: (f: Flight) => string) {
   return [...byYear].map(([y, l]) => `<h4>${y}</h4><ul class="legs">${l.map(f => `<li><i style="--c:${groupColor(f.group)}"></i><span>${other ? other(f) : `${esc(f.origin)} to ${esc(f.destination)}`}</span><em>${f.m >= 0 ? esc(f.month.slice(0, 3)) : ''}</em><small>${esc(f.airline !== 'XXX' ? f.airline : '')}${f.travelers && f.travelers.length > 1 ? `, with ${esc(f.travelers.filter(t => t !== 'Patrick').join(', '))}` : ''}</small></li>`).join('')}</ul>`).join('');
 }
 
-function summaryHTML() {
-  const s = summary(SEL);
-  const top = [...EDGES].sort((a, b) => b.count - a.count).slice(0, 6);
-  const topC = CITIES.slice(0, 6);
-  const al = [...s.airlines].sort((a, b) => b[1] - a[1]).slice(0, 6);
-  const mx = Math.max(1, ...top.map(e => e.count));
-  const mc = Math.max(1, ...topC.map(c => c.visits));
-  const ma = Math.max(1, ...al.map(a => a[1]));
-  const laps = s.km / 40075;
-  return `
-    <p class="kicker">The log, ${span()}</p>
-    <h2>${s.flights ? `${fmtInt(s.flights)} ${s.flights === 1 ? 'flight' : 'flights'}` : 'No flights here'}</h2>
-    ${s.flights ? `
-    <dl class="figs">
-      <div><dt>Kilometres</dt><dd>${fmtKm(s.km)}</dd></div>
-      <div><dt>Around the world</dt><dd>${laps.toFixed(laps < 10 ? 1 : 0)} times</dd></div>
-      <div><dt>Cities</dt><dd>${s.cities}</dd></div>
-      <div><dt>Countries</dt><dd>${s.countries}</dd></div>
-    </dl>
-    ${s.longest ? `<p class="note">Longest leg: <a href="#" data-route="${esc(pairKey(s.longest.origin, s.longest.destination))}">${esc(s.longest.origin)} to ${esc(s.longest.destination)}</a>, ${fmtInt(s.longest.km)} km in ${when(s.longest)}</p>` : ''}
-    <h3>Busiest routes</h3>
-    <ol class="rank">${top.map(e => `<li><a href="#" data-route="${esc(e.key)}">${esc(e.a.name)} and ${esc(e.b.name)}</a><b>${e.count}</b>${bar(e.count, mx, groupColor(e.group))}</li>`).join('')}</ol>
-    <h3>Most visited</h3>
-    <ol class="rank">${topC.map(c => `<li><a href="#" data-city="${esc(c.place.name)}">${esc(c.place.name)}</a><b>${c.visits}</b>${bar(c.visits, mc)}</li>`).join('')}</ol>
-    ${al.length ? `<h3>Airlines</h3><ol class="rank">${al.map(([a, n]) => `<li><span>${esc(a)}</span><b>${n}</b>${bar(n, ma, 'var(--muted)')}</li>`).join('')}</ol>` : ''}
-    ` : `<p class="note">Nothing was flown for these occasions in ${span()}. Pick other years on the timeline or turn more occasions on</p>`}`;
-}
 function cityHTML(name: string) {
   const c = CITIES.find(x => x.place.name === name) ?? toCities(ALL).find(x => x.place.name === name);
-  if (!c) return summaryHTML();
+  if (!c) return '';
   const inSel = CITIES.includes(c);
   const partners = new Map<string, number>();
   for (const f of c.flights) { const o = f.origin === name ? f.destination : f.origin; partners.set(o, (partners.get(o) ?? 0) + 1); }
   const pl = [...partners].sort((a, b) => b[1] - a[1]).slice(0, 8), mp = Math.max(1, ...pl.map(p => p[1]));
   return `
-    <button class="back" data-back>All flights</button>
+    <button class="back" data-back aria-label="Close">Close</button>
     <p class="kicker">${esc(c.place.country)}, ${esc(c.place.continent)}</p>
     <h2>${esc(c.place.name)}</h2>
     <p class="lede">${c.visits} ${c.visits === 1 ? 'flight' : 'flights'} in or out${inSel ? `, ${span()}` : ' in all years'}. First in ${c.first}${c.last !== c.first ? `, last in ${c.last}` : ''}</p>
@@ -327,10 +301,10 @@ function cityHTML(name: string) {
 }
 function routeHTML(key: string) {
   const e = EDGES.find(x => x.key === key) ?? ALL_EDGES.find(x => x.key === key);
-  if (!e) return summaryHTML();
+  if (!e) return '';
   const al = [...e.airlines].sort((a, b) => b[1] - a[1]);
   return `
-    <button class="back" data-back>All flights</button>
+    <button class="back" data-back aria-label="Close">Close</button>
     <p class="kicker">${fmtInt(e.km)} km, ${e.first === e.last ? e.first : `${e.first} to ${e.last}`}</p>
     <h2>${esc(e.a.name)} <span class="amp">and</span> ${esc(e.b.name)}</h2>
     <p class="lede">${e.count} ${e.count === 1 ? 'flight' : 'flights'}${al.length ? ` with ${al.map(([a, n]) => `${esc(a)}${al.length > 1 ? ` (${n})` : ''}`).join(', ')}` : ''}. ${fmtKm(e.km * e.count)} km in all</p>
@@ -340,8 +314,9 @@ function routeHTML(key: string) {
 }
 function showCard() {
   const f = state.focus;
-  cardIn.innerHTML = !f ? summaryHTML() : f.kind === 'city' ? cityHTML(f.name) : routeHTML(f.key);
-  cardIn.scrollTop = 0;
+  const html = !f ? '' : f.kind === 'city' ? cityHTML(f.name) : routeHTML(f.key);
+  if (html) { cardIn.innerHTML = html; cardIn.scrollTop = 0; }
+  setCard(!!html);
 }
 cardIn.addEventListener('click', ev => {
   const a = (ev.target as Element).closest<HTMLElement>('[data-city],[data-route],[data-back]');
@@ -353,13 +328,11 @@ cardIn.addEventListener('click', ev => {
 });
 function openCity(name: string, fly: boolean) {
   state.focus = { kind: 'city', name }; writeHash(); showCard();
-  if (card.classList.contains('closed')) cardToggle.click();
   const c = CITIES.find(x => x.place.name === name) ?? toCities(ALL).find(x => x.place.name === name);
   if (fly && c) globe.flyTo([c.place.lon, c.place.lat], Math.max(globe.k, 1.6), 900); else globe.render();
 }
 function openRoute(key: string) {
   state.focus = { kind: 'route', key }; writeHash(); showCard();
-  if (card.classList.contains('closed')) cardToggle.click();
   const e = EDGES.find(x => x.key === key) ?? ALL_EDGES.find(x => x.key === key);
   if (e) {
     const mid = routeGeo(e).coordinates[Math.floor(routeGeo(e).coordinates.length / 2)] as LonLat;
