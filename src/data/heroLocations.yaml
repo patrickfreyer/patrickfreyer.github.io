@@ -458,6 +458,11 @@
   lon: -71.0096
   country: "United States"
   continent: "North America"
+- name: "Hartford"
+  lat: 41.9389
+  lon: -72.6832
+  country: "United States"
+  continent: "North America"
 - name: "Santo Domingo"
   lat: 18.4861
   lon: -69.9312

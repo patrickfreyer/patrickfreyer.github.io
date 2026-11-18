@@ -1,233 +1,222 @@
 ---
+/**
+ * /flights/ : every flight on the WorldRewind paper and ink globe.
+ * All behaviour lives in src/flights/app.ts (bundled by Vite); this page is markup, styles and data.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ViewSwitcher from '../../components/ViewSwitcher.astro';
+import FlightsHeader from '../../components/flights/FlightsHeader.astro';
 import heroLocations from '../../data/heroLocations.yaml';
 import flightRoutes from '../../data/flightRoutes.yaml';
+import '@fontsource/im-fell-english/latin-400.css';
+import '@fontsource/im-fell-english/latin-400-italic.css';
+import '@fontsource/im-fell-english-sc/latin-400.css';
+import '@fontsource/eb-garamond/latin-400.css';
+import '@fontsource/eb-garamond/latin-400-italic.css';
+import '@fontsource/eb-garamond/latin-500.css';
+import '@fontsource/courier-prime/latin-400.css';
+import '../../styles/atlas.css';
+
+// only the fields the page uses, so the inline JSON stays small
+const data = {
+  flights: (flightRoutes as any[]).map(({ origin, destination, airline, year, month, occasion, travelers, planned }) =>
+    ({ origin, destination, airline, year, month, occasion, travelers, ...(planned ? { planned } : {}) })),
+  places: (heroLocations as any[]).map(({ name, lat, lon, country, continent }) => ({ name, lat, lon, country, continent })),
+};
 ---
 
 <BaseLayout
   title="Flights | Patrick Freyer"
+  description="Every flight Patrick Freyer has taken since 2000, on an atlas globe: routes, cities and the years they were flown."
   fullBleed
+  bodyClass="atlas"
 >
-  <ViewSwitcher current="globe" />
+  <link slot="head" rel="preload" as="image" href="/globe/tex/earth.jpg" crossorigin="anonymous" />
+  <div class="app">
+    <FlightsHeader current="globe" />
 
-  <div class="earth-visualization-page">
-      <div id="filter-panel" class="filter-panel">
-          <div class="filter-header">
-              <h3>Filters</h3>
-              <button id="toggle-filters" class="toggle-filters-btn">
-                  <i class="fas fa-chevron-left"></i>
-              </button>
-          </div>
-          <div class="filter-content">
-              <div class="filter-group">
-                  <label for="year-filter">Year</label>
-                  <select id="year-filter" multiple>
-                      <!-- Will be populated by JavaScript -->
-                  </select>
-              </div>
-              <div class="filter-group">
-                  <label for="airline-filter">Airline</label>
-                  <select id="airline-filter" multiple>
-                      <!-- Will be populated by JavaScript -->
-                  </select>
-              </div>
-              <div class="filter-actions">
-                  <button id="apply-filters" class="filter-button">Apply</button>
-                  <button id="reset-filters" class="filter-button">Reset</button>
-              </div>
-              <div class="filter-group">
-                  <a href="/flights/stats/" class="stats-link">📊 View Statistics</a>
-              </div>
-          </div>
+    <main class="stage" id="stage">
+      <div class="era" aria-live="polite">
+        <span class="yr" id="era-yr"></span>
+        <span class="sub" id="era-sub"></span>
       </div>
-    
-      <!-- Mobile stats button -->
-      <div class="mobile-stats-button">
-          <a href="/flights/stats/" class="mobile-stats-link">
-              <i class="fas fa-chart-bar"></i>
-          </a>
+
+      <div class="zoom">
+        <button id="zin" type="button" aria-label="Zoom in"><svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg></button>
+        <button id="zout" type="button" aria-label="Zoom out"><svg viewBox="0 0 16 16"><path d="M3 8h10"/></svg></button>
+        <button id="zhome" type="button" aria-label="Back to the whole globe"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M2.5 8h11M8 2.5c-2.4 2.6-2.4 8.4 0 11M8 2.5c2.4 2.6 2.4 8.4 0 11"/></svg></button>
       </div>
-    
-      <div id="earth-container" class="fullscreen"></div>
+
+      <p class="mapnote">Drag to turn, scroll to zoom, click a route or a city. Relief from NASA Blue Marble, globe after <a href="https://worldrewind.com" rel="noopener">WorldRewind</a></p>
+
+      <aside class="card" id="card" aria-label="Flight details">
+        <button class="card-toggle" id="card-toggle" type="button" aria-expanded="true" aria-controls="card-in"><span>Log</span></button>
+        <div class="card-in" id="card-in"></div>
+      </aside>
+    </main>
+
+    <footer class="timeline" id="timeline">
+      <button class="play" id="play" type="button" aria-label="Play the years">
+        <svg viewBox="0 0 24 24" class="i-play"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+        <svg viewBox="0 0 24 24" class="i-pause"><path d="M8 5.5v13M16 5.5v13"/></svg>
+      </button>
+      <div class="tl-main">
+        <div class="chips" id="chips" role="group" aria-label="Occasions"></div>
+        <svg id="tl" aria-label="Years shown: click a year, or drag across several"></svg>
+      </div>
+      <button class="tl-all" id="tl-all" type="button" hidden>All years</button>
+    </footer>
   </div>
+  <div class="at-tip" id="tip" role="tooltip"></div>
 
-  <style is:global>
-
-      .earth-visualization-page {
-          position: relative;
-          width: 100vw;
-          height: 100vh;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          background-color: #000000;
-      }
-
-      #earth-container.fullscreen {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          margin: 0;
-          padding: 0;
-      }
-
-      /* Ensure canvas elements also take full space */
-      #earth-container canvas {
-          width: 100% !important;
-          height: 100% !important;
-          margin: 0 !important;
-          padding: 0 !important;
-      }
-
-      .filter-panel {
-          position: absolute;
-          top: 20px;
-          left: 20px;
-          background: rgba(0, 0, 0, 0.8);
-          padding: 20px;
-          border-radius: 10px;
-          color: white;
-          z-index: 1000;
-          max-width: 300px;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .filter-panel h3 {
-          margin: 0 0 15px 0;
-          font-size: 1.2em;
-          color: #fff;
-      }
-
-      .filter-group {
-          margin-bottom: 15px;
-      }
-
-      .filter-group label {
-          display: block;
-          margin-bottom: 5px;
-          color: #ccc;
-      }
-
-      .filter-group select {
-          width: 100%;
-          padding: 8px;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 5px;
-          color: white;
-          outline: none;
-      }
-
-      .filter-group select option {
-          background: #1a1a1a;
-          color: white;
-      }
-
-      .filter-button {
-          padding: 8px 15px;
-          margin-right: 10px;
-          background: rgba(255, 255, 255, 0.2);
-          border: none;
-          border-radius: 5px;
-          color: white;
-          cursor: pointer;
-          transition: background 0.3s ease;
-      }
-
-      .filter-button:hover {
-          background: rgba(255, 255, 255, 0.3);
-      }
-
-      .filter-button:last-child {
-          margin-right: 0;
-      }
-
-      .stats-link {
-          display: block;
-          padding: 10px 15px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 5px;
-          color: white;
-          text-decoration: none;
-          text-align: center;
-          transition: background 0.3s ease;
-          margin-top: 15px;
-      }
-
-      .stats-link:hover {
-          background: rgba(255, 255, 255, 0.3);
-          color: white;
-          text-decoration: none;
-      }
-
-      /* View switcher */
-      .view-switcher {
-          position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-          z-index: 1100; display: flex; gap: 6px;
-          background: rgba(0,0,0,0.75); padding: 6px; border-radius: 999px;
-          border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(10px);
-      }
-      .view-switcher a {
-          color: #cfd8ff; text-decoration: none; padding: 7px 14px; border-radius: 999px;
-          font-size: 13px; font-weight: 500; transition: all 0.2s ease; white-space: nowrap;
-      }
-      .view-switcher a:hover { background: rgba(255,255,255,0.12); color: #fff; }
-      .view-switcher a.active {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;
-      }
-
-      /* Mobile stats button */
-      .mobile-stats-button {
-          display: none;
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          z-index: 1000;
-      }
-
-      .mobile-stats-link {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 50px;
-          height: 50px;
-          background: rgba(0, 0, 0, 0.7);
-          border-radius: 50%;
-          color: white;
-          text-decoration: none;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: all 0.3s ease;
-          font-size: 18px;
-      }
-
-      .mobile-stats-link:hover {
-          background: rgba(0, 0, 0, 0.8);
-          transform: scale(1.1);
-          color: white;
-          text-decoration: none;
-      }
-
-      /* Mobile styles */
-      @media (max-width: 768px) {
-          .filter-panel {
-              display: none;
-          }
-        
-          .mobile-stats-button {
-              display: block;
-          }
-      }
-  </style>
-
-  <script is:inline define:vars={{ heroLocations, flightRoutes }}>
-    window.locationsData = heroLocations;
-    window.flightRoutesData = flightRoutes;
-  </script>
-
-  <script>import '../../scripts/earth.js';</script>
+  <script type="application/json" id="flight-data" set:html={JSON.stringify(data)} />
+  <script>import '../../flights/app';</script>
 </BaseLayout>
+
+<style is:global>
+  .app { position: relative; height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); }
+
+  .stage { position: relative; min-height: 0; overflow: hidden;
+    background: radial-gradient(ellipse at 45% 48%, var(--paper-hi) 0%, var(--paper) 55%, var(--paper-2) 100%); }
+  /* soft fades and a frosted rim instead of drawn frames */
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, transparent 64%, #000 100%); mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, transparent 64%, #000 100%); }
+  .stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: linear-gradient(var(--paper) 0, rgba(239,230,210,0) 60px, rgba(239,230,210,0) calc(100% - 40px), var(--paper) 100%); }
+  .stage > canvas, .stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .stage > canvas.g-globe { opacity: 0; transition: opacity .8s ease; }
+  .stage.ready > canvas.g-globe { opacity: 1; }
+  .stage > svg { touch-action: none; cursor: grab; -webkit-user-select: none; user-select: none; z-index: 2; }
+  .stage > svg:active, .stage > svg.moving { cursor: grabbing; }
+  .stage.over-route > svg { cursor: pointer; }
+  .g-ink { z-index: 1; pointer-events: none; }
+  .grat { fill: none; stroke: rgba(58,44,30,.13); stroke-width: .5; stroke-dasharray: 1 3; pointer-events: none; }
+
+  /* City stamps: an inked seal with a written label */
+  .stamp { cursor: pointer; }
+  .stamp .halo { fill: transparent; }
+  .stamp .seal { fill: var(--paper-hi); stroke: var(--ink); stroke-width: 1.1; transition: fill .2s; }
+  .stamp .dot { fill: var(--ink); pointer-events: none; }
+  .stamp .halo { pointer-events: all; }
+  .stamp.sel .dot { fill: var(--paper-hi); }
+  .stamp:hover .seal, .stamp:focus-visible .seal { stroke: var(--accent); stroke-width: 2; }
+  .stamp.sel .seal { fill: var(--accent); stroke: var(--accent); }
+  .stamp .lbl { font: italic 400 15px var(--f-display); fill: var(--ink); paint-order: stroke; stroke: var(--paper-hi); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+  .stamp.sel .lbl { fill: var(--accent); font-size: 18px; }
+  .stamp.nolbl .lbl, .stamp.off { opacity: 0; }
+  .stamp.off { pointer-events: none; }
+  .stamp.dim { opacity: .4; }
+  .stamp.dim.nolbl { opacity: .25; }
+  .stamp:focus { outline: none; }
+  .g-svg.moving .stamp .lbl { transition: none; }
+
+  /* The years, written large at the top left */
+  .era { position: absolute; left: var(--gutter); top: 18px; z-index: 3; pointer-events: none; font-variant-numeric: oldstyle-nums;
+    background: radial-gradient(closest-side, rgba(247,241,227,.95) 55%, rgba(247,241,227,0) 100%); padding: 24px 56px 26px 30px; margin: -24px 0 0 -30px; }
+  .era .yr { display: block; font: 400 56px/1 var(--f-display); color: var(--ink); text-shadow: 0 0 18px var(--paper), 0 0 6px var(--paper); }
+  .era .yr small { font: italic 400 22px/1 var(--f-display); color: var(--muted); margin-left: 10px; }
+  .era .sub { display: block; margin-top: 6px; font: 13px/1.3 var(--f-data); color: var(--muted); letter-spacing: .02em; }
+
+  /* Occasion chips: quiet small caps with a stroke of the route colour; they double as the legend */
+  .chips { display: flex; flex-wrap: wrap; gap: 0 18px; padding: 0 14px; }
+  .chips button { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; padding: 4px 0; font: 15px/1.1 var(--f-sc); letter-spacing: .05em; color: var(--ink); transition: opacity .2s, color .2s; }
+  .chips button i { width: 18px; height: 3px; border-radius: 2px; background: var(--c); }
+  .chips button[aria-pressed="false"] { opacity: .38; }
+  .chips button[aria-pressed="false"] i { background: transparent; box-shadow: inset 0 0 0 1px var(--c); }
+  .chips button:hover { color: var(--accent); }
+
+  .mapnote { position: absolute; left: var(--gutter); bottom: 10px; z-index: 3; margin: 0; padding: 6px 14px; margin-left: -14px; border-radius: 30px; background: radial-gradient(closest-side, rgba(239,230,210,.85) 60%, rgba(239,230,210,0)); font: italic 13px/1.4 var(--f-read); color: var(--muted); max-width: 46ch; text-shadow: 0 0 6px var(--paper); }
+  .mapnote a { color: var(--muted); }
+
+  .zoom { position: absolute; right: calc(var(--gutter) + var(--card-w, 0px)); top: 62px; z-index: 4; display: grid; gap: 6px; transition: right .3s ease; }
+  .zoom button { width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(247,241,227,.62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 14px -6px rgba(60,40,15,.35); color: var(--ink); }
+  .zoom button:hover { color: var(--accent); }
+  .zoom svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; display: block; margin: auto; }
+
+  /* The reading card: frosted paper on the right, a bottom sheet on phones */
+  .card { position: absolute; z-index: 5; right: var(--gutter); top: 14px; bottom: 14px; width: min(380px, 34vw);
+    display: flex; flex-direction: column; transition: transform .35s cubic-bezier(.3,.7,.2,1), opacity .3s; }
+  .stage:has(.card:not(.closed)) { --card-w: min(400px, calc(34vw + 20px)); }
+  .card-in { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 22px 26px 26px; border-radius: 14px;
+    background: rgba(247,241,227,.78); -webkit-backdrop-filter: blur(14px) saturate(1.05); backdrop-filter: blur(14px) saturate(1.05);
+    box-shadow: 0 18px 40px -22px rgba(60,40,15,.55); scrollbar-width: thin; }
+  .card.closed { transform: translateX(calc(100% + var(--gutter))); }
+  .card.closed .card-toggle { transform: translateX(calc(-100% - var(--gutter) - 12px)); }
+  .card-toggle { position: absolute; left: -44px; top: 0; width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(247,241,227,.62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 14px -6px rgba(60,40,15,.35);
+    font: 13px/1 var(--f-sc); letter-spacing: .04em; color: var(--ink); transition: transform .35s cubic-bezier(.3,.7,.2,1); }
+  .card-toggle:hover { color: var(--accent); }
+  .card .kicker { margin: 0 0 4px; font: 14px/1.2 var(--f-sc); letter-spacing: .06em; color: var(--muted); }
+  .card h2 { margin: 0 0 10px; font: 400 34px/1.08 var(--f-display); color: var(--ink); }
+  .card h2 .amp { font-style: italic; color: var(--muted); font-size: .7em; }
+  .card h3 { margin: 22px 0 6px; font: 15px/1 var(--f-sc); letter-spacing: .07em; color: var(--accent); }
+  .card h4 { margin: 14px 0 2px; font: 13px/1 var(--f-data); color: var(--muted); }
+  .card .lede { margin: 0; color: var(--body); }
+  .card .note { margin: 12px 0 0; font-style: italic; color: var(--body); }
+  .card a { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .25s, color .2s; }
+  .card a:hover { color: var(--accent); background-size: 100% 1px; }
+  .figs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin: 14px 0 0; }
+  .figs div { margin: 0; }
+  .figs dt { font: 13px/1.2 var(--f-sc); letter-spacing: .06em; color: var(--muted); }
+  .figs dd { margin: 2px 0 0; font: 24px/1.1 var(--f-display); color: var(--ink); font-variant-numeric: oldstyle-nums; }
+  .rank { list-style: none; margin: 0; padding: 0; }
+  .rank li { position: relative; display: flex; align-items: baseline; gap: 10px; padding: 5px 0 7px; }
+  .rank li > a, .rank li > span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank b { font: 13px/1 var(--f-data); font-weight: 400; color: var(--muted); }
+  .rank .bar { position: absolute; left: 0; bottom: 2px; height: 2px; width: var(--w); background: var(--c); opacity: .55; border-radius: 2px; }
+  .legs { list-style: none; margin: 0; padding: 0; }
+  .legs li { display: grid; grid-template-columns: 10px 1fr auto; column-gap: 8px; align-items: baseline; padding: 3px 0; }
+  .legs i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); align-self: center; }
+  .legs em { font: 12px/1 var(--f-data); font-style: normal; color: var(--muted); }
+  .legs small { grid-column: 2 / 4; font-size: 14px; font-style: italic; color: var(--muted); line-height: 1.2; }
+  .legs small:empty { display: none; }
+  .occ { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 0; font: 14px/1 var(--f-sc); letter-spacing: .04em; }
+  .occ span { display: inline-flex; align-items: center; gap: 6px; }
+  .occ span::before { content: ""; width: 14px; height: 3px; border-radius: 2px; background: var(--c); }
+  .back { border: 0; background: none; padding: 0 0 12px; font: 14px/1 var(--f-sc); letter-spacing: .06em; color: var(--muted); }
+  .back::before { content: "\2190\00a0"; }
+  .back:hover { color: var(--accent); }
+
+  /* Timeline */
+  .timeline { position: relative; z-index: 6; display: flex; align-items: center; gap: 14px; padding: 0 var(--gutter) 10px; background: var(--paper); }
+  .tl-main { flex: 1; min-width: 0; }
+  .play { position: relative; flex: none; width: 54px; height: 54px; border-radius: 50%; border: 0; background: radial-gradient(circle at 40% 35%, #c2482c, var(--accent) 60%, #8a2a16); color: var(--paper-hi); box-shadow: 0 6px 16px -6px rgba(140,40,15,.7), 0 0 0 4px rgba(247,241,227,.9), 0 0 0 5px rgba(168,52,28,.35); }
+  .play svg { width: 22px; height: 22px; position: absolute; inset: 0; margin: auto; fill: currentColor; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .play .i-pause { display: none; fill: none; }
+  .play.on .i-pause { display: block; } .play.on .i-play { display: none; }
+  #tl { flex: 1; min-width: 0; width: 100%; display: block; touch-action: none; cursor: pointer; overflow: visible; }
+  #tl .band { fill: rgba(168,52,28,.08); rx: 6; transition: x .2s, width .2s, opacity .2s; }
+  #tl .band.all { opacity: 0; }
+  #tl .seg { transition: opacity .2s; }
+  #tl .yr.out .seg { opacity: .22; }
+  #tl .seg.off { opacity: .12 !important; }
+  #tl .hitc { fill: transparent; }
+  #tl .rule { stroke: var(--ink); stroke-width: 1; opacity: .7; }
+  #tl .tick { stroke: var(--ink); stroke-width: .8; opacity: .6; }
+  #tl .ylab { font: 13px var(--f-display); fill: var(--ink); text-anchor: middle; font-variant-numeric: oldstyle-nums; }
+  .tl-all { position: absolute; right: var(--gutter); top: 6px; border: 0; background: none; padding: 2px 0; font: 14px/1 var(--f-sc); letter-spacing: .06em; color: var(--accent); }
+  .tl-all[hidden] { display: none; }
+
+  .no-webgl::before { content: "This browser cannot draw the globe (WebGL is off). The map view works everywhere"; position: absolute; inset: auto 0 45% 0; text-align: center; font: italic 18px var(--f-read); color: var(--muted); z-index: 3; }
+
+  @media (max-width: 720px) {
+    .era { top: 8px; padding: 14px 30px 14px 20px; margin: -14px 0 0 -20px; }
+    .era .yr { font-size: 38px; } .era .yr small { font-size: 17px; }
+    .era .sub { font-size: 12px; margin-top: 4px; }
+    .chips { gap: 0 12px; padding: 0 4px; }
+    .chips button { font-size: 13px; padding: 3px 0; } .chips button i { width: 12px; }
+    .tl-all { top: -24px; }
+    .mapnote { display: none; }
+    .zoom { right: var(--gutter); top: 10px; }
+    .card.closed .card-toggle, .card-toggle { left: auto; }
+    .zoom button { width: 32px; height: 32px; }
+    .card { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; height: 58%; }
+    .card.closed { transform: translateY(calc(100% + 16px)); }
+    .card-toggle { left: auto; right: 6px; top: -46px; }
+    .card.closed .card-toggle { transform: translateY(-62px); }
+    .card-in { padding: 18px 20px 22px; }
+    .card h2 { font-size: 28px; }
+    .play { width: 44px; height: 44px; }
+    .timeline { gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .card, .card-toggle, .zoom, #tl .band { transition: none; } }
+</style>

@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ViewSwitcher from '../../components/ViewSwitcher.astro';
+import FlightsHeader from '../../components/flights/FlightsHeader.astro';
+import '@fontsource/im-fell-english/latin-400.css';
+import '@fontsource/im-fell-english/latin-400-italic.css';
+import '@fontsource/im-fell-english-sc/latin-400.css';
+import '@fontsource/eb-garamond/latin-400.css';
+import '@fontsource/eb-garamond/latin-400-italic.css';
+import '@fontsource/courier-prime/latin-400.css';
+import '../../styles/atlas.css';
+import '../../styles/atlas-views.css';
 import heroLocations from '../../data/heroLocations.yaml';
 import flightRoutes from '../../data/flightRoutes.yaml';
 ---
@@ -8,8 +16,9 @@ import flightRoutes from '../../data/flightRoutes.yaml';
 <BaseLayout
   title="Flight Map | Patrick Freyer"
   stylesheets={["/assets/css/flight-views.css"]}
+  bodyClass="atlas atlas-views"
 >
-  <ViewSwitcher current="map" />
+  <FlightsHeader current="map" />
 
   <script is:inline define:vars={{ heroLocations, flightRoutes }}>
     window.locationsData = heroLocations;
